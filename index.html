@@ -537,7 +537,7 @@ function tryUnlock(){
       btn.disabled=false;btn.textContent='접속하기';
       document.getElementById('lockErr').style.display='block';
     }
-  });
+  },S.month);
 }
 
 /* ── CLOUD (JSONP) ── */
@@ -551,7 +551,7 @@ function jsonpLoad(url,cb){
   document.head.appendChild(sc);
   setTimeout(function(){if(window[nm]){cb(new Error('타임아웃'));delete window[nm];}},12000);
 }
-function cloudLoad(url,cb){jsonpLoad(url,function(e,d){if(e||!d||!d.ok){cb(false,null);}else{cb(true,d.data);}});}
+function cloudLoad(url,cb,month){var mParam=month?'&month='+encodeURIComponent(month):'';var sep=url.indexOf('?')>=0?'&':'?';jsonpLoad(url+sep+'_t='+Date.now()+mParam,function(e,d){if(e||!d||!d.ok){cb(false,null);}else{cb(true,d.data);}});}
 function cloudSave(){
   if(!gasUrl)return;setSyn('ing','저장 중…');
   fetch(gasUrl,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},
@@ -561,13 +561,20 @@ function cloudSave(){
 function setSyn(s,m){var d=document.getElementById('syndot');d.className='dot'+(s==='ok'?' ok':s==='ing'?' ing':s==='err'?' err':'');document.getElementById('synmsg').textContent=m;}
 function applyCloudData(data){
   if(!data||!data.__students__)return;
-  S.students=data.__students__||[];S.month=data.__month__||S.month;
-  Object.keys(data).forEach(function(k){if(k!=='__students__'&&k!=='__month__')S.values[k]=data[k];});
+  S.students=data.__students__||[];
+  S.month=data.__month__||S.month;
+  // v2: values가 별도 객체로 옴
+  if(data.values&&typeof data.values==='object'){
+    Object.keys(data.values).forEach(function(k){S.values[k]=data.values[k];});
+  }else{
+    // v1 하위 호환
+    Object.keys(data).forEach(function(k){if(k!=='__students__'&&k!=='__month__')S.values[k]=data[k];});
+  }
   S.students.sort(function(a,b){return a.name.localeCompare(b.name,'ko');});
   if(!S.activeStudent&&S.students.length)S.activeStudent=S.students[0].id;
   document.getElementById('monthInput').value=S.month;persist();
 }
-function doSync(){if(!gasUrl)return;setSyn('ing','동기화 중…');cloudLoad(gasUrl,function(ok,data){if(ok&&data){applyCloudData(data);renderSP();renderR();renderMemo();setSyn('ok','동기화 완료 '+new Date().toLocaleTimeString());showToast('🔄 동기화 완료!');}else{setSyn('err','동기화 실패');showToast('❌ 동기화 실패');}});}
+function doSync(){if(!gasUrl)return;setSyn('ing','동기화 중…');cloudLoad(gasUrl,function(ok,data){if(ok&&data){applyCloudData(data);renderSP();renderR();renderMemo();setSyn('ok','동기화 완료 '+new Date().toLocaleTimeString());showToast('🔄 동기화 완료!');}else{setSyn('err','동기화 실패');showToast('❌ 동기화 실패');}},S.month);}
 function doDisconn(){if(!confirm('연결을 해제합니다. 다시 접속하려면 URL이 필요합니다.'))return;gasUrl='';try{localStorage.removeItem(GAS_LS);}catch(e){}document.getElementById('mainApp').style.display='none';document.getElementById('lockScreen').style.display='flex';document.getElementById('lockInp').value='';document.getElementById('lockBtn').disabled=true;}
 
 /* ── STUDENT ── */
