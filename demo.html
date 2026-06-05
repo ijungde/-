@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>월간 학습 레포트 — 데모</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;600;700;900&family=Fraunces:ital,wght@0,300;0,700;1,300&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --or:#E8650A;
+  --or2:#FF8C3A;
+  --dk:#18182A;
+  --md:#5A5870;
+  --lt:#A8A5B8;
+  --bg:#FAF8F4;
+  --w:#FFFFFF;
+  --card:#FFFDFB;
+}
+html{scroll-behavior:smooth;}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dk);overflow-x:hidden;}
+
+/* ── 배경 패턴 ── */
+body::before{
+  content:'';position:fixed;inset:0;
+  background:radial-gradient(ellipse 80% 60% at 10% 10%,rgba(232,101,10,.07) 0%,transparent 60%),
+             radial-gradient(ellipse 60% 80% at 90% 90%,rgba(255,140,58,.05) 0%,transparent 60%);
+  pointer-events:none;z-index:0;
+}
+
+/* ── HERO ── */
+.hero{
+  position:relative;z-index:1;
+  min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:60px 24px 80px;text-align:center;
+}
+.badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(232,101,10,.1);border:1px solid rgba(232,101,10,.25);
+  border-radius:100px;padding:7px 18px;font-size:12.5px;font-weight:600;color:var(--or);
+  margin-bottom:36px;animation:fadeUp .8s ease both;
+}
+.badge-dot{width:7px;height:7px;border-radius:50%;background:var(--or);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.5;transform:scale(1.3);}}
+
+.hero-title{
+  font-family:'Fraunces',serif;font-size:clamp(44px,8vw,88px);font-weight:700;line-height:1.05;
+  letter-spacing:-2px;margin-bottom:10px;
+  animation:fadeUp .8s .1s ease both;
+}
+.hero-title em{font-style:italic;color:var(--or);}
+.hero-sub{
+  font-size:clamp(15px,2.5vw,20px);color:var(--md);font-weight:300;line-height:1.7;
+  max-width:520px;margin:0 auto 48px;
+  animation:fadeUp .8s .2s ease both;
+}
+.hero-sub strong{color:var(--dk);font-weight:600;}
+
+.cta-wrap{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;animation:fadeUp .8s .3s ease both;}
+.btn-main{
+  display:inline-flex;align-items:center;gap:10px;
+  background:var(--or);color:#fff;
+  padding:16px 36px;border-radius:100px;font-size:16px;font-weight:700;
+  text-decoration:none;font-family:'Noto Sans KR',sans-serif;
+  box-shadow:0 8px 32px rgba(232,101,10,.35);
+  transition:all .2s;position:relative;overflow:hidden;
+}
+.btn-main::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.15),transparent);
+}
+.btn-main:hover{transform:translateY(-2px);box-shadow:0 14px 40px rgba(232,101,10,.45);}
+.btn-main svg{width:18px;height:18px;flex-shrink:0;}
+
+.btn-sub{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--w);color:var(--dk);
+  padding:16px 28px;border-radius:100px;font-size:15px;font-weight:600;
+  text-decoration:none;font-family:'Noto Sans KR',sans-serif;
+  border:1.5px solid #E8E4DC;
+  transition:all .2s;
+}
+.btn-sub:hover{border-color:var(--or);color:var(--or);}
+
+/* ── 스크롤 힌트 ── */
+.scroll-hint{
+  position:absolute;bottom:32px;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  color:var(--lt);font-size:11px;font-weight:500;animation:fadeUp 1s .6s ease both;
+}
+.scroll-arrow{width:20px;height:20px;border-right:2px solid var(--lt);border-bottom:2px solid var(--lt);transform:rotate(45deg);animation:scrollBounce 1.5s infinite;}
+@keyframes scrollBounce{0%,100%{transform:rotate(45deg) translateY(0);}50%{transform:rotate(45deg) translateY(4px);}}
+
+/* ── 기능 섹션 ── */
+.features{position:relative;z-index:1;padding:100px 24px;max-width:1100px;margin:0 auto;}
+.sec-label{font-size:11.5px;font-weight:700;color:var(--or);letter-spacing:3px;text-transform:uppercase;margin-bottom:16px;text-align:center;}
+.sec-title{font-family:'Fraunces',serif;font-size:clamp(32px,5vw,52px);font-weight:700;text-align:center;margin-bottom:64px;letter-spacing:-1px;line-height:1.2;}
+.sec-title span{color:var(--or);font-style:italic;}
+
+.feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;}
+.feat-card{
+  background:var(--card);border:1.5px solid #F0EDE6;border-radius:20px;
+  padding:32px;transition:all .25s;position:relative;overflow:hidden;
+}
+.feat-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--or),var(--or2));
+  transform:scaleX(0);transform-origin:left;transition:transform .3s;
+}
+.feat-card:hover{transform:translateY(-4px);box-shadow:0 20px 48px rgba(24,24,42,.1);border-color:#E8C4A0;}
+.feat-card:hover::before{transform:scaleX(1);}
+.feat-ico{font-size:36px;margin-bottom:18px;display:block;}
+.feat-name{font-size:17px;font-weight:700;color:var(--dk);margin-bottom:10px;}
+.feat-desc{font-size:14px;color:var(--md);line-height:1.7;font-weight:300;}
+
+/* ── 브랜드 섹션 ── */
+.brands{
+  position:relative;z-index:1;
+  background:var(--dk);padding:72px 24px;text-align:center;
+}
+.brands-sub{font-size:13px;color:rgba(255,255,255,.4);font-weight:300;margin-bottom:32px;letter-spacing:2px;text-transform:uppercase;}
+.brand-row{display:flex;align-items:center;justify-content:center;gap:48px;flex-wrap:wrap;}
+.brand-item{font-size:22px;font-weight:800;opacity:.5;transition:opacity .2s;}
+.brand-item:hover{opacity:1;}
+.brand-item.wawa{color:#E8650A;}
+.brand-item.wplus{color:#4A82D8;}
+.brand-item.glory{color:#3AAC6A;}
+.brand-div{width:1px;height:24px;background:rgba(255,255,255,.15);}
+
+/* ── CTA 섹션 ── */
+.cta-section{
+  position:relative;z-index:1;
+  padding:120px 24px;text-align:center;
+}
+.cta-box{
+  max-width:640px;margin:0 auto;
+  background:linear-gradient(135deg,#fff 0%,#FFF8F4 100%);
+  border:1.5px solid #F0EDE6;border-radius:28px;
+  padding:64px 48px;
+  box-shadow:0 32px 80px rgba(24,24,42,.08);
+}
+.cta-title{font-family:'Fraunces',serif;font-size:clamp(28px,4vw,42px);font-weight:700;margin-bottom:16px;letter-spacing:-1px;}
+.cta-title em{color:var(--or);font-style:italic;}
+.cta-desc{font-size:15px;color:var(--md);margin-bottom:40px;line-height:1.7;font-weight:300;}
+.cta-note{font-size:12px;color:var(--lt);margin-top:20px;}
+
+/* ── 푸터 ── */
+footer{
+  position:relative;z-index:1;
+  border-top:1px solid #EAE7E0;padding:32px 24px;text-align:center;
+  font-size:12px;color:var(--lt);
+}
+
+/* ── 애니메이션 ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
+.reveal{opacity:0;transform:translateY(32px);transition:opacity .7s ease,transform .7s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+/* ── 모바일 ── */
+@media(max-width:600px){
+  .cta-box{padding:40px 24px;}
+  .brand-row{gap:28px;}
+  .brand-div{display:none;}
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="badge">
+    <span class="badge-dot"></span>
+    월간 학습 레포트 시스템
+  </div>
+  <h1 class="hero-title">학생 한 명 한 명<br><em>제대로</em> 기록하다</h1>
+  <p class="hero-sub">
+    매달 반복되는 레포트 작성을 더 빠르고 깔끔하게.<br>
+    <strong>입력하면 바로 이미지로</strong> — 학부모에게 바로 전송하세요.
+  </p>
+  <div class="cta-wrap">
+    <a href="https://ijungde.github.io/-/" class="btn-main" target="_blank">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg>
+      지금 체험해보기
+    </a>
+  </div>
+  <div class="scroll-hint">
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<!-- 기능 -->
+<section class="features">
+  <p class="sec-label reveal">Features</p>
+  <h2 class="sec-title reveal">선생님을 위한 <span>스마트한</span> 기능들</h2>
+  <div class="feat-grid">
+    <div class="feat-card reveal">
+      <span class="feat-ico">📋</span>
+      <div class="feat-name">과목별 상세 기록</div>
+      <div class="feat-desc">국어·영어·수학 등 과목별 진도, 수업태도, 다음달 목표를 체계적으로 입력하고 관리하세요. 과목 추가·수정도 자유롭게.</div>
+    </div>
+    <div class="feat-card reveal">
+      <span class="feat-ico">🖼️</span>
+      <div class="feat-name">한 클릭 이미지 복사</div>
+      <div class="feat-desc">입력 완료 후 미리보기로 확인하고 클립보드에 복사. 카톡으로 바로 전송할 수 있는 고화질 이미지가 완성됩니다.</div>
+    </div>
+    <div class="feat-card reveal">
+      <span class="feat-ico">☁️</span>
+      <div class="feat-name">구글 시트 클라우드 연동</div>
+      <div class="feat-desc">데이터가 구글 시트에 자동 저장됩니다. 어디서든 접속해도 학생 정보가 그대로 유지돼요.</div>
+    </div>
+    <div class="feat-card reveal">
+      <span class="feat-ico">↩️</span>
+      <div class="feat-name">이전달 내용 불러오기</div>
+      <div class="feat-desc">매달 반복 입력이 필요한 항목을 이전달에서 한 번에 불러옵니다. 변경된 부분만 수정하면 끝.</div>
+    </div>
+    <div class="feat-card reveal">
+      <span class="feat-ico">🏫</span>
+      <div class="feat-name">센터명 자동 표시</div>
+      <div class="feat-desc">센터 이름을 한 번 설정하면 모든 학생 이미지에 자동으로 표시됩니다. 브랜드 로고도 선택 가능.</div>
+    </div>
+    <div class="feat-card reveal">
+      <span class="feat-ico">✏️</span>
+      <div class="feat-name">간편한 학생 관리</div>
+      <div class="feat-desc">학생 추가·삭제는 물론 이름 수정도 더블클릭으로 간단하게. 여러 학생을 빠르게 전환하며 작성하세요.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 브랜드 -->
+<section class="brands">
+  <p class="brands-sub">지원 브랜드</p>
+  <div class="brand-row">
+    <span class="brand-item wawa">wawa</span>
+    <div class="brand-div"></div>
+    <span class="brand-item wplus">W<sup style="font-size:13px">+</sup></span>
+    <div class="brand-div"></div>
+    <span class="brand-item glory">글로리드</span>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-box reveal">
+    <h2 class="cta-title">지금 바로<br><em>체험</em>해보세요</h2>
+    <p class="cta-desc">설치 없이 브라우저에서 바로 사용 가능합니다.<br>구글 계정만 있으면 클라우드 연동도 5분 안에 완료.</p>
+    <a href="https://ijungde.github.io/-/" class="btn-main" target="_blank" style="font-size:15px;padding:15px 32px;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg>
+      체험하기
+    </a>
+    <p class="cta-note">별도 설치 없음 · 모바일/PC 모두 지원</p>
+  </div>
+</section>
+
+<footer>
+  © 2026 월간 학습 레포트 시스템
+</footer>
+
+<script>
+// 스크롤 애니메이션
+var reveals=document.querySelectorAll('.reveal');
+var io=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');}});
+},{threshold:0.15});
+reveals.forEach(function(el){io.observe(el);});
+</script>
+</body>
+</html>
