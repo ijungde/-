@@ -361,6 +361,7 @@ var SEC=[
   {key:'comment',  label:'담당 선생님의 한마디', ej:'💬',cls:'sr', color:'#C24810',bg:'#FFF1EC',type:'textarea',full:true}
 ];
 var MEMO_N=10,LS_KEY='rpt_v14',GAS_LS='gas_url_v4',LOGO_LS='rpt_logo_v2';
+var isDemo=false;
 var activeLogos=['wawa'];
 var LOGO_ORDER=['wawa','wplus','glory'];
 
@@ -570,7 +571,7 @@ function doSync(){if(!gasUrl)return;setSyn('ing','동기화 중…');cloudLoad(g
 function doDisconn(){if(!confirm('연결을 해제합니다. 다시 접속하려면 URL이 필요합니다.'))return;gasUrl='';try{localStorage.removeItem(GAS_LS);}catch(e){}document.getElementById('mainApp').style.display='none';document.getElementById('lockScreen').style.display='flex';document.getElementById('lockInp').value='';document.getElementById('lockBtn').disabled=true;}
 
 /* ── STUDENT ── */
-function addStu(){var n=prompt('학생 이름을 입력하세요');if(!n||!n.trim())return;var id='s'+Date.now()+'_'+Math.floor(Math.random()*1000);S.students.push({id:id,name:n.trim()});S.students.sort(function(a,b){return a.name.localeCompare(b.name,'ko');});S.activeStudent=id;actCho=cho(n.trim());srch='';document.getElementById('searchInput').value='';autosave();renderSP();renderR();renderMemo();}
+function addStu(){if(isDemo&&S.students.length>=10){showToast('⚠️ 데모 버전은 최대 10명까지 등록할 수 있습니다');return;}var n=prompt('학생 이름을 입력하세요');if(!n||!n.trim())return;var id='s'+Date.now()+'_'+Math.floor(Math.random()*1000);S.students.push({id:id,name:n.trim()});S.students.sort(function(a,b){return a.name.localeCompare(b.name,'ko');});S.activeStudent=id;actCho=cho(n.trim());srch='';document.getElementById('searchInput').value='';autosave();renderSP();renderR();renderMemo();}
 function delStu(id){if(!confirm('학생을 삭제하시겠습니까?'))return;pushU('학생 삭제');S.students=S.students.filter(function(s){return s.id!==id;});Object.keys(S.values).forEach(function(k){if(k.indexOf(id+'_')===0||k.indexOf('t_'+id+'_')===0)delete S.values[k];});if(S.activeStudent===id)S.activeStudent=S.students.length?S.students[0].id:null;autosave();renderSP();renderR();renderMemo();}
 function switchStu(id){S.activeStudent=id;renderSP();renderR();renderMemo();}
 function doSearch(v){srch=v;actCho='전체';renderSP();}
@@ -692,6 +693,22 @@ function buildCanvas(stu){
   else{for(var ri2=0;ri2<rows.length;ri2++){var p3=rows[ri2];for(var ci2=0;ci2<p3.length;ci2++)drawFC(c3,p3[ci2],stu,ci2===0?oP:oP+cW+gap,cy,cW);cy+=rH[ri2]+(ri2<rows.length-1?gap:0);}if(e>0&&emL==='below'){cy+=gap;var c4=Math.max(1,Math.floor((cvW-oP*2+tgap)/(TW2+tgap)));for(var ti4=0;ti4<e;ti4++)drawTile(c3,empty[ti4],oP+(ti4%c4)*(TW2+tgap),cy+Math.floor(ti4/c4)*(TH2+tgap));var tR3=Math.ceil(e/c4);cy+=(TH2+tgap)*tR3-tgap;}}
   var lY;if(emL==='right_col'){var tb=oP+hH+oP+e*(TH2+tgap)-tgap;var cb3=oP+hH+oP+fH[0];lY=Math.max(tb,cb3)+px(14);}else{lY=cy+px(14);}
   drawLogo(c3,oP,lY,cvW-oP*2);
+  if(isDemo){
+    // 데모 워터마크
+    var wc=cv2.getContext('2d');
+    wc.save();
+    wc.translate(cvW/2, totH/2);
+    wc.rotate(-Math.PI/5);
+    wc.font='bold '+px(88)+'px sans-serif';
+    wc.fillStyle='rgba(220,60,60,0.18)';
+    wc.textAlign='center';
+    wc.textBaseline='middle';
+    wc.fillText('DEMO', 0, -px(40));
+    wc.font='bold '+px(36)+'px sans-serif';
+    wc.fillStyle='rgba(220,60,60,0.15)';
+    wc.fillText('체험판 · 무단사용금지', 0, px(40));
+    wc.restore();
+  }
   return cropC(cv2,lY+px(48));
 }
 
@@ -712,7 +729,7 @@ function norm(st){if(!st||typeof st!=='object')st={};if(!Array.isArray(st.studen
 
 function init(){
   // 데모 모드: URL에 ?demo 있으면 localStorage 무시하고 빈 상태로 시작
-  var isDemo=location.search.indexOf('demo')!==-1||location.hash==='#demo';
+  isDemo=location.search.indexOf('demo')!==-1||location.hash==='#demo';
 
   var emb=document.getElementById('embedded-data').textContent.trim();
   var loaded=null;if(emb){try{loaded=JSON.parse(emb);}catch(e){}}
@@ -729,10 +746,15 @@ function init(){
   renderSubjPanel();
 
   if(isDemo){
-    // 데모용 샘플 데이터
+    // 데모 모드: 잠금화면 건너뛰고 바로 실행
     S.month=new Date().getFullYear()+'-'+String(new Date().getMonth()+1).padStart(2,'0');
     document.getElementById('monthInput').value=S.month;
-    showToast('👋 데모 모드 — 자유롭게 체험해보세요!');
+    document.getElementById('lockScreen').style.display='none';
+    document.getElementById('mainApp').style.display='block';
+    // 클라우드 배너 숨기기
+    var cb=document.getElementById('cbanner');if(cb)cb.style.display='none';
+    renderSP();renderR();renderMemo();
+    setTimeout(function(){showToast('👋 데모 모드 — 자유롭게 체험해보세요!');},500);
   }
 
   // 저장된 URL로 자동 로그인 시도
