@@ -140,7 +140,60 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dk);
 .memoinp::placeholder{color:#C8C4B8}
 .toast{position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(80px);background:#18182A;color:#fff;padding:12px 24px;border-radius:12px;font-size:13px;font-weight:600;box-shadow:0 4px 20px rgba(0,0,0,.25);transition:transform .3s,opacity .3s;opacity:0;pointer-events:none;z-index:9999;max-width:90vw;text-align:center}
 .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+
+/* 로고 선택 패널 */
+.logopanel{background:var(--w);border:1.5px solid var(--bd);border-radius:14px;padding:14px 18px;margin-bottom:18px;box-shadow:var(--sh)}
+.logopanel-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.logopanel-ttl{font-size:12.5px;font-weight:700;color:var(--dk);display:flex;align-items:center;gap:6px;white-space:nowrap}
+.logopanel-ttl span{font-size:16px}
+.logo-opts{display:flex;gap:8px;flex-wrap:wrap;flex:1}
+.logobtn{display:inline-flex;align-items:center;gap:6px;padding:7px 16px;border-radius:22px;font-size:12.5px;font-weight:600;cursor:pointer;border:1.5px solid var(--bd);background:var(--w);color:var(--md);font-family:inherit;transition:all .18s;user-select:none;white-space:nowrap}
+.logobtn:hover{border-color:#aaa;background:var(--bg)}
+.logobtn.sel{border-width:2px}
+.logobtn.wawa.sel{background:#FFF1E8;border-color:#E8650A;color:#C24810}
+.logobtn.wplus.sel{background:#EAF0FC;border-color:#2E62B8;color:#1A4FAA}
+.logobtn.glory.sel{background:#E8F5EE;border-color:#2A8C5A;color:#1E7A48}
+.logobtn .chk{width:14px;height:14px;border-radius:50%;border:2px solid #ccc;display:inline-flex;align-items:center;justify-content:center;font-size:9px;transition:all .18s;flex-shrink:0}
+.logobtn.sel .chk{border-color:currentColor;background:currentColor;color:#fff}
+.logo-hint{font-size:11px;color:var(--lt);margin-top:6px}
 .page{max-width:1180px;margin:0 auto;padding:28px 22px 64px}
+
+/* 센터명 패널 */
+.centerpanel{background:var(--w);border:1.5px solid var(--bd);border-radius:14px;padding:12px 18px;margin-bottom:18px;box-shadow:var(--sh);display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.centerpanel-ttl{font-size:12.5px;font-weight:700;color:var(--dk);white-space:nowrap;display:flex;align-items:center;gap:6px}
+.centerinp{border:1.5px solid var(--bd);border-radius:10px;padding:7px 14px;font-size:13px;font-family:inherit;background:var(--bg);color:var(--dk);outline:none;flex:1;min-width:180px;max-width:320px}
+.centerinp:focus{border-color:var(--or);background:#fff}
+.center-hint{font-size:11px;color:var(--lt)}
+
+/* 과목 관리 패널 */
+.subjpanel{background:var(--w);border:1.5px solid var(--bd);border-radius:14px;padding:14px 18px;margin-bottom:18px;box-shadow:var(--sh)}
+.subjpanel-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.subjpanel-ttl{font-size:12.5px;font-weight:700;color:var(--dk);display:flex;align-items:center;gap:6px}
+.subj-list{display:flex;gap:7px;flex-wrap:wrap;align-items:center}
+.subj-chip{display:inline-flex;align-items:center;gap:5px;padding:6px 12px;border-radius:20px;font-size:12.5px;font-weight:600;background:var(--bgo);border:1.5px solid #F4C4A0;color:#C24810;cursor:default}
+.subj-chip .sedit{font-size:11px;cursor:pointer;opacity:.6;padding:0 2px}
+.subj-chip .sedit:hover{opacity:1}
+.subj-chip .sdel{width:14px;height:14px;border-radius:50%;background:rgba(194,72,16,.15);display:inline-flex;align-items:center;justify-content:center;font-size:10px;cursor:pointer;color:#C24810}
+.subj-chip .sdel:hover{background:rgba(194,72,16,.3)}
+.subj-addbtn{display:inline-flex;align-items:center;gap:5px;padding:6px 13px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;border:1.5px dashed var(--am);background:transparent;color:#8A6010;font-family:inherit;transition:all .15s}
+.subj-addbtn:hover{background:var(--bga)}
+.subj-hint{font-size:11px;color:var(--lt);margin-top:6px}
+
+/* 이전달 불러오기 버튼 */
+.btn-prev{background:var(--w);color:#7A5A2A;border-color:#E0C880}
+.btn-prev:hover{background:#FFFAE6}
+
+/* 미리보기 모달 */
+.pvmodal{display:none;position:fixed;inset:0;background:rgba(24,20,42,.55);z-index:99990;align-items:center;justify-content:center;padding:20px}
+.pvmodal.open{display:flex}
+.pvbox{background:#fff;border-radius:20px;box-shadow:0 12px 48px rgba(24,20,42,.22);max-width:95vw;max-height:92vh;overflow:hidden;display:flex;flex-direction:column}
+.pvhd{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--bd)}
+.pvttl{font-size:14px;font-weight:700;color:var(--dk)}
+.pvclose{width:32px;height:32px;border-radius:50%;border:none;background:var(--bg);cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;color:var(--md)}
+.pvclose:hover{background:var(--bd)}
+.pvbody{overflow:auto;padding:16px;display:flex;align-items:flex-start;justify-content:center}
+.pvbody img{max-width:100%;border-radius:8px;box-shadow:var(--sh2)}
+.pvfoot{padding:14px 20px;border-top:1px solid var(--bd);display:flex;gap:10px;justify-content:flex-end}
 @media print{.cbanner,.topbar .acts,.sp,.meta,.memosec{display:none!important}body{background:#fff}.page{padding:16px}.subgrid{grid-template-columns:1fr 1fr}.subc{break-inside:avoid;box-shadow:none}}
 </style>
 </head>
@@ -175,6 +228,44 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dk);
   <div class="cb-info"><span class="dot ok" id="syndot"></span><span id="synmsg">연결됨</span></div>
 </div>
 
+<!-- 로고 선택 패널 -->
+<div class="logopanel">
+  <div class="logopanel-row">
+    <div class="logopanel-ttl"><span>🏷️</span> 이미지 로고 설정</div>
+    <div class="logo-opts">
+      <button class="logobtn wawa" id="logo-wawa" onclick="selectLogo('wawa')">
+        <span class="chk">✓</span>
+        <span style="color:#C24810;font-weight:800">wawa</span>
+      </button>
+      <button class="logobtn wplus" id="logo-wplus" onclick="selectLogo('wplus')">
+        <span class="chk">✓</span>
+        <span><span style="color:#1A4FAA;font-weight:800">W</span><span style="color:#1A4FAA;font-size:9px;font-weight:800;vertical-align:super">+</span></span>
+      </button>
+      <button class="logobtn glory" id="logo-glory" onclick="selectLogo('glory')">
+        <span class="chk">✓</span>
+        <span style="color:#1E7A48;font-weight:800">글로리드</span>
+      </button>
+    </div>
+  </div>
+  <div class="logo-hint">선택한 로고만 이미지 하단에 표시됩니다 · 전체 학생 이미지에 동일 적용</div>
+</div>
+
+<!-- 센터명 설정 -->
+<div class="centerpanel">
+  <div class="centerpanel-ttl">🏫 센터명</div>
+  <input class="centerinp" id="centerInp" type="text" placeholder="센터 이름 입력 (이미지에 표시됩니다)" oninput="onCenterName(this.value)" maxlength="30">
+  <span class="center-hint">이미지 상단에 표시됩니다</span>
+</div>
+
+<!-- 과목 관리 -->
+<div class="subjpanel">
+  <div class="subjpanel-row">
+    <div class="subjpanel-ttl">📚 과목 관리</div>
+  </div>
+  <div class="subj-list" id="subjList"></div>
+  <div class="subj-hint">과목을 추가하거나 이름을 수정할 수 있습니다 · 삭제 시 해당 과목 데이터는 유지됩니다</div>
+</div>
+
 <div class="topbar">
   <div class="brand">
     <div class="bico"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
@@ -182,15 +273,35 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dk);
   </div>
   <div class="acts">
     <span class="svbadge" id="svbadge">✓ 저장됨</span>
+    <button class="btn btn-prev" onclick="loadPrevMonth()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px"><path d="M3 10h11a6 6 0 0 1 0 12H3"/><polyline points="7,6 3,10 7,14"/></svg>이전달 불러오기
+    </button>
     <button class="btn btn-u" id="undoBtn" onclick="undoAct()" disabled>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10h11a6 6 0 0 1 0 12H3"/><polyline points="7,6 3,10 7,14"/></svg>실행취소
     </button>
     <button class="btn" onclick="window.print()">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>인쇄
     </button>
-    <button class="btn btn-p" id="imgBtn" onclick="copyAll()">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>이미지 복사
+    <button class="btn btn-p" id="imgBtn" onclick="previewImg()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>미리보기 / 복사
     </button>
+  </div>
+</div>
+
+<!-- 미리보기 모달 -->
+<div class="pvmodal" id="pvmodal" onclick="if(event.target===this)closePv()">
+  <div class="pvbox">
+    <div class="pvhd">
+      <span class="pvttl" id="pvttl">이미지 미리보기</span>
+      <button class="pvclose" onclick="closePv()">✕</button>
+    </div>
+    <div class="pvbody"><img id="pvimg" src="" alt="미리보기"></div>
+    <div class="pvfoot">
+      <button class="btn" onclick="closePv()">닫기</button>
+      <button class="btn btn-p" id="pvCopyBtn" onclick="doCopyFromPv()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>클립보드에 복사
+      </button>
+    </div>
   </div>
 </div>
 
@@ -237,7 +348,11 @@ document.addEventListener('keydown',function(e){
   if(e.key==='F12')e.preventDefault();
 });
 
-var SUBJECTS=[{key:'korean',label:'국어'},{key:'english',label:'영어'},{key:'math',label:'수학'},{key:'social',label:'사회'},{key:'science',label:'과학'}];
+var DEFAULT_SUBJECTS=[{key:'korean',label:'국어'},{key:'english',label:'영어'},{key:'math',label:'수학'},{key:'social',label:'사회'},{key:'science',label:'과학'}];
+var SUBJECTS=DEFAULT_SUBJECTS.slice();
+var SUBJ_LS='rpt_subj_v1';
+var CENTER_LS='rpt_center_v1';
+var centerName='';
 var SEC=[
   {key:'progress', label:'진도',            ej:'📖',cls:'so', color:'#E8650A',bg:'#FFF1E8',type:'text'},
   {key:'attitude', label:'수업태도',          ej:'🔥',cls:'sa', color:'#D4971A',bg:'#FFF8E6',type:'star'},
@@ -245,7 +360,138 @@ var SEC=[
   {key:'memo',     label:'수업 메모',          ej:'📝',cls:'sg2',color:'#2A8C5A',bg:'#E8F5EE',type:'textarea'},
   {key:'comment',  label:'담당 선생님의 한마디', ej:'💬',cls:'sr', color:'#C24810',bg:'#FFF1EC',type:'textarea',full:true}
 ];
-var MEMO_N=10,LS_KEY='rpt_v13',GAS_LS='gas_url_v4';
+var MEMO_N=10,LS_KEY='rpt_v14',GAS_LS='gas_url_v4',LOGO_LS='rpt_logo_v2';
+var activeLogos=['wawa'];
+var LOGO_ORDER=['wawa','wplus','glory'];
+
+/* ── 센터명 ── */
+function onCenterName(v){centerName=v.trim();try{localStorage.setItem(CENTER_LS,v.trim());}catch(e){}autosave();}
+function initCenter(){try{var s=localStorage.getItem(CENTER_LS);if(s!=null){centerName=s;var el=document.getElementById('centerInp');if(el)el.value=s;}}catch(e){}}
+
+/* ── 과목 관리 ── */
+function saveSUBJ(){try{localStorage.setItem(SUBJ_LS,JSON.stringify(SUBJECTS));}catch(e){}}
+function loadSUBJ(){try{var s=localStorage.getItem(SUBJ_LS);if(s){var p=JSON.parse(s);if(Array.isArray(p)&&p.length>0){SUBJECTS=p;return;}}}catch(e){}SUBJECTS=DEFAULT_SUBJECTS.slice();}
+function renderSubjPanel(){
+  var list=document.getElementById('subjList');if(!list)return;
+  list.innerHTML='';
+  SUBJECTS.forEach(function(sub,i){
+    var chip=document.createElement('span');chip.className='subj-chip';
+    chip.innerHTML='<span>'+esc(sub.label)+'</span>'
+      +'<span class="sedit" title="이름 수정" onclick="editSubj('+i+')">✏️</span>'
+      +(SUBJECTS.length>1?'<span class="sdel" onclick="delSubj('+i+')">&times;</span>':'');
+    list.appendChild(chip);
+  });
+  var addbtn=document.createElement('button');addbtn.className='subj-addbtn';
+  addbtn.innerHTML='+ 과목 추가';addbtn.onclick=addSubj;
+  list.appendChild(addbtn);
+}
+function addSubj(){
+  var n=prompt('추가할 과목 이름을 입력하세요');if(!n||!n.trim())return;
+  var key='subj_'+Date.now();
+  SUBJECTS.push({key:key,label:n.trim()});
+  saveSUBJ();renderSubjPanel();renderR();
+}
+function editSubj(i){
+  var n=prompt('과목 이름 수정',SUBJECTS[i].label);if(!n||!n.trim())return;
+  SUBJECTS[i].label=n.trim();
+  saveSUBJ();renderSubjPanel();renderR();
+}
+function delSubj(i){
+  if(SUBJECTS.length<=1){showToast('⚠️ 최소 1개 과목은 필요합니다');return;}
+  if(!confirm('['+SUBJECTS[i].label+'] 과목을 목록에서 제거합니다.\n(입력된 데이터는 유지됩니다)'))return;
+  SUBJECTS.splice(i,1);
+  saveSUBJ();renderSubjPanel();renderR();
+}
+
+/* ── 학생 이름 수정 ── */
+function renameStu(id){
+  var stu=S.students.find(function(s){return s.id===id;});if(!stu)return;
+  var n=prompt('새 이름을 입력하세요',stu.name);if(!n||!n.trim())return;
+  pushU('이름 수정');stu.name=n.trim();
+  S.students.sort(function(a,b){return a.name.localeCompare(b.name,'ko');});
+  autosave();renderSP();renderR();renderMemo();
+}
+
+/* ── 이전달 불러오기 ── */
+function loadPrevMonth(){
+  var stu=S.students.find(function(s){return s.id===S.activeStudent;});
+  if(!stu){showToast('⚠️ 학생을 먼저 선택해주세요');return;}
+  if(!S.month){showToast('⚠️ 기준 월을 먼저 설정해주세요');return;}
+  var parts=S.month.split('-');var y=parseInt(parts[0]),m=parseInt(parts[1]);
+  m--;if(m===0){m=12;y--;}
+  var prevMonth=y+'-'+String(m).padStart(2,'0');
+  var copied=0;
+  SUBJECTS.forEach(function(sub){
+    ['progress','attitude','attitude_text','goal','memo','comment'].forEach(function(sec){
+      var prevKey=stu.id+'_'+prevMonth+'_'+sub.key+'_'+sec;
+      var curKey=stu.id+'_'+S.month+'_'+sub.key+'_'+sec;
+      var prevVal=S.values[prevKey];
+      if(prevVal!=null&&prevVal!==''){
+        if(!S.values[curKey]||S.values[curKey]===''){S.values[curKey]=prevVal;copied++;}
+      }
+    });
+    // 담당 선생님도 복사
+    var prevTk='t_'+stu.id+'_'+sub.key;
+    if(S.values[prevTk]&&!gv('t_'+stu.id+'_'+sub.key)){S.values['t_'+stu.id+'_'+sub.key]=S.values[prevTk];copied++;}
+  });
+  if(copied===0){showToast('이전달('+prevMonth+') 데이터가 없거나 이미 모두 입력되어 있습니다');}
+  else{pushU('이전달 불러오기');autosave();renderR();showToast('✅ 이전달('+prevMonth+') 데이터 '+copied+'개 항목을 불러왔습니다');}
+}
+
+/* ── 미리보기 ── */
+var _pvCanvas=null;
+function previewImg(){
+  var stu=S.students.find(function(s){return s.id===S.activeStudent;});
+  if(!stu){showToast('⚠️ 학생을 먼저 선택해주세요');return;}
+  var btn=document.getElementById('imgBtn');btn.disabled=true;
+  setTimeout(function(){
+    try{
+      _pvCanvas=buildCanvas(stu);
+      document.getElementById('pvimg').src=_pvCanvas.toDataURL('image/png');
+      document.getElementById('pvttl').textContent=stu.name+' — 이미지 미리보기';
+      document.getElementById('pvmodal').classList.add('open');
+    }catch(err){alert('오류: '+err.message);}
+    btn.disabled=false;
+  },50);
+}
+function closePv(){document.getElementById('pvmodal').classList.remove('open');_pvCanvas=null;}
+function doCopyFromPv(){
+  if(!_pvCanvas){showToast('⚠️ 미리보기를 먼저 열어주세요');return;}
+  var stu=S.students.find(function(s){return s.id===S.activeStudent;});
+  var label=stu?stu.name+' 레포트':'레포트';
+  copyToClip(_pvCanvas,label);
+}
+
+function selectLogo(key){
+  var idx=activeLogos.indexOf(key);
+  if(idx===-1){
+    activeLogos.push(key);
+    activeLogos.sort(function(a,b){return LOGO_ORDER.indexOf(a)-LOGO_ORDER.indexOf(b);});
+  }else{
+    if(activeLogos.length===1){showToast('⚠️ 최소 1개는 선택해야 합니다');return;}
+    activeLogos.splice(idx,1);
+  }
+  try{localStorage.setItem(LOGO_LS,JSON.stringify(activeLogos));}catch(e){}
+  ['wawa','wplus','glory'].forEach(function(k){
+    var el=document.getElementById('logo-'+k);
+    if(el){el.classList.toggle('sel',activeLogos.indexOf(k)!==-1);}
+  });
+  var names={wawa:'wawa',wplus:'W+',glory:'글로리드'};
+  var label=activeLogos.map(function(k){return names[k];}).join(' · ');
+  showToast('✅ 로고 설정: '+label+' — 다음 이미지 복사부터 적용됩니다');
+}
+function initLogo(){
+  var saved=['wawa'];
+  try{
+    var s=localStorage.getItem(LOGO_LS);
+    if(s){var parsed=JSON.parse(s);if(Array.isArray(parsed)&&parsed.length>0&&parsed.every(function(k){return LOGO_ORDER.indexOf(k)!==-1;}))saved=parsed;}
+  }catch(e){}
+  activeLogos=saved;
+  ['wawa','wplus','glory'].forEach(function(k){
+    var el=document.getElementById('logo-'+k);
+    if(el){el.classList.toggle('sel',activeLogos.indexOf(k)!==-1);}
+  });
+}
 var CHO_LIST=['ㄱ','ㄴ','ㄷ','ㄹ','ㅁ','ㅂ','ㅅ','ㅇ','ㅈ','ㅊ','ㅋ','ㅌ','ㅍ','ㅎ','기타'];
 var CHO_RAW=['ㄱ','ㄲ','ㄴ','ㄷ','ㄸ','ㄹ','ㅁ','ㅂ','ㅃ','ㅅ','ㅆ','ㅇ','ㅈ','ㅉ','ㅊ','ㅋ','ㅌ','ㅍ','ㅎ'];
 var CHO_GRP={'ㄱ':['ㄱ','ㄲ'],'ㄴ':['ㄴ'],'ㄷ':['ㄷ','ㄸ'],'ㄹ':['ㄹ'],'ㅁ':['ㅁ'],'ㅂ':['ㅂ','ㅃ'],'ㅅ':['ㅅ','ㅆ'],'ㅇ':['ㅇ'],'ㅈ':['ㅈ','ㅉ'],'ㅊ':['ㅊ'],'ㅋ':['ㅋ'],'ㅌ':['ㅌ'],'ㅍ':['ㅍ'],'ㅎ':['ㅎ']};
@@ -340,7 +586,7 @@ function renderSP(){
   else if(actCho!=='전체'){list=list.filter(function(s){return cho(s.name)===actCho;});}
   var grid=document.getElementById('stuGrid');grid.innerHTML='';
   if(!list.length){var em=document.createElement('span');em.className='sempty';em.textContent=S.students.length?'해당 초성의 학생이 없습니다.':'학생 추가 버튼으로 등록하세요.';grid.appendChild(em);return;}
-  list.forEach(function(s){var c=document.createElement('div');c.className='chip'+(s.id===S.activeStudent?' act':'');c.innerHTML='<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" style="width:12px;height:12px;flex-shrink:0"><circle cx="8" cy="5.5" r="2.5"/><path d="M2,14c0-3.3,2.7-6,6-6s6,2.7,6,6"/></svg><span>'+esc(s.name)+'</span><span class="xb" onclick="event.stopPropagation();delStu(\''+s.id+'\')">&times;</span>';c.onclick=function(){switchStu(s.id);};grid.appendChild(c);});
+  list.forEach(function(s){var c=document.createElement('div');c.className='chip'+(s.id===S.activeStudent?' act':'');c.innerHTML='<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" style="width:12px;height:12px;flex-shrink:0"><circle cx="8" cy="5.5" r="2.5"/><path d="M2,14c0-3.3,2.7-6,6-6s6,2.7,6,6"/></svg><span>'+esc(s.name)+'</span><span class="xb" onclick="event.stopPropagation();delStu(\''+s.id+'\')">&times;</span>';c.onclick=function(){switchStu(s.id);};c.ondblclick=function(e){e.stopPropagation();renameStu(s.id);};grid.appendChild(c);});
 }
 
 function renderMemo(){
@@ -386,8 +632,37 @@ function drawFC(c,sub,stu,x,y,cW){var pad=px(14),hH=px(54),sg=px(10),cr=px(16),i
 function hasCont(stu,sk){return['progress','attitude','attitude_text','goal','memo','comment'].some(function(k){var v=gv(fk(stu.id,sk,k));return v&&String(v).trim();});}
 var TH2=px(30),TW2=px(50);
 function drawTile(c,sub,x,y){var cr=px(8);c.save();c.shadowColor='rgba(24,20,42,.07)';c.shadowBlur=px(4);c.shadowOffsetY=px(2);rr(c,x,y,TW2,TH2,cr);c.fillStyle='#fff';c.fill();c.restore();rr(c,x,y,TW2,TH2,cr);c.strokeStyle='#E8E4DC';c.lineWidth=px(1);c.stroke();rr(c,x,y,px(3),TH2,cr);c.fillStyle='#E8650A';c.fill();c.font=pf(10,true);c.fillStyle='#18182A';c.textAlign='center';c.textBaseline='middle';c.fillText(sub.label,x+TW2/2+px(2),y+TH2/2);}
-function drawLogo(c,lx,ly,tw){c.save();c.strokeStyle='#DEDAD2';c.lineWidth=px(1);c.beginPath();c.moveTo(lx,ly);c.lineTo(lx+tw,ly);c.stroke();c.restore();var cy=ly+px(24),cx=lx+tw/2;c.font=pf(16,true);c.fillStyle='#C24810';c.textAlign='center';c.textBaseline='middle';c.fillText('wawa',cx-px(82),cy);c.font=pf(15,false);c.fillStyle='#C0BDB5';c.fillText('|',cx-px(36),cy);c.font=pf(16,true);c.fillStyle='#1A4FAA';c.fillText('W',cx-px(14),cy);c.font=pf(11,true);c.textBaseline='top';c.fillText('+',cx-px(1),cy-px(10));c.font=pf(15,false);c.fillStyle='#C0BDB5';c.textBaseline='middle';c.fillText('|',cx+px(18),cy);c.font=pf(16,true);c.fillStyle='#1E7A48';c.fillText('글로리드',cx+px(68),cy);}
-function drawHdr(c,stu,ml,hx,hy,tw){rr(c,hx,hy,px(44),px(44),px(11));c.fillStyle='#E8650A';c.fill();c.font=px(20)+'px serif';c.textAlign='center';c.textBaseline='middle';c.fillText('📋',hx+px(22),hy+px(22));c.font=pf(23,true);c.fillStyle='#18182A';c.textAlign='left';c.textBaseline='top';c.fillText(stu.name,hx+px(54),hy+px(2));c.font=pf(12,false);c.fillStyle='#A8A5B8';c.fillText('월간 학습 레포트 · '+ml,hx+px(54),hy+px(28));c.font=pf(14,true);c.fillStyle='#E8650A';c.textAlign='right';c.textBaseline='middle';c.fillText(ml,hx+tw,hy+px(22));c.strokeStyle='#F0EDE6';c.lineWidth=px(1);c.beginPath();c.moveTo(hx,hy+px(54));c.lineTo(hx+tw,hy+px(54));c.stroke();}
+function drawOneLogo(c,key,cx,cy){
+  if(key==='wawa'){
+    c.font=pf(17,true);c.fillStyle='#C24810';c.textAlign='center';c.textBaseline='middle';c.fillText('wawa',cx,cy);
+  }else if(key==='wplus'){
+    c.font=pf(18,true);c.fillStyle='#1A4FAA';c.textAlign='center';c.textBaseline='middle';c.fillText('W',cx-px(8),cy);
+    c.font=pf(13,true);c.textBaseline='top';c.fillText('+',cx+px(6),cy-px(14));
+  }else if(key==='glory'){
+    c.font=pf(17,true);c.fillStyle='#1E7A48';c.textAlign='center';c.textBaseline='middle';c.fillText('글로리드',cx,cy);
+  }
+}
+function drawLogo(c,lx,ly,tw){
+  c.save();c.strokeStyle='#DEDAD2';c.lineWidth=px(1);c.beginPath();c.moveTo(lx,ly);c.lineTo(lx+tw,ly);c.stroke();c.restore();
+  var cy=ly+px(24);
+  var logos=activeLogos&&activeLogos.length?activeLogos:['wawa'];
+  var n=logos.length;
+  // 로고 간격: 텍스트 너비 기반으로 가운데 정렬
+  var gap=px(32);
+  // 각 로고 텍스트 너비 측정용 임시 캔버스
+  var tc=document.createElement('canvas').getContext('2d');
+  var wArr=logos.map(function(key){
+    if(key==='wplus'){tc.font=pf(18,true);return tc.measureText('W+').width+px(8);}
+    tc.font=pf(17,true);return tc.measureText(key==='wawa'?'wawa':'글로리드').width;
+  });
+  var totalW=wArr.reduce(function(s,w){return s+w;},0)+gap*(n-1);
+  var curX=lx+(tw-totalW)/2;
+  logos.forEach(function(key,i){
+    drawOneLogo(c,key,curX+wArr[i]/2,cy);
+    curX+=wArr[i]+gap;
+  });
+}
+function drawHdr(c,stu,ml,hx,hy,tw){rr(c,hx,hy,px(44),px(44),px(11));c.fillStyle='#E8650A';c.fill();c.font=px(20)+'px serif';c.textAlign='center';c.textBaseline='middle';c.fillText('📋',hx+px(22),hy+px(22));c.font=pf(23,true);c.fillStyle='#18182A';c.textAlign='left';c.textBaseline='top';c.fillText(stu.name,hx+px(54),hy+px(2));c.font=pf(12,false);c.fillStyle='#A8A5B8';c.fillText('월간 학습 레포트 · '+ml,hx+px(54),hy+px(28));c.font=pf(14,true);c.fillStyle='#E8650A';c.textAlign='right';c.textBaseline='top';c.fillText(ml,hx+tw,hy+px(4));if(centerName){c.font=pf(14,true);c.fillStyle='#E8650A';c.textAlign='right';c.textBaseline='top';c.fillText(centerName,hx+tw,hy+px(26));}c.strokeStyle='#F0EDE6';c.lineWidth=px(1);c.beginPath();c.moveTo(hx,hy+px(54));c.lineTo(hx+tw,hy+px(54));c.stroke();}
 function cropC(s,h){if(h>=s.height)return s;var c2=document.createElement('canvas');c2.width=s.width;c2.height=h;c2.getContext('2d').drawImage(s,0,0);return c2;}
 
 function buildCanvas(stu){
@@ -441,6 +716,14 @@ function init(){
   if(!loaded)loaded=loadLS();
   S=norm(loaded||{});
   document.getElementById('monthInput').value=S.month;
+
+  // 로고 설정 초기화
+  initLogo();
+  // 센터명 초기화
+  initCenter();
+  // 과목 설정 초기화
+  loadSUBJ();
+  renderSubjPanel();
 
   // 저장된 URL로 자동 로그인 시도
   try{
