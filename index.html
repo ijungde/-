@@ -578,7 +578,28 @@ function doSync(){if(!gasUrl)return;setSyn('ing','동기화 중…');cloudLoad(g
 function doDisconn(){if(!confirm('연결을 해제합니다. 다시 접속하려면 URL이 필요합니다.'))return;gasUrl='';try{localStorage.removeItem(GAS_LS);}catch(e){}document.getElementById('mainApp').style.display='none';document.getElementById('lockScreen').style.display='flex';document.getElementById('lockInp').value='';document.getElementById('lockBtn').disabled=true;}
 
 /* ── STUDENT ── */
-function addStu(){if(isDemo&&S.students.length>=10){showToast('⚠️ 데모 버전은 최대 10명까지 등록할 수 있습니다');return;}var n=prompt('학생 이름을 입력하세요');if(!n||!n.trim())return;var id='s'+Date.now()+'_'+Math.floor(Math.random()*1000);S.students.push({id:id,name:n.trim()});S.students.sort(function(a,b){return a.name.localeCompare(b.name,'ko');});S.activeStudent=id;actCho=cho(n.trim());srch='';document.getElementById('searchInput').value='';autosave();renderSP();renderR();renderMemo();}
+function addStu(){
+  if(isDemo&&S.students.length>=10){showToast('⚠️ 데모 버전은 최대 10명까지 등록할 수 있습니다');return;}
+  var n=prompt('학생 이름을 입력하세요');
+  if(!n||!n.trim())return;
+  var trimmed=n.trim();
+  // 동일 이름 체크
+  var dup=S.students.find(function(s){return s.name===trimmed;});
+  if(dup){
+    var fix=prompt('⚠️ ['+trimmed+'] 이름이 이미 등록되어 있습니다.\n다른 이름으로 수정해주세요 (예: 홍길동2, 홍길동(초등))\n\n새 이름 입력:',trimmed);
+    if(!fix||!fix.trim())return;
+    trimmed=fix.trim();
+    // 수정한 이름도 중복 체크
+    var dup2=S.students.find(function(s){return s.name===trimmed;});
+    if(dup2){showToast('⚠️ ['+trimmed+'] 이름도 이미 등록되어 있습니다. 다시 시도해주세요.');return;}
+  }
+  var id='s'+Date.now()+'_'+Math.floor(Math.random()*1000);
+  S.students.push({id:id,name:trimmed});
+  S.students.sort(function(a,b){return a.name.localeCompare(b.name,'ko');});
+  S.activeStudent=id;actCho=cho(trimmed);srch='';
+  document.getElementById('searchInput').value='';
+  autosave();renderSP();renderR();renderMemo();
+}
 function delStu(id){if(!confirm('학생을 삭제하시겠습니까?'))return;pushU('학생 삭제');S.students=S.students.filter(function(s){return s.id!==id;});Object.keys(S.values).forEach(function(k){if(k.indexOf(id+'_')===0||k.indexOf('t_'+id+'_')===0)delete S.values[k];});if(S.activeStudent===id)S.activeStudent=S.students.length?S.students[0].id:null;autosave();renderSP();renderR();renderMemo();}
 function switchStu(id){S.activeStudent=id;renderSP();renderR();renderMemo();}
 function doSearch(v){srch=v;actCho='전체';renderSP();}
