@@ -158,6 +158,28 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dk);
 .logo-hint{font-size:11px;color:var(--lt);margin-top:6px}
 .page{max-width:1180px;margin:0 auto;padding:28px 22px 64px}
 
+/* 자동생성 토글 패널 */
+.autopanel{background:var(--w);border:1.5px solid var(--bd);border-radius:14px;padding:12px 18px;margin-bottom:18px;box-shadow:var(--sh);display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.autopanel-ttl{font-size:12.5px;font-weight:700;color:var(--dk);white-space:nowrap;display:flex;align-items:center;gap:6px}
+.toggle{position:relative;display:inline-block;width:46px;height:26px;flex-shrink:0}
+.toggle input{opacity:0;width:0;height:0}
+.toggle-sl{position:absolute;cursor:pointer;inset:0;background:#D8D4CC;border-radius:26px;transition:.25s}
+.toggle-sl:before{content:'';position:absolute;height:20px;width:20px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.25s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.toggle input:checked + .toggle-sl{background:#E8650A}
+.toggle input:checked + .toggle-sl:before{transform:translateX(20px)}
+.auto-hint{font-size:11px;color:var(--lt)}
+.auto-state{font-size:12px;font-weight:600;color:var(--or)}
+
+/* 자동생성 버튼 (한마디 칸) */
+.genbtn{display:inline-flex;align-items:center;gap:5px;padding:4px 11px;border-radius:14px;font-size:11px;font-weight:600;cursor:pointer;border:1.5px solid #E8A060;background:#FFF6EE;color:#C24810;font-family:inherit;transition:all .15s;margin-left:auto}
+.genbtn:hover{background:#FFE8D6;border-color:#E8650A}
+.genbtn:active{transform:scale(.96)}
+.sh2.with-gen{display:flex;align-items:center;gap:6px}
+.kwbox{margin-bottom:7px}
+.kwinp{width:100%;border:1.5px dashed #E8A060;border-radius:9px;padding:7px 10px;font-size:12px;font-family:inherit;background:#FFFBF6;color:#18182A;outline:none;box-sizing:border-box;resize:none}
+.kwinp:focus{border-color:#E8650A;background:#fff}
+.kwinp::placeholder{color:#C8A878;font-size:11.5px}
+
 /* 센터명 패널 */
 .centerpanel{background:var(--w);border:1.5px solid var(--bd);border-radius:14px;padding:12px 18px;margin-bottom:18px;box-shadow:var(--sh);display:flex;align-items:center;gap:12px;flex-wrap:wrap}
 .centerpanel-ttl{font-size:12.5px;font-weight:700;color:var(--dk);white-space:nowrap;display:flex;align-items:center;gap:6px}
@@ -171,6 +193,9 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dk);
 .subjpanel-ttl{font-size:12.5px;font-weight:700;color:var(--dk);display:flex;align-items:center;gap:6px}
 .subj-list{display:flex;gap:7px;flex-wrap:wrap;align-items:center}
 .subj-chip{display:inline-flex;align-items:center;gap:5px;padding:6px 12px;border-radius:20px;font-size:12.5px;font-weight:600;background:var(--bgo);border:1.5px solid #F4C4A0;color:#C24810;cursor:default}
+.subj-chip .smove{font-size:13px;cursor:pointer;opacity:.55;padding:0 1px;user-select:none;line-height:1}
+.subj-chip .smove:hover{opacity:1}
+.subj-chip .smove.disabled{opacity:.15;cursor:default}
 .subj-chip .sedit{font-size:11px;cursor:pointer;opacity:.6;padding:0 2px}
 .subj-chip .sedit:hover{opacity:1}
 .subj-chip .sdel{width:14px;height:14px;border-radius:50%;background:rgba(194,72,16,.15);display:inline-flex;align-items:center;justify-content:center;font-size:10px;cursor:pointer;color:#C24810}
@@ -248,6 +273,17 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dk);
     </div>
   </div>
   <div class="logo-hint">선택한 로고만 이미지 하단에 표시됩니다 · 전체 학생 이미지에 동일 적용</div>
+</div>
+
+<!-- 자동생성 설정 -->
+<div class="autopanel">
+  <div class="autopanel-ttl">✨ 한마디 자동생성</div>
+  <label class="toggle">
+    <input type="checkbox" id="autoGenToggle" onchange="toggleAutoGen(this.checked)">
+    <span class="toggle-sl"></span>
+  </label>
+  <span class="auto-state" id="autoState">꺼짐</span>
+  <span class="auto-hint">켜면 '담당 선생님의 한마디' 칸에 ✨버튼이 생깁니다 · 입력한 내용으로 초안 문장을 만들어줍니다 (수정 필요)</span>
 </div>
 
 <!-- 센터명 설정 -->
@@ -362,8 +398,148 @@ var SEC=[
 ];
 var MEMO_N=10,LS_KEY='rpt_v14',GAS_LS='gas_url_v4',LOGO_LS='rpt_logo_v2';
 var isDemo=false;
+var autoGenOn=false;
+var AUTOGEN_LS='rpt_autogen_v1';
 var activeLogos=['wawa'];
 var LOGO_ORDER=['wawa','wplus','glory'];
+
+/* ── 한마디 자동생성 ── */
+function toggleAutoGen(on){
+  autoGenOn=on;
+  try{localStorage.setItem(AUTOGEN_LS,on?'1':'0');}catch(e){}
+  document.getElementById('autoState').textContent=on?'켜짐':'꺼짐';
+  document.getElementById('autoState').style.color=on?'#E8650A':'#A8A5B8';
+  renderR();
+}
+function initAutoGen(){
+  var on=false;
+  try{on=localStorage.getItem(AUTOGEN_LS)==='1';}catch(e){}
+  autoGenOn=on;
+  var t=document.getElementById('autoGenToggle');if(t)t.checked=on;
+  var st=document.getElementById('autoState');if(st){st.textContent=on?'켜짐':'꺼짐';st.style.color=on?'#E8650A':'#A8A5B8';}
+}
+
+// 별점 → 태도 표현
+function _attWord(star){
+  if(star>=5)return['매우 성실하고 집중도 높은','적극적이고 열의 있는','모범적인'];
+  if(star>=4)return['성실하고 바른','집중력 있는','안정적인'];
+  if(star>=3)return['차분한','꾸준한','무난한'];
+  if(star>=2)return['다소 산만한 면이 있으나 노력하는','집중에 기복이 있는'];
+  if(star>=1)return['집중이 더 필요한','학습 습관 형성이 필요한'];
+  return['','',''];
+}
+function _pick(arr,seed){return arr[Math.abs(seed)%arr.length];}
+// 입력값 끝의 문장부호/조사 정리
+function _clean(t){return String(t).trim().replace(/[.。,\s]+$/,'');}
+// 한 문장으로 마무리: 끝을 ~했습니다/~입니다 형태로
+function _endSentence(t){
+  var s=_clean(t);
+  if(!s)return '';
+  // 이미 격식 어미(~습니다/~입니다 등)로 끝나면 마침표만
+  if(/(습니다|입니다|됩니다|합니다|있습니다|없습니다|었습니다|았습니다|겠습니다|십니다)$/.test(s))return s+'.';
+  // 과거형 어간(했/였/었/았)으로 끝남 → ~습니다
+  if(/(했|였|었|았)$/.test(s))return s+'습니다.';
+  // '하'로 끝남 → ~였습니다
+  if(/하$/.test(s))return s+'였습니다.';
+  // 명사형 종결(임/함/됨/음) → ~니다
+  if(/(임|함|됨|음)$/.test(s))return s.slice(0,-1)+'니다.';
+  // 형용사 관형/기본형 추정(~ㄴ/~는/~운/~던 등)은 그대로 두고 '모습을 보였습니다'로 감쌈
+  if(/(은|는|운|던|린|인)$/.test(s))return s+' 모습을 보였습니다.';
+  // 그 외(명사/짧은 키워드) → '~을 보였습니다'로 자연스럽게
+  return s+'한 모습이 인상적이었습니다.';
+}
+
+function genComment(stuId,subKey){
+  var stu=S.students.find(function(s){return s.id===stuId;});
+  if(!stu)return;
+  var sub=SUBJECTS.find(function(x){return x.key===subKey;});
+  var subLabel=sub?sub.label:'';
+
+  var progress=(gv(fk(stuId,subKey,'progress'))||'').trim();
+  var attText=(gv(fk(stuId,subKey,'attitude_text'))||'').trim();
+  var star=parseInt(gv(fk(stuId,subKey,'attitude'))||0);
+  var goal=(gv(fk(stuId,subKey,'goal'))||'').trim();
+  var memo=(gv(fk(stuId,subKey,'memo'))||'').trim();
+
+  // 키워드 입력창 값 읽기 (저장 안 됨, 임시)
+  var kwEl=document.getElementById('kw_'+stuId+'_'+subKey);
+  var kwRaw=kwEl?kwEl.value.trim():'';
+  var keywords=kwRaw?kwRaw.split(/[,·\/\n]+/).map(function(k){return k.trim();}).filter(function(k){return k;}):[];
+
+  // 입력된 내용이 하나도 없으면
+  if(!progress&&!attText&&!star&&!goal&&!memo&&keywords.length===0){
+    showToast('⚠️ 키워드 또는 진도·수업태도·목표·메모 중 하나 이상 입력해주세요');
+    return;
+  }
+
+  var seed=stu.name.length+subKey.length+(new Date().getDate());
+  var name=stu.name;
+  var parts=[];
+
+  // 1) 태도 + 진도
+  if(star>0){
+    var aw=_pick(_attWord(star),seed);
+    if(progress){
+      parts.push(name+' 학생은 이번 달 '+subLabel+' 수업에서 '+aw+' 자세로 '+_clean(progress)+' 학습을 진행했습니다.');
+    }else{
+      parts.push(name+' 학생은 이번 달 '+subLabel+' 수업에 '+aw+' 자세로 참여했습니다.');
+    }
+  }else if(progress){
+    parts.push(name+' 학생은 이번 달 '+subLabel+' 수업에서 '+_clean(progress)+' 학습을 진행했습니다.');
+  }
+
+  // 2) 수업태도 메모 반영
+  if(attText){
+    parts.push(_endSentence(attText));
+  }
+
+  // 3) 수업 메모 반영
+  if(memo){
+    var memoConn=_pick(['특히 ','또한 ','수업 중에는 '],seed+1);
+    parts.push(memoConn+_endSentence(memo));
+  }
+
+  // 4) 다음달 목표
+  if(goal){
+    var goalConn=_pick(['다음 달에는 ','앞으로는 ','이어지는 학습에서는 '],seed+2);
+    parts.push(goalConn+_clean(goal)+'에 중점을 두어 꾸준히 지도하겠습니다.');
+  }
+
+  // 4.5) 키워드 반영 문장
+  if(keywords.length>0){
+    var kwConn=_pick(['특히 ','무엇보다 ','이번 달에는 '],seed+4);
+    var kwJoined=keywords.join(', ');
+    var kwTail=_pick([
+      '면에서 돋보이는 모습을 보였습니다.',
+      ' 등의 강점이 인상적이었습니다.',
+      '에서 좋은 모습을 보여주었습니다.'
+    ],seed+5);
+    parts.push(kwConn+kwJoined+kwTail);
+  }
+
+  // 5) 마무리 문장
+  var closing=_pick([
+    '꾸준한 노력이 좋은 결과로 이어질 수 있도록 함께 지도하겠습니다.',
+    '앞으로의 성장이 더욱 기대되는 학생입니다.',
+    '가정에서도 따뜻한 격려 부탁드립니다.',
+    '한 달간의 노력에 칭찬을 전하며, 계속 응원하겠습니다.'
+  ],seed+3);
+  parts.push(closing);
+
+  var result=parts.join(' ').replace(/\s+/g,' ').replace(/\.{2,}/g,'.').trim();
+
+  // 기존 내용이 있으면 덮어쓸지 확인
+  var existKey=fk(stuId,subKey,'comment');
+  var existing=(gv(existKey)||'').trim();
+  if(existing){
+    if(!confirm('이미 작성된 한마디가 있습니다.\n자동생성 초안으로 바꾸시겠어요?\n(기존 내용은 사라집니다)'))return;
+  }
+
+  pushU('한마디 자동생성');
+  S.values[existKey]=result;
+  autosave();renderR();
+  showToast('✨ 초안이 생성되었습니다 — 내용을 확인하고 수정해주세요!');
+}
 
 /* ── 센터명 ── */
 function onCenterName(v){centerName=v.trim();try{localStorage.setItem(CENTER_LS,v.trim());}catch(e){}autosave();}
@@ -377,7 +553,11 @@ function renderSubjPanel(){
   list.innerHTML='';
   SUBJECTS.forEach(function(sub,i){
     var chip=document.createElement('span');chip.className='subj-chip';
-    chip.innerHTML='<span>'+esc(sub.label)+'</span>'
+    var leftDis=i===0?' disabled':'';
+    var rightDis=i===SUBJECTS.length-1?' disabled':'';
+    chip.innerHTML='<span class="smove'+leftDis+'" title="앞으로" onclick="'+(i===0?'':'moveSubj('+i+',-1)')+'">‹</span>'
+      +'<span>'+esc(sub.label)+'</span>'
+      +'<span class="smove'+rightDis+'" title="뒤로" onclick="'+(i===SUBJECTS.length-1?'':'moveSubj('+i+',1)')+'">›</span>'
       +'<span class="sedit" title="이름 수정" onclick="editSubj('+i+')">✏️</span>'
       +(SUBJECTS.length>1?'<span class="sdel" onclick="delSubj('+i+')">&times;</span>':'');
     list.appendChild(chip);
@@ -386,22 +566,56 @@ function renderSubjPanel(){
   addbtn.innerHTML='+ 과목 추가';addbtn.onclick=addSubj;
   list.appendChild(addbtn);
 }
+function moveSubj(i,dir){
+  var j=i+dir;
+  if(j<0||j>=SUBJECTS.length)return;
+  var tmp=SUBJECTS[i];SUBJECTS[i]=SUBJECTS[j];SUBJECTS[j]=tmp;
+  saveSUBJ();renderSubjPanel();renderR();
+}
+// 과목 이름 → 안정적인 key (같은 이름이면 항상 같은 key)
+function subjKeyFromName(name){
+  var defaults={'국어':'korean','영어':'english','수학':'math','사회':'social','과학':'science'};
+  if(defaults[name])return defaults[name];
+  // 이름을 기반으로 고정 해시 key 생성 (같은 이름 → 같은 key)
+  var h=0;for(var i=0;i<name.length;i++){h=((h<<5)-h+name.charCodeAt(i))|0;}
+  return 'subj_'+Math.abs(h);
+}
+// 해당 과목 key에 저장된 데이터가 있는지 확인
+function subjHasData(key){
+  return Object.keys(S.values).some(function(vk){
+    return vk.indexOf('_'+key+'_')!==-1;
+  });
+}
 function addSubj(){
   var n=prompt('추가할 과목 이름을 입력하세요');if(!n||!n.trim())return;
-  var key='subj_'+Date.now();
-  SUBJECTS.push({key:key,label:n.trim()});
+  var name=n.trim();
+  // 이미 목록에 있는 과목이면 중복 안내
+  if(SUBJECTS.some(function(s){return s.label===name;})){
+    showToast('⚠️ 이미 있는 과목입니다');return;
+  }
+  var key=subjKeyFromName(name);
+  SUBJECTS.push({key:key,label:name});
   saveSUBJ();renderSubjPanel();renderR();
+  // 복구된 데이터가 있으면 안내
+  if(subjHasData(key)){
+    showToast('✅ ['+name+'] 과목을 추가했습니다 — 이전에 입력한 내용이 복구되었습니다!');
+  }else{
+    showToast('✅ ['+name+'] 과목을 추가했습니다');
+  }
 }
 function editSubj(i){
   var n=prompt('과목 이름 수정',SUBJECTS[i].label);if(!n||!n.trim())return;
   SUBJECTS[i].label=n.trim();
   saveSUBJ();renderSubjPanel();renderR();
+  showToast('✅ 과목 이름을 변경했습니다 (입력 내용은 그대로 유지됩니다)');
 }
 function delSubj(i){
   if(SUBJECTS.length<=1){showToast('⚠️ 최소 1개 과목은 필요합니다');return;}
-  if(!confirm('['+SUBJECTS[i].label+'] 과목을 목록에서 제거합니다.\n(입력된 데이터는 유지됩니다)'))return;
+  var label=SUBJECTS[i].label;
+  if(!confirm('['+label+'] 과목을 목록에서 제거합니다.\n\n입력했던 내용은 삭제되지 않고 보관됩니다.\n같은 이름으로 다시 추가하면 그대로 복구됩니다.'))return;
   SUBJECTS.splice(i,1);
   saveSUBJ();renderSubjPanel();renderR();
+  showToast('['+label+'] 과목을 제거했습니다 — 같은 이름으로 다시 추가하면 복구됩니다');
 }
 
 /* ── 학생 이름 수정 ── */
@@ -633,7 +847,7 @@ function renderR(){
   if(!stu){grid.innerHTML='<div class="estt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="16" y1="11" x2="22" y2="11"/></svg><p>학생을 추가하고 레포트를 작성해보세요</p><small>위 학생 목록에서 학생을 선택하거나 추가하세요</small></div>';return;}
   SUBJECTS.forEach(function(sub){
     var card=document.createElement('div');card.className='subc';var tv=gv(tk(stu.id,sub.key));
-    function bs(s){var key=fk(stu.id,sub.key,s.key);var val=gv(key);var inner='';if(s.type==='star'){var at=gv(fk(stu.id,sub.key,'attitude_text'));var sv3=parseInt(gv(key)||0);var stars='';for(var i=1;i<=5;i++)stars+='<span class="star'+(i<=sv3?' on':'')+'" data-key="'+key+'" data-v="'+i+'">★</span>';inner='<textarea class="fi ml" data-key="'+fk(stu.id,sub.key,'attitude_text')+'" placeholder="수업태도 내용…">'+esc(at)+'</textarea><div class="star-row" data-sk="'+key+'">'+stars+'</div>';}else if(s.type==='text'){inner='<textarea class="fi" data-key="'+key+'" placeholder="입력하세요…" style="height:22px;" rows="1">'+esc(val)+'</textarea>';}else{inner='<textarea class="fi ml" data-key="'+key+'" placeholder="입력하세요…">'+esc(val)+'</textarea>';}return '<div class="sb '+s.cls+'"><div class="sh2"><span class="sej">'+s.ej+'</span><span class="stt">'+s.label+'</span></div><div class="sdiv"></div>'+inner+'</div>';}
+    function bs(s){var key=fk(stu.id,sub.key,s.key);var val=gv(key);var inner='';if(s.type==='star'){var at=gv(fk(stu.id,sub.key,'attitude_text'));var sv3=parseInt(gv(key)||0);var stars='';for(var i=1;i<=5;i++)stars+='<span class="star'+(i<=sv3?' on':'')+'" data-key="'+key+'" data-v="'+i+'">★</span>';inner='<textarea class="fi ml" data-key="'+fk(stu.id,sub.key,'attitude_text')+'" placeholder="수업태도 내용…">'+esc(at)+'</textarea><div class="star-row" data-sk="'+key+'">'+stars+'</div>';}else if(s.type==='text'){inner='<textarea class="fi" data-key="'+key+'" placeholder="입력하세요…" style="height:22px;" rows="1">'+esc(val)+'</textarea>';}else{inner='<textarea class="fi ml" data-key="'+key+'" placeholder="입력하세요…">'+esc(val)+'</textarea>';}var genBtn=(s.key==='comment'&&autoGenOn)?'<button class="genbtn" onclick="genComment(\''+stu.id+'\',\''+sub.key+'\')">✨ 자동생성</button>':'';var shClass=genBtn?'sh2 with-gen':'sh2';var kwBox=(s.key==='comment'&&autoGenOn)?'<div class="kwbox"><input class="kwinp" id="kw_'+stu.id+'_'+sub.key+'" type="text" placeholder="✨ 포함할 키워드 (예: 리더십, 성실, 발표력) — 저장 안 됨"></div>':'';return '<div class="sb '+s.cls+'"><div class="'+shClass+'"><span class="sej">'+s.ej+'</span><span class="stt">'+s.label+'</span>'+genBtn+'</div><div class="sdiv"></div>'+kwBox+inner+'</div>';}
     var body='<div class="cbody"><div class="srow">'+bs(SEC[0])+bs(SEC[1])+'</div><div class="srow">'+bs(SEC[2])+bs(SEC[3])+'</div>'+bs(SEC[4])+'</div>';
     card.innerHTML='<div class="chd"><div class="chl"><span class="sbadge">'+sub.label+'</span><div class="ta"><span class="tl">담당</span><input class="ti" data-tkey="'+tk(stu.id,sub.key)+'" placeholder="선생님 이름" value="'+esc(tv)+'"></div></div><button class="cib" onclick="copySubImg(\''+sub.key+'\',\''+sub.label+'\')" ><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>복사</button></div>'+body;
     grid.appendChild(card);
@@ -774,6 +988,8 @@ function init(){
   // 과목 설정 초기화
   loadSUBJ();
   renderSubjPanel();
+  // 자동생성 설정 초기화
+  initAutoGen();
 
   if(isDemo){
     // 데모 모드: 잠금화면 건너뛰고 바로 실행
