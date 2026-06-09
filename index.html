@@ -105,6 +105,9 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dk);
 .cib{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;border:1.5px solid var(--bd);background:var(--w);color:var(--md);font-family:inherit;transition:all .15s;flex-shrink:0}
 .cib:hover{background:var(--bg)}
 .cib svg{width:11px;height:11px}
+.chbtns{display:flex;gap:6px;flex-shrink:0}
+.cib.prevb{color:#7A5A2A;border-color:#E0C880}
+.cib.prevb:hover{background:#FFFAE6;border-color:#D4B860}
 .cbody{padding:14px 16px 16px;display:flex;flex-direction:column;gap:10px}
 .srow{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .sb{border-radius:14px;padding:14px 16px;overflow:hidden}
@@ -311,9 +314,6 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dk);
   </div>
   <div class="acts">
     <span class="svbadge" id="svbadge">✓ 저장됨</span>
-    <button class="btn btn-prev" onclick="loadPrevMonth()">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px"><path d="M3 10h11a6 6 0 0 1 0 12H3"/><polyline points="7,6 3,10 7,14"/></svg>이전달 불러오기
-    </button>
     <button class="btn btn-u" id="undoBtn" onclick="undoAct()" disabled>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10h11a6 6 0 0 1 0 12H3"/><polyline points="7,6 3,10 7,14"/></svg>실행취소
     </button>
@@ -514,30 +514,45 @@ function renameStu(id){
   autosave();renderSP();renderR();renderMemo();
 }
 
-/* ── 이전달 불러오기 ── */
-function loadPrevMonth(){
+/* ── 과목별 이전달 불러오기 ── */
+function loadPrevSubject(subKey){
   var stu=S.students.find(function(s){return s.id===S.activeStudent;});
   if(!stu){showToast('⚠️ 학생을 먼저 선택해주세요');return;}
   if(!S.month){showToast('⚠️ 기준 월을 먼저 설정해주세요');return;}
+  var sub=SUBJECTS.find(function(s){return s.key===subKey;});
+  if(!sub)return;
   var parts=S.month.split('-');var y=parseInt(parts[0]),m=parseInt(parts[1]);
   m--;if(m===0){m=12;y--;}
   var prevMonth=y+'-'+String(m).padStart(2,'0');
-  var copied=0;
-  SUBJECTS.forEach(function(sub){
-    ['progress','attitude','attitude_text','goal','memo','comment'].forEach(function(sec){
-      var prevKey=stu.id+'_'+prevMonth+'_'+sub.key+'_'+sec;
-      var curKey=stu.id+'_'+S.month+'_'+sub.key+'_'+sec;
-      var prevVal=S.values[prevKey];
-      if(prevVal!=null&&prevVal!==''){
-        if(!S.values[curKey]||S.values[curKey]===''){S.values[curKey]=prevVal;copied++;}
-      }
-    });
-    // 담당 선생님도 복사
-    var prevTk='t_'+stu.id+'_'+sub.key;
-    if(S.values[prevTk]&&!gv('t_'+stu.id+'_'+sub.key)){S.values['t_'+stu.id+'_'+sub.key]=S.values[prevTk];copied++;}
+
+  // 이전달 해당 과목 데이터가 있는지 먼저 확인
+  var hasPrev=['progress','attitude','attitude_text','goal','memo','comment'].some(function(sec){
+    var v=S.values[stu.id+'_'+prevMonth+'_'+subKey+'_'+sec];
+    return v!=null&&v!=='';
   });
-  if(copied===0){showToast('이전달('+prevMonth+') 데이터가 없거나 이미 모두 입력되어 있습니다');}
-  else{pushU('이전달 불러오기');autosave();renderR();showToast('✅ 이전달('+prevMonth+') 데이터 '+copied+'개 항목을 불러왔습니다');}
+  if(!hasPrev){
+    showToast('이전달('+prevMonth+') ['+sub.label+'] 데이터가 없습니다');
+    return;
+  }
+
+  // 현재 과목에 입력된 내용이 있으면 덮어쓸지 확인
+  var hasCur=['progress','attitude','attitude_text','goal','memo','comment'].some(function(sec){
+    var v=S.values[stu.id+'_'+S.month+'_'+subKey+'_'+sec];
+    return v!=null&&v!=='';
+  });
+  if(hasCur){
+    if(!confirm('['+sub.label+'] 과목에 이미 입력된 내용이 있습니다.\n이전달('+prevMonth+') 내용으로 덮어쓰시겠습니까?'))return;
+  }
+
+  var copied=0;
+  ['progress','attitude','attitude_text','goal','memo','comment'].forEach(function(sec){
+    var prevKey=stu.id+'_'+prevMonth+'_'+subKey+'_'+sec;
+    var curKey=stu.id+'_'+S.month+'_'+subKey+'_'+sec;
+    var prevVal=S.values[prevKey];
+    if(prevVal!=null&&prevVal!==''){S.values[curKey]=prevVal;copied++;}
+  });
+  pushU('이전달 불러오기');autosave();renderR();
+  showToast('✅ ['+sub.label+'] 이전달('+prevMonth+') 내용을 불러왔습니다');
 }
 
 /* ── 미리보기 ── */
@@ -610,8 +625,17 @@ function gv(k){return S.values[k]==null?'':S.values[k];}
 function sv2(k,v){S.values[k]=v;}
 function persist(){try{localStorage.setItem(LS_KEY,JSON.stringify(S));}catch(e){}}
 function loadLS(){try{var d=localStorage.getItem(LS_KEY);return d?JSON.parse(d):null;}catch(e){return null;}}
-var _at;
-function autosave(){clearTimeout(_at);_at=setTimeout(function(){persist();showSaved();if(gasUrl)cloudSave();},900);}
+var _at,_ct;
+function autosave(){
+  // 로컬 저장은 즉시 (빠름, 데이터 유실 방지)
+  clearTimeout(_at);
+  _at=setTimeout(function(){persist();showSaved();},400);
+  // 클라우드 저장은 입력이 멈춘 뒤 한 번만 (타이핑 중 반복 전송 방지)
+  if(gasUrl){
+    clearTimeout(_ct);
+    _ct=setTimeout(function(){cloudSave();},2000);
+  }
+}
 function showSaved(){var b=document.getElementById('svbadge');b.classList.add('show');clearTimeout(b._t);b._t=setTimeout(function(){b.classList.remove('show');},2000);}
 
 function beginEdit(){if(!_es)_es={snap:JSON.parse(JSON.stringify(S.values))};}
@@ -801,7 +825,7 @@ function renderR(){
     var card=document.createElement('div');card.className='subc';var tv=gv(tk(stu.id,sub.key));
     function bs(s){var key=fk(stu.id,sub.key,s.key);var val=gv(key);var inner='';if(s.type==='star'){var at=gv(fk(stu.id,sub.key,'attitude_text'));var sv3=parseInt(gv(key)||0);var stars='';for(var i=1;i<=5;i++)stars+='<span class="star'+(i<=sv3?' on':'')+'" data-key="'+key+'" data-v="'+i+'">★</span>';inner='<textarea class="fi ml" data-key="'+fk(stu.id,sub.key,'attitude_text')+'" placeholder="수업태도 내용…">'+esc(at)+'</textarea><div class="star-row" data-sk="'+key+'">'+stars+'</div>';}else if(s.type==='text'){inner='<textarea class="fi" data-key="'+key+'" placeholder="입력하세요…" style="height:22px;" rows="1">'+esc(val)+'</textarea>';}else{inner='<textarea class="fi ml" data-key="'+key+'" placeholder="입력하세요…">'+esc(val)+'</textarea>';}return '<div class="sb '+s.cls+'"><div class="sh2"><span class="sej">'+s.ej+'</span><span class="stt">'+s.label+'</span></div><div class="sdiv"></div>'+inner+'</div>';}
     var body='<div class="cbody"><div class="srow">'+bs(SEC[0])+bs(SEC[1])+'</div><div class="srow">'+bs(SEC[2])+bs(SEC[3])+'</div>'+bs(SEC[4])+'</div>';
-    card.innerHTML='<div class="chd"><div class="chl"><span class="sbadge">'+sub.label+'</span><div class="ta"><span class="tl">담당</span><input class="ti" data-tkey="'+tk(stu.id,sub.key)+'" placeholder="선생님 이름" value="'+esc(tv)+'"></div></div><button class="cib" onclick="copySubImg(\''+sub.key+'\',\''+sub.label+'\')" ><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>복사</button></div>'+body;
+    card.innerHTML='<div class="chd"><div class="chl"><span class="sbadge">'+sub.label+'</span><div class="ta"><span class="tl">담당</span><input class="ti" data-tkey="'+tk(stu.id,sub.key)+'" placeholder="선생님 이름" value="'+esc(tv)+'"></div></div><div class="chbtns"><button class="cib prevb" onclick="loadPrevSubject(\''+sub.key+'\')" title="이전달 내용 불러오기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10h11a6 6 0 0 1 0 12H3"/><polyline points="7,6 3,10 7,14"/></svg>이전달</button><button class="cib" onclick="copySubImg(\''+sub.key+'\',\''+sub.label+'\')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>복사</button></div></div>'+body;
     grid.appendChild(card);
     card.addEventListener('focusin',function(e){if(e.target.dataset.key||e.target.dataset.tkey)beginEdit();});
     card.addEventListener('focusout',function(e){if(e.target.dataset.key||e.target.dataset.tkey)commitEdit();});
