@@ -187,6 +187,9 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dk);
 .centerinp{border:1.5px solid var(--bd);border-radius:10px;padding:7px 14px;font-size:13px;font-family:inherit;background:var(--bg);color:var(--dk);outline:none;flex:1;min-width:180px;max-width:320px}
 .centerinp:focus{border-color:var(--or);background:#fff}
 .center-hint{font-size:11px;color:var(--lt)}
+.centerinp:disabled{background:#F2F0EC;color:#7A7788;cursor:not-allowed;border-style:dashed}
+.center-unlock{display:inline-flex;align-items:center;gap:4px;padding:6px 12px;border-radius:10px;font-size:11.5px;font-weight:600;cursor:pointer;border:1.5px solid var(--bd);background:var(--w);color:var(--md);font-family:inherit;transition:all .15s}
+.center-unlock:hover{border-color:var(--or);color:var(--or)}
 
 /* 과목 관리 패널 */
 .subjpanel{background:var(--w);border:1.5px solid var(--bd);border-radius:14px;padding:14px 18px;margin-bottom:18px;box-shadow:var(--sh)}
@@ -294,8 +297,9 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dk);
 <!-- 센터명 설정 -->
 <div class="centerpanel">
   <div class="centerpanel-ttl">🏫 센터명</div>
-  <input class="centerinp" id="centerInp" type="text" placeholder="센터 이름 입력 (이미지에 표시됩니다)" oninput="onCenterName(this.value)" maxlength="30">
-  <span class="center-hint">이미지 상단에 표시됩니다</span>
+  <input class="centerinp" id="centerInp" type="text" placeholder="센터 이름 입력 (이미지에 표시됩니다)" oninput="onCenterName(this.value)" onblur="commitCenterName()" maxlength="30">
+  <button class="center-unlock" id="centerUnlock" style="display:none" onclick="unlockCenter()">🔒 수정하려면 클릭</button>
+  <span class="center-hint" id="centerHint">처음 입력 후 잠깁니다 · 이미지 상단에 표시됩니다</span>
 </div>
 
 <!-- 과목 관리 -->
@@ -429,13 +433,44 @@ var activeLogos=['wawa'];
 var LOGO_ORDER=['wawa','wplus','glory'];
 
 /* ── 센터명 ── */
-function onCenterName(v){centerName=v.trim();try{localStorage.setItem(CENTER_LS,v.trim());}catch(e){}S.values['__centerName__']=centerName;persist();showSaved();if(gasUrl){clearTimeout(_ct);_ct=setTimeout(function(){cloudSave();},1200);}}
+function onCenterName(v){centerName=v.trim();try{localStorage.setItem(CENTER_LS,v.trim());}catch(e){}S.values['__centerName__']=centerName;autosave();}
+var CENTER_PW='1234'; // 센터명 수정 잠금 해제 비밀번호
+var _centerUnlocked=false; // 비밀번호로 해제된 상태인지
+function lockCenterIfSet(){
+  var el=document.getElementById('centerInp');
+  var hint=document.getElementById('centerHint');
+  var unlock=document.getElementById('centerUnlock');
+  if(!el)return;
+  // 해제 상태면 잠그지 않음
+  if(_centerUnlocked){el.disabled=false;if(hint)hint.style.display='none';if(unlock)unlock.style.display='none';return;}
+  var isSet=centerName&&centerName.trim()!=='';
+  el.disabled=isSet;
+  if(hint)hint.style.display=isSet?'none':'';
+  if(unlock)unlock.style.display=isSet?'':'none';
+}
+function unlockCenter(){
+  var pw=prompt('센터명을 수정하려면 비밀번호를 입력하세요');
+  if(pw==null)return;
+  if(pw!==CENTER_PW){showToast('⚠️ 비밀번호가 올바르지 않습니다');return;}
+  _centerUnlocked=true;
+  var el=document.getElementById('centerInp');
+  if(el){el.disabled=false;setTimeout(function(){el.focus();},50);}
+  var unlock=document.getElementById('centerUnlock');if(unlock)unlock.style.display='none';
+  var hint=document.getElementById('centerHint');if(hint)hint.style.display='';
+  showToast('🔓 센터명 수정이 가능합니다 — 수정 후 다른 곳을 클릭하면 다시 잠깁니다');
+}
+function commitCenterName(){
+  // 해제 상태였으면 수정 완료 처리 후 다시 잠금
+  if(_centerUnlocked){_centerUnlocked=false;}
+  if(centerName&&centerName.trim()!==''){lockCenterIfSet();}
+}
 function initCenter(){
-  // 클라우드(S.values)에 저장된 센터명 우선(빈문자열 아닌 경우), 없으면 localStorage
+  // 클라우드(S.values)에 저장된 센터명 우선, 없으면 localStorage
   var s=null;
-  if(S.values&&S.values['__centerName__']!=null&&S.values['__centerName__']!=='')s=S.values['__centerName__'];
-  else{try{var ls=localStorage.getItem(CENTER_LS);if(ls)s=ls;}catch(e){}}
-  if(s!=null&&s!==''){centerName=s;var el=document.getElementById('centerInp');if(el)el.value=s;try{localStorage.setItem(CENTER_LS,s);}catch(e){}}
+  if(S.values&&S.values['__centerName__']!=null)s=S.values['__centerName__'];
+  else{try{s=localStorage.getItem(CENTER_LS);}catch(e){}}
+  if(s!=null){centerName=s;var el=document.getElementById('centerInp');if(el)el.value=s;try{localStorage.setItem(CENTER_LS,s);}catch(e){}}
+  lockCenterIfSet();
 }
 
 /* ── 과목 관리 ── */
@@ -707,7 +742,8 @@ function applyCloudData(data){
   if(!S.activeStudent&&S.students.length)S.activeStudent=S.students[0].id;
   document.getElementById('monthInput').value=S.month;
   // 클라우드에서 받은 센터명 적용
-  if(S.values&&S.values['__centerName__']!=null&&S.values['__centerName__']!==''){centerName=S.values['__centerName__'];var ce=document.getElementById('centerInp');if(ce)ce.value=centerName;try{localStorage.setItem(CENTER_LS,centerName);}catch(e){}}
+  if(S.values&&S.values['__centerName__']!=null){centerName=S.values['__centerName__'];var ce=document.getElementById('centerInp');if(ce)ce.value=centerName;}
+  lockCenterIfSet();
   persist();
 }
 function doSync(){if(!gasUrl)return;setSyn('ing','동기화 중…');cloudLoad(gasUrl,function(ok,data){if(ok&&data){applyCloudData(data);renderSP();renderR();renderMemo();setSyn('ok','동기화 완료 '+new Date().toLocaleTimeString());showToast('🔄 동기화 완료!');}else{setSyn('err','동기화 실패');showToast('❌ 동기화 실패');}},S.month);}
