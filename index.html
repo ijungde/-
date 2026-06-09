@@ -429,13 +429,13 @@ var activeLogos=['wawa'];
 var LOGO_ORDER=['wawa','wplus','glory'];
 
 /* ── 센터명 ── */
-function onCenterName(v){centerName=v.trim();try{localStorage.setItem(CENTER_LS,v.trim());}catch(e){}S.values['__centerName__']=centerName;autosave();}
+function onCenterName(v){centerName=v.trim();try{localStorage.setItem(CENTER_LS,v.trim());}catch(e){}S.values['__centerName__']=centerName;persist();showSaved();if(gasUrl){clearTimeout(_ct);_ct=setTimeout(function(){cloudSave();},1200);}}
 function initCenter(){
-  // 클라우드(S.values)에 저장된 센터명 우선, 없으면 localStorage
+  // 클라우드(S.values)에 저장된 센터명 우선(빈문자열 아닌 경우), 없으면 localStorage
   var s=null;
-  if(S.values&&S.values['__centerName__']!=null)s=S.values['__centerName__'];
-  else{try{s=localStorage.getItem(CENTER_LS);}catch(e){}}
-  if(s!=null){centerName=s;var el=document.getElementById('centerInp');if(el)el.value=s;try{localStorage.setItem(CENTER_LS,s);}catch(e){}}
+  if(S.values&&S.values['__centerName__']!=null&&S.values['__centerName__']!=='')s=S.values['__centerName__'];
+  else{try{var ls=localStorage.getItem(CENTER_LS);if(ls)s=ls;}catch(e){}}
+  if(s!=null&&s!==''){centerName=s;var el=document.getElementById('centerInp');if(el)el.value=s;try{localStorage.setItem(CENTER_LS,s);}catch(e){}}
 }
 
 /* ── 과목 관리 ── */
@@ -707,7 +707,7 @@ function applyCloudData(data){
   if(!S.activeStudent&&S.students.length)S.activeStudent=S.students[0].id;
   document.getElementById('monthInput').value=S.month;
   // 클라우드에서 받은 센터명 적용
-  if(S.values&&S.values['__centerName__']!=null){centerName=S.values['__centerName__'];var ce=document.getElementById('centerInp');if(ce)ce.value=centerName;}
+  if(S.values&&S.values['__centerName__']!=null&&S.values['__centerName__']!==''){centerName=S.values['__centerName__'];var ce=document.getElementById('centerInp');if(ce)ce.value=centerName;try{localStorage.setItem(CENTER_LS,centerName);}catch(e){}}
   persist();
 }
 function doSync(){if(!gasUrl)return;setSyn('ing','동기화 중…');cloudLoad(gasUrl,function(ok,data){if(ok&&data){applyCloudData(data);renderSP();renderR();renderMemo();setSyn('ok','동기화 완료 '+new Date().toLocaleTimeString());showToast('🔄 동기화 완료!');}else{setSyn('err','동기화 실패');showToast('❌ 동기화 실패');}},S.month);}
