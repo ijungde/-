@@ -585,6 +585,8 @@ function loadPrevSubject(subKey){
     if(!confirm('['+sub.label+'] 과목에 이미 입력된 내용이 있습니다.\n이전달('+prevMonth+') 내용으로 덮어쓰시겠습니까?'))return;
   }
 
+  // 덮어쓰기 전 상태를 먼저 저장 (실행취소용)
+  pushU('이전달 불러오기');
   var copied=0;
   ['progress','attitude','attitude_text','goal','memo','comment'].forEach(function(sec){
     var prevKey=stu.id+'_'+prevMonth+'_'+subKey+'_'+sec;
@@ -592,7 +594,7 @@ function loadPrevSubject(subKey){
     var prevVal=S.values[prevKey];
     if(prevVal!=null&&prevVal!==''){S.values[curKey]=prevVal;copied++;}
   });
-  pushU('이전달 불러오기');autosave();renderR();
+  autosave();renderR();
   showToast('✅ ['+sub.label+'] 이전달('+prevMonth+') 내용을 불러왔습니다');
 }
 
@@ -667,14 +669,15 @@ function sv2(k,v){S.values[k]=v;}
 function persist(){try{localStorage.setItem(LS_KEY,JSON.stringify(S));}catch(e){}}
 function loadLS(){try{var d=localStorage.getItem(LS_KEY);return d?JSON.parse(d):null;}catch(e){return null;}}
 var _at,_ct;
-function autosave(){
+function autosave(fast){
   // 로컬 저장은 즉시 (빠름, 데이터 유실 방지)
   clearTimeout(_at);
   _at=setTimeout(function(){persist();showSaved();},400);
   // 클라우드 저장은 입력이 멈춘 뒤 한 번만 (타이핑 중 반복 전송 방지)
+  // fast=true면 1초(메모용), 기본은 2초
   if(gasUrl){
     clearTimeout(_ct);
-    _ct=setTimeout(function(){cloudSave();},2000);
+    _ct=setTimeout(function(){cloudSave();},fast?1000:2000);
   }
 }
 function showSaved(){var b=document.getElementById('svbadge');b.classList.add('show');clearTimeout(b._t);b._t=setTimeout(function(){b.classList.remove('show');},2000);}
@@ -752,6 +755,7 @@ function doDisconn(){if(!confirm('연결을 해제합니다. 다시 접속하려
 /* ── STUDENT ── */
 function addStu(){
   if(isDemo&&S.students.length>=10){showToast('⚠️ 데모 버전은 최대 10명까지 등록할 수 있습니다');return;}
+  if(!isDemo&&S.students.length>=300){showToast('⚠️ 학생은 최대 300명까지 등록할 수 있습니다');return;}
   var n=prompt('학생 이름을 입력하세요');
   if(!n||!n.trim())return;
   var trimmed=n.trim();
@@ -858,7 +862,7 @@ function renderMemo(){
   var sec=document.getElementById('memosec');if(!stu){sec.style.display='none';return;}
   sec.style.display='block';document.getElementById('memoBadge').textContent=S.month?S.month.replace('-','년 ')+'월':'';
   var cont=document.getElementById('memoLines');cont.innerHTML='';
-  for(var i=0;i<MEMO_N;i++){var row=document.createElement('div');row.className='memoline';var num=document.createElement('span');num.className='memonum';num.textContent=(i+1)+'.';var inp=document.createElement('input');inp.className='memoinp';inp.type='text';inp.placeholder='메모 입력…';inp.maxLength=200;inp.value=gv(mk(i));(function(idx){inp.addEventListener('focusin',function(){beginEdit();});inp.addEventListener('focusout',function(){commitEdit();});inp.addEventListener('input',function(){sv2(mk(idx),this.value);autosave();});})(i);row.appendChild(num);row.appendChild(inp);cont.appendChild(row);}
+  for(var i=0;i<MEMO_N;i++){var row=document.createElement('div');row.className='memoline';var num=document.createElement('span');num.className='memonum';num.textContent=(i+1)+'.';var inp=document.createElement('input');inp.className='memoinp';inp.type='text';inp.placeholder='메모 입력…';inp.maxLength=200;inp.value=gv(mk(i));(function(idx){inp.addEventListener('focusin',function(){beginEdit();});inp.addEventListener('focusout',function(){commitEdit();});inp.addEventListener('input',function(){sv2(mk(idx),this.value);autosave(true);});})(i);row.appendChild(num);row.appendChild(inp);cont.appendChild(row);}
 }
 
 function renderR(){
