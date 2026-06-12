@@ -150,12 +150,9 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dk);
 .logopanel-ttl{font-size:12.5px;font-weight:700;color:var(--dk);display:flex;align-items:center;gap:6px;white-space:nowrap}
 .logopanel-ttl span{font-size:16px}
 .logo-opts{display:flex;gap:8px;flex-wrap:wrap;flex:1}
-.logobtn{display:inline-flex;align-items:center;gap:6px;padding:7px 16px;border-radius:22px;font-size:12.5px;font-weight:600;cursor:pointer;border:1.5px solid var(--bd);background:var(--w);color:var(--md);font-family:inherit;transition:all .18s;user-select:none;white-space:nowrap}
-.logobtn:hover{border-color:#aaa;background:var(--bg)}
-.logobtn.sel{border-width:2px}
-.logobtn.wawa.sel{background:#FFF1E8;border-color:#E8650A;color:#C24810}
-.logobtn.wplus.sel{background:#EAF0FC;border-color:#2E62B8;color:#1A4FAA}
-.logobtn.glory.sel{background:#E8F5EE;border-color:#2A8C5A;color:#1E7A48}
+.logotxt{border:1.5px solid var(--bd);border-radius:10px;padding:8px 14px;font-size:13px;font-family:inherit;background:var(--bg);color:var(--dk);outline:none;flex:1;min-width:180px;max-width:340px}
+.logotxt:focus{border-color:var(--or);background:var(--w)}
+.logotxt::placeholder{color:var(--lt)}
 .themepanel{background:var(--w);border:1.5px solid var(--bd);border-radius:14px;padding:12px 18px;margin-bottom:18px;box-shadow:var(--sh);display:flex;align-items:center;gap:12px;flex-wrap:wrap}
 .themepanel-ttl{font-size:12.5px;font-weight:700;color:var(--dk);white-space:nowrap;display:flex;align-items:center;gap:6px}
 .theme-opts{display:flex;gap:8px;flex-wrap:wrap}
@@ -164,8 +161,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dk);
 .themebtn .dot{width:14px;height:14px;border-radius:50%;flex-shrink:0}
 .themebtn.sel{border-color:var(--dk);background:var(--bg)}
 .theme-hint{font-size:11px;color:var(--lt)}
-.logobtn .chk{width:14px;height:14px;border-radius:50%;border:2px solid #ccc;display:inline-flex;align-items:center;justify-content:center;font-size:9px;transition:all .18s;flex-shrink:0}
-.logobtn.sel .chk{border-color:currentColor;background:currentColor;color:#fff}
+
 .logo-hint{font-size:11px;color:var(--lt);margin-top:6px}
 .page{max-width:1180px;margin:0 auto;padding:28px 22px 64px}
 
@@ -263,26 +259,14 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dk);
   <div class="cb-info"><span class="dot ok" id="syndot"></span><span id="synmsg">연결됨</span></div>
 </div>
 
-<!-- 로고 선택 패널 -->
+<!-- 로고 텍스트 패널 -->
 <div class="logopanel">
   <div class="logopanel-row">
-    <div class="logopanel-ttl"><span>🏷️</span> 이미지 로고 설정</div>
-    <div class="logo-opts">
-      <button class="logobtn wawa" id="logo-wawa" onclick="selectLogo('wawa')">
-        <span class="chk">✓</span>
-        <span style="color:#C24810;font-weight:800">wawa</span>
-      </button>
-      <button class="logobtn wplus" id="logo-wplus" onclick="selectLogo('wplus')">
-        <span class="chk">✓</span>
-        <span><span style="color:#1A4FAA;font-weight:800">W</span><span style="color:#1A4FAA;font-size:9px;font-weight:800;vertical-align:super">+</span></span>
-      </button>
-      <button class="logobtn glory" id="logo-glory" onclick="selectLogo('glory')">
-        <span class="chk">✓</span>
-        <span style="color:#1E7A48;font-weight:800">글로리드</span>
-      </button>
-    </div>
+    <div class="logopanel-ttl"><span>🏷️</span> 이미지 로고</div>
+    <input class="logotxt" id="logoTextInp" type="text" placeholder="예) 00점" maxlength="30"
+      oninput="onLogoText(this.value)">
   </div>
-  <div class="logo-hint">선택한 로고만 이미지 하단에 표시됩니다 · 전체 학생 이미지에 동일 적용</div>
+  <div class="logo-hint">입력한 텍스트가 이미지 하단에 로고로 표시됩니다</div>
 </div>
 
 
@@ -442,8 +426,7 @@ var SEC=[
 ];
 var MEMO_N=10,LS_KEY='rpt_v14',GAS_LS='gas_url_v4',LOGO_LS='rpt_logo_v2';
 var isDemo=false;
-var activeLogos=['wawa'];
-var LOGO_ORDER=['wawa','wplus','glory'];
+var logoText='';
 
 /* ── 센터명 ── */
 function onCenterName(v){centerName=v.trim();try{localStorage.setItem(CENTER_LS,v.trim());}catch(e){}S.values['__centerName__']=centerName;autosave();}
@@ -635,35 +618,21 @@ function doCopyFromPv(){
   copyToClip(_pvCanvas,label);
 }
 
-function selectLogo(key){
-  var idx=activeLogos.indexOf(key);
-  if(idx===-1){
-    activeLogos.push(key);
-    activeLogos.sort(function(a,b){return LOGO_ORDER.indexOf(a)-LOGO_ORDER.indexOf(b);});
-  }else{
-    if(activeLogos.length===1){showToast('⚠️ 최소 1개는 선택해야 합니다');return;}
-    activeLogos.splice(idx,1);
-  }
-  try{localStorage.setItem(LOGO_LS,JSON.stringify(activeLogos));}catch(e){}
-  ['wawa','wplus','glory'].forEach(function(k){
-    var el=document.getElementById('logo-'+k);
-    if(el){el.classList.toggle('sel',activeLogos.indexOf(k)!==-1);}
-  });
-  var names={wawa:'wawa',wplus:'W+',glory:'글로리드'};
-  var label=activeLogos.map(function(k){return names[k];}).join(' · ');
-  showToast('✅ 로고 설정: '+label+' — 다음 이미지 복사부터 적용됩니다');
+function onLogoText(v){
+  logoText=v;
+  try{localStorage.setItem(LOGO_LS,JSON.stringify(v));}catch(e){}
 }
 function initLogo(){
-  var saved=['wawa'];
   try{
     var s=localStorage.getItem(LOGO_LS);
-    if(s){var parsed=JSON.parse(s);if(Array.isArray(parsed)&&parsed.length>0&&parsed.every(function(k){return LOGO_ORDER.indexOf(k)!==-1;}))saved=parsed;}
+    if(s!=null){
+      var parsed=JSON.parse(s);
+      if(typeof parsed==='string'){logoText=parsed;}
+      else if(Array.isArray(parsed)){logoText='';}  // 구버전 배열 → 초기화
+    }
   }catch(e){}
-  activeLogos=saved;
-  ['wawa','wplus','glory'].forEach(function(k){
-    var el=document.getElementById('logo-'+k);
-    if(el){el.classList.toggle('sel',activeLogos.indexOf(k)!==-1);}
-  });
+  var el=document.getElementById('logoTextInp');
+  if(el)el.value=logoText;
 }
 var CHO_LIST=['ㄱ','ㄴ','ㄷ','ㄹ','ㅁ','ㅂ','ㅅ','ㅇ','ㅈ','ㅊ','ㅋ','ㅌ','ㅍ','ㅎ','기타'];
 var CHO_RAW=['ㄱ','ㄲ','ㄴ','ㄷ','ㄸ','ㄹ','ㅁ','ㅂ','ㅃ','ㅅ','ㅆ','ㅇ','ㅈ','ㅉ','ㅊ','ㅋ','ㅌ','ㅍ','ㅎ'];
@@ -992,35 +961,12 @@ function drawFC(c,sub,stu,x,y,cW){var pad=px(14),hH=px(54),sg=px(10),cr=px(16),i
 function hasCont(stu,sk){return['progress','attitude','attitude_text','goal','memo','comment'].some(function(k){var v=gv(fk(stu.id,sk,k));return v&&String(v).trim();});}
 var TH2=px(30),TW2=px(50);
 function drawTile(c,sub,x,y){var cr=px(8);c.save();c.shadowColor='rgba(24,20,42,.07)';c.shadowBlur=px(4);c.shadowOffsetY=px(2);rr(c,x,y,TW2,TH2,cr);c.fillStyle='#fff';c.fill();c.restore();rr(c,x,y,TW2,TH2,cr);c.strokeStyle='#E8E4DC';c.lineWidth=px(1);c.stroke();rr(c,x,y,px(3),TH2,cr);c.fillStyle=themeColor();c.fill();c.font=pf(10,true);c.fillStyle='#18182A';c.textAlign='center';c.textBaseline='middle';c.fillText(sub.label,x+TW2/2+px(2),y+TH2/2);}
-function drawOneLogo(c,key,cx,cy){
-  if(key==='wawa'){
-    c.font=pf(17,true);c.fillStyle='#C24810';c.textAlign='center';c.textBaseline='middle';c.fillText('wawa',cx,cy);
-  }else if(key==='wplus'){
-    c.font=pf(18,true);c.fillStyle='#1A4FAA';c.textAlign='center';c.textBaseline='middle';c.fillText('W',cx-px(8),cy);
-    c.font=pf(13,true);c.textBaseline='top';c.fillText('+',cx+px(6),cy-px(14));
-  }else if(key==='glory'){
-    c.font=pf(17,true);c.fillStyle='#1E7A48';c.textAlign='center';c.textBaseline='middle';c.fillText('글로리드',cx,cy);
-  }
-}
 function drawLogo(c,lx,ly,tw){
   c.save();c.strokeStyle='#DEDAD2';c.lineWidth=px(1);c.beginPath();c.moveTo(lx,ly);c.lineTo(lx+tw,ly);c.stroke();c.restore();
+  if(!logoText||!logoText.trim())return;
   var cy=ly+px(24);
-  var logos=activeLogos&&activeLogos.length?activeLogos:['wawa'];
-  var n=logos.length;
-  // 로고 간격: 텍스트 너비 기반으로 가운데 정렬
-  var gap=px(32);
-  // 각 로고 텍스트 너비 측정용 임시 캔버스
-  var tc=document.createElement('canvas').getContext('2d');
-  var wArr=logos.map(function(key){
-    if(key==='wplus'){tc.font=pf(18,true);return tc.measureText('W+').width+px(8);}
-    tc.font=pf(17,true);return tc.measureText(key==='wawa'?'wawa':'글로리드').width;
-  });
-  var totalW=wArr.reduce(function(s,w){return s+w;},0)+gap*(n-1);
-  var curX=lx+(tw-totalW)/2;
-  logos.forEach(function(key,i){
-    drawOneLogo(c,key,curX+wArr[i]/2,cy);
-    curX+=wArr[i]+gap;
-  });
+  c.font=pf(17,true);c.fillStyle=themeColor();c.textAlign='center';c.textBaseline='middle';
+  c.fillText(logoText.trim(),lx+tw/2,cy);
 }
 function drawHdr(c,stu,ml,hx,hy,tw){rr(c,hx,hy,px(44),px(44),px(11));c.fillStyle=themeColor();c.fill();c.font=px(20)+'px serif';c.textAlign='center';c.textBaseline='middle';c.fillText('📋',hx+px(22),hy+px(22));c.font=pf(23,true);c.fillStyle='#18182A';c.textAlign='left';c.textBaseline='top';c.fillText(stu.name,hx+px(54),hy+px(2));c.font=pf(12,false);c.fillStyle='#A8A5B8';c.fillText('월간 학습 레포트 · '+ml,hx+px(54),hy+px(28));c.font=pf(14,true);c.fillStyle=themeColor();c.textAlign='right';c.textBaseline='top';c.fillText(ml,hx+tw,hy+px(4));if(centerName){c.font=pf(14,true);c.fillStyle=themeColor();c.textAlign='right';c.textBaseline='top';c.fillText(centerName,hx+tw,hy+px(26));}c.strokeStyle='#F0EDE6';c.lineWidth=px(1);c.beginPath();c.moveTo(hx,hy+px(54));c.lineTo(hx+tw,hy+px(54));c.stroke();}
 function cropC(s,h){if(h>=s.height)return s;var c2=document.createElement('canvas');c2.width=s.width;c2.height=h;c2.getContext('2d').drawImage(s,0,0);return c2;}
