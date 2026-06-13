@@ -1074,24 +1074,7 @@ function init(){
     if(saved){
       document.getElementById('lockInp').value=saved;
       document.getElementById('lockBtn').disabled=false;
-      // 클라우드 데이터 먼저 받고 화면 열기 (이전 데이터 안 보이게)
-      var btn=document.getElementById('lockBtn');
-      if(btn){btn.disabled=true;btn.textContent='연결 중…';}
-      document.getElementById('lockErr').style.display='none';
-      cloudLoad(saved,function(ok,data){
-        if(ok){
-          gasUrl=saved;
-          document.getElementById('lockScreen').style.display='none';
-          document.getElementById('mainApp').style.display='block';
-          setSyn('ok','연결됨');
-          applyCloudData(data);
-          renderSP();renderR();renderMemo();
-        }else{
-          // 클라우드 실패 시 localStorage 데이터로 오프라인 모드
-          if(btn){btn.disabled=false;btn.textContent='접속하기';}
-          document.getElementById('lockErr').style.display='block';
-        }
-      },S.month);
+      tryUnlock();
     }
   }catch(e){}
 }
