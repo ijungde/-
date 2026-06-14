@@ -85,7 +85,6 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dk);
 .chip.act .xb{background:rgba(255,255,255,.3)}
 .sempty{font-size:12.5px;color:var(--lt);padding:8px 4px}
 .meta{display:flex;align-items:center;gap:18px;margin-bottom:22px;flex-wrap:wrap}
-.meta label{font-size:12.5px;color:var(--md);font-weight:600}
 .meta input[type=month]{border:1.5px solid var(--bd);border-radius:10px;padding:7px 12px;font-size:12.5px;font-family:inherit;background:var(--w);color:var(--dk);outline:none;box-shadow:var(--sh)}
 .meta input[type=month]:focus{border-color:var(--or)}
 .subgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:20px}
@@ -195,19 +194,12 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dk);
 .pvbody img{max-width:100%;border-radius:8px;box-shadow:var(--sh2)}
 .pvfoot{padding:14px 20px;border-top:1px solid var(--bd);display:flex;gap:10px;justify-content:flex-end}
 .page{max-width:1180px;margin:0 auto;padding:28px 22px 64px}
-.toggle{position:relative;display:inline-block;width:46px;height:26px;flex-shrink:0}
-.toggle input{opacity:0;width:0;height:0}
-.toggle-sl{position:absolute;cursor:pointer;inset:0;background:#D8D4CC;border-radius:26px;transition:.25s}
-.toggle-sl:before{content:'';position:absolute;height:20px;width:20px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.25s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
-.toggle input:checked+.toggle-sl{background:#E8650A}
-.toggle input:checked+.toggle-sl:before{transform:translateX(20px)}
 @media print{.cbanner,.topbar .acts,.sp,.meta,.memosec,.apptab-bar,.dal-msg-panel,.dal-controls{display:none!important}body{background:#fff}.page{padding:16px}.subgrid{grid-template-columns:1fr 1fr}.subc{break-inside:avoid;box-shadow:none}}
 
-/* ══ 데일리 전용 (dal_ prefix) ══ */
+/* 데일리 전용 */
 .dal-wrap{user-select:text}
 .dal-panel{background:var(--w);border:1.5px solid var(--bd);border-radius:14px;padding:14px 18px;margin-bottom:14px;box-shadow:var(--sh)}
 .dal-panel-ttl{font-size:12.5px;font-weight:700;color:var(--dk);display:flex;align-items:center;gap:7px;margin-bottom:10px}
-/* 고정멘트 */
 .dal-tmpl-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:8px}
 @media(max-width:580px){.dal-tmpl-grid{grid-template-columns:1fr}}
 .dal-tmpl-lbl{font-size:11.5px;font-weight:700;color:var(--md);margin-bottom:4px}
@@ -215,7 +207,6 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dk);
 .dal-tmpl-inp:focus{border-color:var(--or);background:var(--w)}
 .dal-tmpl-save{display:inline-flex;align-items:center;gap:5px;padding:6px 13px;border-radius:9px;font-size:12px;font-weight:600;cursor:pointer;border:1.5px solid #B0DCC0;background:var(--bgg);color:var(--gr);font-family:inherit;transition:all .15s}
 .dal-tmpl-save:hover{background:#C8EDDA}
-/* 날짜 */
 .dal-controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
 .dal-datenav{display:flex;align-items:center;gap:4px;background:var(--w);border:1.5px solid var(--bd);border-radius:12px;padding:3px 6px;box-shadow:var(--sh)}
 .dal-datenav-btn{width:28px;height:28px;border-radius:8px;border:none;background:transparent;cursor:pointer;font-size:16px;color:var(--md);display:flex;align-items:center;justify-content:center;transition:.15s}
@@ -223,7 +214,6 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dk);
 .dal-date-lbl{font-size:13px;font-weight:700;color:var(--dk);min-width:116px;text-align:center}
 input.dal-date-inp{border:1.5px solid var(--bd);border-radius:10px;padding:7px 11px;font-size:12.5px;font-family:inherit;background:var(--w);color:var(--dk);outline:none;box-shadow:var(--sh)}
 input.dal-date-inp:focus{border-color:var(--or)}
-/* 액션 버튼 */
 .dalb{display:inline-flex;align-items:center;gap:5px;padding:7px 13px;border-radius:10px;font-size:12.5px;font-weight:600;cursor:pointer;border:1.5px solid var(--bd);background:var(--w);color:var(--md);font-family:inherit;transition:all .15s;white-space:nowrap}
 .dalb:hover{background:var(--bg)}
 .dalb-sm{padding:5px 10px;font-size:12px}
@@ -231,18 +221,14 @@ input.dal-date-inp:focus{border-color:var(--or)}
 .dalb-gr{background:var(--bgg);color:var(--gr);border-color:#B0DCC0}.dalb-gr:hover{background:#C8EDDA}
 .dalb-rd{background:var(--bgr);color:var(--rd);border-color:#F4C4A0}.dalb-rd:hover{background:#FFE4D8}
 .dalb-bl{background:var(--bgb);color:var(--bl);border-color:#B4C8F0}.dalb-bl:hover{background:#C8D8F8}
-/* 학생 선택 */
-.dal-stu-select-wrap{margin-bottom:10px}
-.dal-stu-select-hint{font-size:11.5px;color:var(--lt);margin-bottom:8px}
+.dal-stu-select-wrap{margin-bottom:4px}
 .dal-stu-chips{display:flex;flex-wrap:wrap;gap:7px}
 .dal-stu-chip{display:inline-flex;align-items:center;padding:7px 13px;border-radius:22px;font-size:12.5px;font-weight:500;cursor:pointer;border:1.5px solid var(--bd);background:var(--w);color:var(--md);white-space:nowrap;user-select:none;transition:all .15s}
 .dal-stu-chip:hover{background:var(--bg);border-color:#bbb}
 .dal-stu-chip.sel{background:var(--or);color:#fff;border-color:var(--or);font-weight:700}
-/* 요약 */
 .dal-summary{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
 .dal-sum-item{background:var(--w);border:1px solid var(--bd);border-radius:10px;padding:6px 12px;font-size:12px;color:var(--md);display:flex;align-items:center;gap:6px;box-shadow:var(--sh)}
 .dal-sum-item b{font-size:14px;font-weight:800;color:var(--dk)}
-/* 테이블 */
 .dal-tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
 .dal-tbl{width:100%;border-collapse:separate;border-spacing:0;min-width:660px}
 .dal-tbl thead th{background:#FAFAF8;padding:9px 7px;font-size:12px;font-weight:700;color:var(--md);border-bottom:2px solid var(--bd);text-align:center;white-space:nowrap;position:sticky;top:0;z-index:1}
@@ -262,11 +248,9 @@ input[type=checkbox].dal-chk{width:17px;height:17px;cursor:pointer;accent-color:
 .dal-ta{resize:none;overflow:hidden;min-height:30px;line-height:1.5}
 select.dal-inp{min-width:56px;cursor:pointer}
 .dal-empty-td{text-align:center;padding:32px;color:var(--lt);font-size:13px}
-/* 문자 버튼 */
 .dal-msg-btn{width:28px;height:28px;border-radius:8px;border:1.5px solid var(--bd);background:var(--w);cursor:pointer;font-size:14px;display:inline-flex;align-items:center;justify-content:center;transition:all .15s}
 .dal-msg-btn:hover{background:var(--bgo);border-color:var(--or)}
 .dal-msg-btn.active{background:var(--or);border-color:var(--or)}
-/* 문자 슬라이드 패널 */
 .dal-msg-panel{position:fixed;bottom:0;left:0;right:0;background:var(--w);border-top:2px solid var(--or);border-radius:20px 20px 0 0;box-shadow:0 -6px 32px rgba(24,20,42,.15);z-index:9000;transform:translateY(100%);transition:transform .32s cubic-bezier(.4,0,.2,1);max-height:68vh;display:flex;flex-direction:column}
 .dal-msg-panel.open{transform:translateY(0)}
 .dal-msg-panel-hd{display:flex;align-items:center;justify-content:space-between;padding:13px 20px 10px;border-bottom:1px solid var(--bd);flex-shrink:0}
@@ -277,7 +261,6 @@ select.dal-inp{min-width:56px;cursor:pointer}
 .dal-preview-box{background:#F8F6F2;border:1.5px solid var(--bd);border-radius:12px;padding:14px 16px;font-size:13px;line-height:1.85;white-space:pre-wrap;color:var(--dk);margin-bottom:12px;user-select:text;min-height:60px}
 .dal-copy-row{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
 .dal-copy-hint{font-size:12px;color:var(--lt)}
-/* PDF 저장 모달 */
 .dal-pdf-modal{display:none;position:fixed;inset:0;background:rgba(24,20,42,.55);z-index:99980;align-items:center;justify-content:center;padding:20px}
 .dal-pdf-modal.open{display:flex}
 .dal-pdf-box{background:#fff;border-radius:20px;box-shadow:0 12px 48px rgba(24,20,42,.22);max-width:95vw;max-height:90vh;overflow:hidden;display:flex;flex-direction:column;min-width:320px}
@@ -302,7 +285,6 @@ select.dal-inp{min-width:56px;cursor:pointer}
   </div>
 </div>
 <div class="toast" id="toast"></div>
-
 <div id="mainApp" style="display:none">
 <div class="page">
 
@@ -322,7 +304,7 @@ select.dal-inp{min-width:56px;cursor:pointer}
   <div class="apptab" id="apptab-monthly" onclick="switchAppTab('monthly')">📊 월간 레포트</div>
 </div>
 
-<!-- ══ 월간 레포트 ══ -->
+<!-- 월간 레포트 -->
 <div class="appview" id="appview-monthly">
 <div class="logopanel">
   <div class="logopanel-row">
@@ -381,7 +363,7 @@ select.dal-inp{min-width:56px;cursor:pointer}
     <div class="pvbody"><img id="pvimg" src="" alt="미리보기"></div>
     <div class="pvfoot">
       <button class="btn" onclick="closePv()">닫기</button>
-      <button class="btn btn-p" id="pvCopyBtn" onclick="doCopyFromPv()">
+      <button class="btn btn-p" onclick="doCopyFromPv()">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>클립보드에 복사
       </button>
     </div>
@@ -417,29 +399,21 @@ select.dal-inp{min-width:56px;cursor:pointer}
   </div>
   <div class="memolines" id="memoLines"></div>
 </div>
-</div><!-- /monthly -->
+</div>
 
-<!-- ══ 데일리 평가 ══ -->
+<!-- 데일리 평가 -->
 <div class="appview act" id="appview-daily">
 <div class="dal-wrap">
-
-  <!-- ① 고정 문자 멘트 -->
+  <!-- 고정 멘트 -->
   <div class="dal-panel">
     <div class="dal-panel-ttl">✉️ 고정 문자 멘트</div>
     <div class="dal-tmpl-grid">
-      <div>
-        <div class="dal-tmpl-lbl">📌 인사말 (앞)</div>
-        <textarea class="dal-tmpl-inp" id="dalMsgPrefix" oninput="dalRefreshPreview()"></textarea>
-      </div>
-      <div>
-        <div class="dal-tmpl-lbl">📌 마무리 멘트 (뒤)</div>
-        <textarea class="dal-tmpl-inp" id="dalMsgSuffix" oninput="dalRefreshPreview()"></textarea>
-      </div>
+      <div><div class="dal-tmpl-lbl">📌 인사말 (앞)</div><textarea class="dal-tmpl-inp" id="dalMsgPrefix" oninput="dalRefreshPreview()"></textarea></div>
+      <div><div class="dal-tmpl-lbl">📌 마무리 멘트 (뒤)</div><textarea class="dal-tmpl-inp" id="dalMsgSuffix" oninput="dalRefreshPreview()"></textarea></div>
     </div>
     <button class="dal-tmpl-save" onclick="dalSaveTmpl()">✅ 멘트 저장</button>
   </div>
-
-  <!-- ② 날짜 + 액션 -->
+  <!-- 날짜 + 액션 -->
   <div class="dal-controls">
     <div class="dal-datenav">
       <button class="dal-datenav-btn" onclick="dalMoveDate(-1)">‹</button>
@@ -454,25 +428,21 @@ select.dal-inp{min-width:56px;cursor:pointer}
       <button class="dalb dalb-sm dalb-bl" onclick="dalSavePDF()">📄 PDF·이미지 저장</button>
     </div>
   </div>
-
-  <!-- ③ 학생 선택 -->
+  <!-- 학생 선택 -->
   <div class="dal-panel">
     <div class="dal-panel-ttl" style="justify-content:space-between;flex-wrap:wrap;gap:8px">
       <span>👥 수업 학생 선택 <span style="font-size:11px;font-weight:400;color:var(--lt)">클릭으로 오늘 수업할 학생을 선택하세요</span></span>
-      <div style="display:flex;gap:7px;align-items:center">
-        <input type="text" id="dalNewStuInp" class="dal-inp" placeholder="학생 이름" style="width:110px;padding:5px 8px;font-size:12px" onkeydown="if(event.key==='Enter')dalAddStu()">
+      <div style="display:flex;gap:7px;align-items:center;flex-wrap:wrap">
+        <input type="text" id="dalStuSearchInp" class="dal-inp" placeholder="🔍 학생 검색" style="width:110px;padding:5px 8px;font-size:12px" oninput="dalStuSearch=this.value;dalRenderChips()">
+        <input type="text" id="dalNewStuInp" class="dal-inp" placeholder="이름 입력" style="width:90px;padding:5px 8px;font-size:12px" onkeydown="if(event.key==='Enter')dalAddStu()">
         <button class="dalb dalb-sm dalb-p" onclick="dalAddStu()">+ 추가</button>
       </div>
     </div>
-    <div class="dal-stu-select-wrap">
-      <div class="dal-stu-chips" id="dalStuChips"></div>
-    </div>
+    <div class="dal-stu-select-wrap"><div class="dal-stu-chips" id="dalStuChips"></div></div>
   </div>
-
-  <!-- ④ 요약 -->
+  <!-- 요약 -->
   <div class="dal-summary" id="dalSummary"></div>
-
-  <!-- ⑤ 평가 테이블 -->
+  <!-- 테이블 -->
   <div class="dal-panel" style="padding:0;overflow:hidden">
     <div style="padding:11px 16px 10px;border-bottom:1px solid var(--bd);background:#FAFAF8;font-size:13px;font-weight:700;color:var(--dk)">📊 수업 기록</div>
     <div class="dal-tbl-wrap">
@@ -491,8 +461,7 @@ select.dal-inp{min-width:56px;cursor:pointer}
       </table>
     </div>
   </div>
-
-  <!-- ⑥ 문자 슬라이드 패널 -->
+  <!-- 문자 패널 -->
   <div class="dal-msg-panel" id="dalMsgPanel">
     <div class="dal-msg-panel-hd">
       <span class="dal-msg-panel-ttl">💬 <span id="dalMsgPanelName"></span> 문자 미리보기</span>
@@ -506,14 +475,10 @@ select.dal-inp{min-width:56px;cursor:pointer}
       </div>
     </div>
   </div>
-
-  <!-- ⑦ PDF 미리보기 모달 -->
+  <!-- PDF 모달 -->
   <div class="dal-pdf-modal" id="dalPdfModal" onclick="if(event.target===this)dalClosePdfModal()">
     <div class="dal-pdf-box">
-      <div class="dal-pdf-hd">
-        <span class="dal-pdf-ttl" id="dalPdfTtl">데일리 평가 저장</span>
-        <button class="dal-pdf-close" onclick="dalClosePdfModal()">✕</button>
-      </div>
+      <div class="dal-pdf-hd"><span class="dal-pdf-ttl" id="dalPdfTtl">데일리 평가 저장</span><button class="dal-pdf-close" onclick="dalClosePdfModal()">✕</button></div>
       <div class="dal-pdf-body" id="dalPdfBody"></div>
       <div class="dal-pdf-foot">
         <button class="dalb" onclick="dalClosePdfModal()">닫기</button>
@@ -522,19 +487,17 @@ select.dal-inp{min-width:56px;cursor:pointer}
       </div>
     </div>
   </div>
-
 </div>
-</div><!-- /daily -->
+</div>
 
-</div></div><!-- /page /mainApp -->
+</div></div>
 
 <script id="embedded-data" type="application/json">{"students":[],"values":{},"month":"2026-06","activeStudent":null}</script>
 <script>
-/* ── 복제 방지 ── */
 document.addEventListener('contextmenu',function(e){e.preventDefault();});
 document.addEventListener('keydown',function(e){if((e.ctrlKey||e.metaKey)&&['s','u','p','a'].indexOf(e.key)!==-1)e.preventDefault();if(e.key==='F12')e.preventDefault();});
 
-/* ════════ 월간 레포트 원본 (변경 없음) ════════ */
+/* ════ 월간 레포트 원본 ════ */
 var DEFAULT_SUBJECTS=[{key:'korean',label:'국어'},{key:'english',label:'영어'},{key:'math',label:'수학'},{key:'social',label:'사회'},{key:'science',label:'과학'}];
 var SUBJECTS=DEFAULT_SUBJECTS.slice();
 var SUBJ_LS='rpt_subj_v1',CENTER_LS='rpt_center_v1',centerName='',THEME_LS='rpt_theme_v1';
@@ -551,13 +514,13 @@ function onCenterName(v){centerName=v.trim();try{localStorage.setItem(CENTER_LS,
 var CENTER_PW='1234',_centerUnlocked=false;
 function lockCenterIfSet(){var el=document.getElementById('centerInp'),hint=document.getElementById('centerHint'),unlock=document.getElementById('centerUnlock');if(!el)return;if(_centerUnlocked){el.disabled=false;if(hint)hint.style.display='none';if(unlock)unlock.style.display='none';return;}var isSet=centerName&&centerName.trim()!=='';el.disabled=isSet;if(hint)hint.style.display=isSet?'none':'';if(unlock)unlock.style.display=isSet?'':'none';}
 function unlockCenter(){var pw=prompt('센터명을 수정하려면 비밀번호를 입력하세요');if(pw==null)return;if(pw!==CENTER_PW){showToast('⚠️ 비밀번호가 올바르지 않습니다');return;}_centerUnlocked=true;var el=document.getElementById('centerInp');if(el){el.disabled=false;setTimeout(function(){el.focus();},50);}var unlock=document.getElementById('centerUnlock');if(unlock)unlock.style.display='none';var hint=document.getElementById('centerHint');if(hint)hint.style.display='';showToast('🔓 센터명 수정 가능');}
-function commitCenterName(){if(_centerUnlocked){_centerUnlocked=false;}if(centerName&&centerName.trim()!==''){lockCenterIfSet();}}
+function commitCenterName(){if(_centerUnlocked)_centerUnlocked=false;if(centerName&&centerName.trim()!=='')lockCenterIfSet();}
 function initCenter(){var s=null;if(S.values&&S.values['__centerName__']!=null)s=S.values['__centerName__'];else{try{s=localStorage.getItem(CENTER_LS);}catch(e){}}if(s!=null){centerName=s;var el=document.getElementById('centerInp');if(el)el.value=s;try{localStorage.setItem(CENTER_LS,s);}catch(e){}}lockCenterIfSet();}
 function saveSUBJ(){try{localStorage.setItem(SUBJ_LS,JSON.stringify(SUBJECTS));}catch(e){}}
 function loadSUBJ(){try{var s=localStorage.getItem(SUBJ_LS);if(s){var p=JSON.parse(s);if(Array.isArray(p)&&p.length>0){SUBJECTS=p;return;}}}catch(e){}SUBJECTS=DEFAULT_SUBJECTS.slice();}
 function renderSubjPanel(){var list=document.getElementById('subjList');if(!list)return;list.innerHTML='';SUBJECTS.forEach(function(sub,i){var chip=document.createElement('span');chip.className='subj-chip';var ld=i===0?' disabled':'',rd=i===SUBJECTS.length-1?' disabled':'';chip.innerHTML='<span class="smove'+ld+'" onclick="'+(i===0?'':'moveSubj('+i+',-1)')+'">‹</span><span>'+esc(sub.label)+'</span><span class="smove'+rd+'" onclick="'+(i===SUBJECTS.length-1?'':'moveSubj('+i+',1)')+'">›</span><span class="sedit" onclick="editSubj('+i+')">✏️</span>'+(SUBJECTS.length>1?'<span class="sdel" onclick="delSubj('+i+')">&times;</span>':'');list.appendChild(chip);});var ab=document.createElement('button');ab.className='subj-addbtn';ab.innerHTML='+ 과목 추가';ab.onclick=addSubj;list.appendChild(ab);}
 function moveSubj(i,dir){var j=i+dir;if(j<0||j>=SUBJECTS.length)return;var tmp=SUBJECTS[i];SUBJECTS[i]=SUBJECTS[j];SUBJECTS[j]=tmp;saveSUBJ();renderSubjPanel();renderR();}
-function subjKeyFromName(name){var d={'국어':'korean','영어':'english','수학':'math','사회':'social','과학':'science'};if(d[name])return d[name];var h=0;for(var i=0;i<name.length;i++){h=((h<<5)-h+name.charCodeAt(i))|0;}return'subj_'+Math.abs(h);}
+function subjKeyFromName(name){var d={'국어':'korean','영어':'english','수학':'math','사회':'social','과학':'science'};if(d[name])return d[name];var h=0;for(var i=0;i<name.length;i++){h=((h<<5)-h+name.charCodeAt(i))|0;}return 'subj_'+Math.abs(h);}
 function subjHasData(key){return Object.keys(S.values).some(function(vk){return vk.indexOf('_'+key+'_')!==-1;});}
 function addSubj(){var n=prompt('추가할 과목 이름을 입력하세요');if(!n||!n.trim())return;var name=n.trim();if(SUBJECTS.some(function(s){return s.label===name;})){showToast('⚠️ 이미 있는 과목입니다');return;}var key=subjKeyFromName(name);SUBJECTS.push({key:key,label:name});saveSUBJ();renderSubjPanel();renderR();showToast(subjHasData(key)?'✅ ['+name+'] 추가 — 이전 내용 복구됨':'✅ ['+name+'] 과목 추가');}
 function editSubj(i){var n=prompt('과목 이름 수정',SUBJECTS[i].label);if(!n||!n.trim())return;SUBJECTS[i].label=n.trim();saveSUBJ();renderSubjPanel();renderR();}
@@ -575,8 +538,8 @@ function cho(n){if(!n||!n.trim())return'기타';var c=n.charCodeAt(0);if(c<0xAC0
 var S={month:'',students:[],activeStudent:null,values:{}},undoStack=[],_es=null,srch='',actCho='전체',gasUrl='';
 function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function fk(sid,sub,sec){return sid+'_'+S.month+'_'+sub+'_'+sec;}
-function tk(sid,sub){return't_'+sid+'_'+sub;}
-function mk(i){return'memo__'+S.month+'__'+i;}
+function tk(sid,sub){return 't_'+sid+'_'+sub;}
+function mk(i){return 'memo__'+S.month+'__'+i;}
 function gv(k){return S.values[k]==null?'':S.values[k];}
 function sv2(k,v){S.values[k]=v;}
 function persist(){try{localStorage.setItem(LS_KEY,JSON.stringify(S));}catch(e){}}
@@ -589,14 +552,14 @@ function commitEdit(){if(!_es)return;if(JSON.stringify(S.values)!==JSON.stringif
 function pushU(d){undoStack.push({desc:d,snap:JSON.parse(JSON.stringify(S.values))});if(undoStack.length>50)undoStack.shift();_es=null;updU();}
 function updU(){document.getElementById('undoBtn').disabled=!undoStack.length;}
 function undoAct(){if(!undoStack.length)return;_es=null;S.values=undoStack.pop().snap;persist();renderR();renderMemo();updU();}
-function tryUnlock(){var url=document.getElementById('lockInp').value.trim();if(!url)return;var btn=document.getElementById('lockBtn');btn.disabled=true;btn.textContent='확인 중…';document.getElementById('lockErr').style.display='none';cloudLoad(url,function(ok,data){if(ok){gasUrl=url;try{localStorage.setItem(GAS_LS,url);}catch(e){}document.getElementById('lockScreen').style.display='none';document.getElementById('mainApp').style.display='block';setSyn('ok','연결됨');applyCloudData(data);renderSP();renderR();renderMemo();}else{btn.disabled=false;btn.textContent='접속하기';document.getElementById('lockErr').style.display='block';}},S.month);}
+function tryUnlock(){var url=document.getElementById('lockInp').value.trim();if(!url)return;var btn=document.getElementById('lockBtn');btn.disabled=true;btn.textContent='확인 중…';document.getElementById('lockErr').style.display='none';cloudLoad(url,function(ok,data){if(ok){gasUrl=url;try{localStorage.setItem(GAS_LS,url);}catch(e){}document.getElementById('lockScreen').style.display='none';document.getElementById('mainApp').style.display='block';setSyn('ok','연결됨');applyCloudData(data);renderSP();renderR();renderMemo();dalInitStudents();}else{btn.disabled=false;btn.textContent='접속하기';document.getElementById('lockErr').style.display='block';}},S.month);}
 var _ci=0;
 function jsonpLoad(url,cb){var nm='_jcb'+(++_ci);window[nm]=function(d){cb(null,d);delete window[nm];var s=document.getElementById(nm);if(s)s.parentNode.removeChild(s);};var sc=document.createElement('script');sc.id=nm;sc.src=url+(url.indexOf('?')>=0?'&':'?')+'callback='+nm+'&_='+Date.now();sc.onerror=function(){cb(new Error('실패'));delete window[nm];};document.head.appendChild(sc);setTimeout(function(){if(window[nm]){cb(new Error('타임아웃'));delete window[nm];}},12000);}
 function cloudLoad(url,cb,month){var mParam=month?'&month='+encodeURIComponent(month):'';var sep=url.indexOf('?')>=0?'&':'?';jsonpLoad(url+sep+'_t='+Date.now()+mParam,function(e,d){if(e||!d||!d.ok){cb(false,null);}else{cb(true,d.data);}});}
 function cloudSave(){if(!gasUrl)return;setSyn('ing','저장 중…');fetch(gasUrl,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify({action:'save',payload:{students:S.students,values:S.values,month:S.month,archived:S.archived||[]}})}).then(function(){setSyn('ok','저장됨 '+new Date().toLocaleTimeString());}).catch(function(){setSyn('err','저장 실패');});}
 function setSyn(s,m){var d=document.getElementById('syndot');d.className='dot'+(s==='ok'?' ok':s==='ing'?' ing':s==='err'?' err':'');document.getElementById('synmsg').textContent=m;}
 function applyCloudData(data){if(!data||!data.__students__)return;S.students=data.__students__||[];S.month=data.__month__||S.month;if(Array.isArray(data.__archived__))S.archived=data.__archived__;if(data.values&&typeof data.values==='object'){Object.keys(data.values).forEach(function(k){S.values[k]=data.values[k];});}else{Object.keys(data).forEach(function(k){if(k!=='__students__'&&k!=='__month__'&&k!=='__archived__'&&k!=='values')S.values[k]=data[k];});}S.students.sort(function(a,b){return a.name.localeCompare(b.name,'ko');});if(!S.activeStudent&&S.students.length)S.activeStudent=S.students[0].id;document.getElementById('monthInput').value=S.month;updateMonthLabel();if(S.values&&S.values['__centerName__']!=null){centerName=S.values['__centerName__'];var ce=document.getElementById('centerInp');if(ce)ce.value=centerName;}lockCenterIfSet();persist();}
-function doSync(){if(!gasUrl)return;setSyn('ing','동기화 중…');cloudLoad(gasUrl,function(ok,data){if(ok&&data){applyCloudData(data);renderSP();renderR();renderMemo();dalRenderChips();dalRenderTable();setSyn('ok','동기화 완료 '+new Date().toLocaleTimeString());showToast('🔄 동기화 완료!');}else{setSyn('err','동기화 실패');showToast('❌ 동기화 실패');}},S.month);}
+function doSync(){if(!gasUrl)return;setSyn('ing','동기화 중…');cloudLoad(gasUrl,function(ok,data){if(ok&&data){applyCloudData(data);renderSP();renderR();renderMemo();dalInitStudents();dalRenderChips();setSyn('ok','동기화 완료 '+new Date().toLocaleTimeString());showToast('🔄 동기화 완료!');}else{setSyn('err','동기화 실패');showToast('❌ 동기화 실패');}},S.month);}
 function doDisconn(){if(!confirm('연결을 해제합니다. 다시 접속하려면 URL이 필요합니다.'))return;gasUrl='';try{localStorage.removeItem(GAS_LS);}catch(e){}document.getElementById('mainApp').style.display='none';document.getElementById('lockScreen').style.display='flex';document.getElementById('lockInp').value='';document.getElementById('lockBtn').disabled=true;}
 function addStu(){if(isDemo&&S.students.length>=10){showToast('⚠️ 데모 버전은 최대 10명까지');return;}if(!isDemo&&S.students.length>=300){showToast('⚠️ 최대 300명');return;}var n=prompt('학생 이름을 입력하세요');if(!n||!n.trim())return;var trimmed=n.trim();var dup=S.students.find(function(s){return s.name===trimmed;});if(dup){var fix=prompt('⚠️ ['+trimmed+'] 이름이 이미 있습니다.\n새 이름 입력:',trimmed);if(!fix||!fix.trim())return;trimmed=fix.trim();if(S.students.find(function(s){return s.name===trimmed;})){showToast('⚠️ 이름 중복');return;}}purgeArchive();if(!S.archived)S.archived=[];var arcIdx=S.archived.findIndex(function(a){return a.name===trimmed;});var id;if(arcIdx!==-1){var arc=S.archived[arcIdx];var delDate=arc.deletedAt?new Date(arc.deletedAt):null;var dateStr=delDate?(delDate.getFullYear()+'.'+(delDate.getMonth()+1)+'.'+delDate.getDate()):'';if(confirm('['+trimmed+'] 이전 기록이 있습니다.'+(dateStr?'\n(삭제일: '+dateStr+')':'')+'\n\n이전 내용을 불러오시겠습니까?')){id=arc.id;S.students.push({id:id,name:trimmed});S.archived.splice(arcIdx,1);S.students.sort(function(a,b){return a.name.localeCompare(b.name,'ko');});S.activeStudent=id;actCho=cho(trimmed);srch='';document.getElementById('searchInput').value='';autosave();renderSP();renderR();renderMemo();showToast('✅ ['+trimmed+'] 복구 완료');return;}else{var oldId=arc.id;Object.keys(S.values).forEach(function(k){if(k.indexOf(oldId+'_')===0||k.indexOf('t_'+oldId+'_')===0)delete S.values[k];});S.archived.splice(arcIdx,1);}}id='s'+Date.now()+'_'+Math.floor(Math.random()*1000);S.students.push({id:id,name:trimmed});S.students.sort(function(a,b){return a.name.localeCompare(b.name,'ko');});S.activeStudent=id;actCho=cho(trimmed);srch='';document.getElementById('searchInput').value='';autosave();renderSP();renderR();renderMemo();}
 function purgeArchive(){if(!S.archived||!S.archived.length)return;var T=1000*60*60*24*30*3,now=Date.now(),keep=[];S.archived.forEach(function(a){var t=a.deletedAt||0;if(t&&(now-t)>T){Object.keys(S.values).forEach(function(k){if(k.indexOf(a.id+'_')===0||k.indexOf('t_'+a.id+'_')===0)delete S.values[k];});}else{keep.push(a);}});S.archived=keep;}
@@ -612,6 +575,7 @@ function renderMemo(){var stu=S.students.find(function(s){return s.id===S.active
 function renderR(){var grid=document.getElementById('reportGrid');grid.innerHTML='';var stu=S.students.find(function(s){return s.id===S.activeStudent;});document.getElementById('stuTitle').textContent=stu?stu.name+' 월간 레포트':'월간 학습 레포트';if(!stu){grid.innerHTML='<div class="estt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="16" y1="11" x2="22" y2="11"/></svg><p>학생을 추가하고 레포트를 작성해보세요</p><small>위 학생 목록에서 학생을 선택하거나 추가하세요</small></div>';return;}SUBJECTS.forEach(function(sub){var card=document.createElement('div');card.className='subc';var tv=gv(tk(stu.id,sub.key));function bs(s){var key=fk(stu.id,sub.key,s.key),val=gv(key),inner='';if(s.type==='star'){var at=gv(fk(stu.id,sub.key,'attitude_text')),sv3=parseInt(gv(key)||0),stars='';for(var i=1;i<=5;i++)stars+='<span class="star'+(i<=sv3?' on':'')+'" data-key="'+key+'" data-v="'+i+'">★</span>';inner='<textarea class="fi ml" data-key="'+fk(stu.id,sub.key,'attitude_text')+'" placeholder="수업태도 내용…">'+esc(at)+'</textarea><div class="star-row" data-sk="'+key+'">'+stars+'</div>';}else if(s.type==='text'){inner='<textarea class="fi" data-key="'+key+'" placeholder="입력하세요…" style="height:22px;" rows="1">'+esc(val)+'</textarea>';}else{var mlx=s.key==='comment'?' maxlength="600"':'',ph=s.key==='comment'?'600자 이내로 입력해주세요':'입력하세요…';inner='<textarea class="fi ml" data-key="'+key+'" placeholder="'+ph+'"'+mlx+'>'+esc(val)+'</textarea>';}return'<div class="sb '+s.cls+'"><div class="sh2"><span class="sej">'+s.ej+'</span><span class="stt">'+s.label+'</span></div><div class="sdiv"></div>'+inner+'</div>';}var body='<div class="cbody"><div class="srow">'+bs(SEC[0])+bs(SEC[1])+'</div><div class="srow">'+bs(SEC[2])+bs(SEC[3])+'</div>'+bs(SEC[4])+'</div>';card.innerHTML='<div class="chd"><div class="chl"><span class="sbadge">'+sub.label+'</span><div class="ta"><span class="tl">담당</span><input class="ti" data-tkey="'+tk(stu.id,sub.key)+'" placeholder="선생님 이름" value="'+esc(tv)+'"></div></div><div class="chbtns"><button class="cib prevb" onclick="loadPrevSubject(\''+sub.key+'\')" title="이전달 내용 불러오기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10h11a6 6 0 0 1 0 12H3"/><polyline points="7,6 3,10 7,14"/></svg>이전달</button><button class="cib" onclick="copySubImg(\''+sub.key+'\',\''+sub.label+'\')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>복사</button></div></div>'+body;grid.appendChild(card);card.addEventListener('focusin',function(e){if(e.target.dataset.key||e.target.dataset.tkey)beginEdit();});card.addEventListener('focusout',function(e){if(e.target.dataset.key||e.target.dataset.tkey)commitEdit();});card.addEventListener('input',function(e){var t=e.target;if(t.dataset.tkey){sv2(t.dataset.tkey,t.value);autosave();return;}if(t.dataset.key){sv2(t.dataset.key,t.value);autosave();autoR(t);}});card.addEventListener('click',function(e){var star=e.target.closest('.star');if(!star)return;var key=star.dataset.key||star.closest('[data-sk]').dataset.sk,v=parseInt(star.dataset.v),cur=parseInt(gv(key)||0),nv=cur===v?0:v;pushU('별점');sv2(key,nv);autosave();star.closest('.star-row').querySelectorAll('.star').forEach(function(x){parseInt(x.dataset.v)<=nv?x.classList.add('on'):x.classList.remove('on');});});card.querySelectorAll('textarea').forEach(function(t){setTimeout(function(){autoR(t);},0);});});}
 function autoR(el){el.style.height='auto';el.style.height=el.scrollHeight+'px';}
 function showToast(msg){var t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(function(){t.classList.remove('show');},3200);}
+
 /* 이미지 엔진 */
 var SC=2.5;
 function pf(sz,b){return(b?'700 ':'400 ')+Math.round(sz*SC)+"px 'Noto Sans KR',sans-serif";}
@@ -631,45 +595,64 @@ function drawHdr(c,stu,ml,hx,hy,tw){rr(c,hx,hy,px(44),px(44),px(11));c.fillStyle
 function cropC(s,h){if(h>=s.height)return s;var c2=document.createElement('canvas');c2.width=s.width;c2.height=h;c2.getContext('2d').drawImage(s,0,0);return c2;}
 function buildCanvas(stu){var ml=(S.month||'미지정').replace('-','년 ')+'월',oP=px(28),gap=px(14),tgap=px(6),hH=px(74),lgH=px(52),baseW=px(1000),cW=Math.floor((baseW-oP*2-gap)/2),full=[],empty=[];SUBJECTS.forEach(function(s){(hasCont(stu,s.key)?full:empty).push(s);});function mkM(){var c=document.createElement('canvas');c.width=10;c.height=10;return c.getContext('2d');}var n=full.length,e=empty.length;if(n===0){var mTPR=Math.max(1,Math.floor((baseW-oP*2+tgap)/(TW2+tgap))),tR=Math.ceil(e/mTPR),tRH=(TH2+tgap)*tR-tgap,cv=document.createElement('canvas');cv.width=baseW;cv.height=oP+hH+oP+tRH+oP+lgH;var c=cv.getContext('2d');c.fillStyle='#FFF';c.fillRect(0,0,cv.width,cv.height);drawHdr(c,stu,ml,oP,oP,baseW-oP*2);var ty=oP+hH+oP;for(var ti=0;ti<e;ti++)drawTile(c,empty[ti],oP+(ti%mTPR)*(TW2+tgap),ty+Math.floor(ti/mTPR)*(TH2+tgap));drawLogo(c,oP,ty+tRH+px(14),baseW-oP*2);return cropC(cv,ty+tRH+px(14)+lgH);}var mx=mkM(),fH=full.map(function(s){return calcCardH(mx,s,stu,cW);}),rows=[];for(var i=0;i<n;i+=2){var p=[];for(var j=0;j<2&&i+j<n;j++)p.push(full[i+j]);rows.push(p);}var rH=rows.map(function(p){var m=0;p.forEach(function(s){m=Math.max(m,fH[full.indexOf(s)]);});return m;}),cH2=rH.reduce(function(a,b){return a+b;},0)+(rH.length>1?gap*(rH.length-1):0),emL=e===0?'none':n===1?'right_col':n===3?'right_of_last':'below',cvW=baseW,rX=0;if(emL==='right_col'){cvW=oP+cW+tgap+TW2+oP;rX=oP+cW+tgap;}else if(emL==='right_of_last'){cvW=baseW+tgap+TW2;rX=baseW+tgap;}var eH=0;if(emL==='below'){var c2=Math.max(1,Math.floor((cvW-oP*2+tgap)/(TW2+tgap))),tR2=Math.ceil(e/c2);eH=(TH2+tgap)*tR2-tgap+gap;}var totH=oP+hH+oP+cH2+eH+oP+lgH,cv2=document.createElement('canvas');cv2.width=cvW;cv2.height=totH;var c3=cv2.getContext('2d');c3.fillStyle='#FFF';c3.fillRect(0,0,cvW,totH);drawHdr(c3,stu,ml,oP,oP,cvW-oP*2);var cy=oP+hH+oP;if(emL==='right_col'){drawFC(c3,full[0],stu,oP,cy,cW);for(var ti2=0;ti2<e;ti2++)drawTile(c3,empty[ti2],rX,cy+ti2*(TH2+tgap));}else if(emL==='right_of_last'){for(var ri=0;ri<rows.length;ri++){var p2=rows[ri],isL=(ri===rows.length-1);for(var ci=0;ci<p2.length;ci++)drawFC(c3,p2[ci],stu,ci===0?oP:oP+cW+gap,cy,cW);if(isL&&e>0){var tX=oP+cW+gap;for(var ti3=0;ti3<e;ti3++)drawTile(c3,empty[ti3],tX,cy+ti3*(TH2+tgap));}cy+=rH[ri]+(ri<rows.length-1?gap:0);}}else{for(var ri2=0;ri2<rows.length;ri2++){var p3=rows[ri2];for(var ci2=0;ci2<p3.length;ci2++)drawFC(c3,p3[ci2],stu,ci2===0?oP:oP+cW+gap,cy,cW);cy+=rH[ri2]+(ri2<rows.length-1?gap:0);}if(e>0&&emL==='below'){cy+=gap;var c4=Math.max(1,Math.floor((cvW-oP*2+tgap)/(TW2+tgap)));for(var ti4=0;ti4<e;ti4++)drawTile(c3,empty[ti4],oP+(ti4%c4)*(TW2+tgap),cy+Math.floor(ti4/c4)*(TH2+tgap));var tR3=Math.ceil(e/c4);cy+=(TH2+tgap)*tR3-tgap;}}var lY;if(emL==='right_col'){var tb=oP+hH+oP+e*(TH2+tgap)-tgap,cb3=oP+hH+oP+fH[0];lY=Math.max(tb,cb3)+px(14);}else{lY=cy+px(14);}drawLogo(c3,oP,lY,cvW-oP*2);if(isDemo){var wc=cv2.getContext('2d');wc.save();wc.translate(cvW/2,totH/2);wc.rotate(-Math.PI/5);wc.font='bold '+px(88)+'px sans-serif';wc.fillStyle='rgba(220,60,60,0.18)';wc.textAlign='center';wc.textBaseline='middle';wc.fillText('DEMO',0,-px(40));wc.font='bold '+px(36)+'px sans-serif';wc.fillStyle='rgba(220,60,60,0.15)';wc.fillText('체험판 · 무단사용금지',0,px(40));wc.restore();}return cropC(cv2,lY+px(48));}
 function copyToClip(canvas,label){canvas.toBlob(function(blob){if(!blob){showToast('❌ 이미지 생성 실패');return;}if(navigator.clipboard&&window.ClipboardItem){try{navigator.clipboard.write([new ClipboardItem({'image/png':blob})]).then(function(){showToast('📋 '+label+' 복사 완료!');}).catch(function(){showToast('⚠️ 클립보드 권한을 허용해주세요.');});}catch(e){showToast('⚠️ Chrome 브라우저를 사용해 주세요.');}}else{showToast('⚠️ Chrome 브라우저를 사용해 주세요.');}},'image/png');}
-function copyAll(){var stu=S.students.find(function(s){return s.id===S.activeStudent;});if(!stu){alert('학생을 먼저 선택해주세요.');return;}var btn=document.getElementById('imgBtn');btn.disabled=true;setTimeout(function(){try{copyToClip(buildCanvas(stu),stu.name+' 레포트');}catch(err){alert('오류: '+err.message);}btn.disabled=false;btn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>이미지 복사';},50);}
-function copySubImg(sk,sl){var stu=S.students.find(function(s){return s.id===S.activeStudent;});if(!stu){alert('학생을 먼저 선택해주세요.');return;}var sub=SUBJECTS.find(function(s){return s.key===sk;});if(!sub)return;setTimeout(function(){try{var ml=(S.month||'미지정').replace('-','년 ')+'월',oP=px(28),hH=px(68),lgH=px(52),cW=px(720)-oP*2,mc=document.createElement('canvas');mc.width=cW;mc.height=10;var cH3=calcCardH(mc.getContext('2d'),sub,stu,cW),tH=oP+hH+oP+cH3+px(14)+lgH+oP,cv=document.createElement('canvas');cv.width=px(720);cv.height=tH;var c=cv.getContext('2d');c.fillStyle='#FFF';c.fillRect(0,0,px(720),tH);var hx=oP,hy=oP;rr(c,hx,hy,px(38),px(38),px(10));c.fillStyle=themeColor();c.fill();c.font=px(18)+'px serif';c.textAlign='center';c.textBaseline='middle';c.fillText(SEC[0].ej,hx+px(19),hy+px(19));c.font=pf(20,true);c.fillStyle='#18182A';c.textAlign='left';c.textBaseline='top';c.fillText(stu.name+' 학생',hx+px(48),hy+px(2));c.font=pf(12,false);c.fillStyle='#A8A5B8';c.fillText('월간 성장 리포트 / '+sl,hx+px(48),hy+px(24));c.font=pf(13,true);c.fillStyle=themeColor();c.textAlign='right';c.textBaseline='middle';c.fillText(ml,px(720)-oP,hy+px(20));c.strokeStyle='#F0EDE6';c.lineWidth=px(1);c.beginPath();c.moveTo(oP,hy+px(48));c.lineTo(px(720)-oP,hy+px(48));c.stroke();drawFC(c,sub,stu,oP,hy+hH+oP,cW);drawLogo(c,oP,hy+hH+oP+cH3+px(14),px(720)-oP*2);if(isDemo){c.save();c.translate(cv.width/2,cv.height/2);c.rotate(-Math.PI/5);c.font='bold '+px(88)+'px sans-serif';c.fillStyle='rgba(220,60,60,0.18)';c.textAlign='center';c.textBaseline='middle';c.fillText('DEMO',0,-px(40));c.font='bold '+px(36)+'px sans-serif';c.fillStyle='rgba(220,60,60,0.15)';c.fillText('체험판 · 무단사용금지',0,px(40));c.restore();}copyToClip(cv,sl);}catch(err){alert('오류: '+err.message);}},50);}
+function copySubImg(sk,sl){var stu=S.students.find(function(s){return s.id===S.activeStudent;});if(!stu){alert('학생을 먼저 선택해주세요.');return;}setTimeout(function(){try{var ml=(S.month||'미지정').replace('-','년 ')+'월',oP=px(28),hH=px(68),lgH=px(52),cW=px(720)-oP*2,mc=document.createElement('canvas');mc.width=cW;mc.height=10;var cH3=calcCardH(mc.getContext('2d'),SUBJECTS.find(function(s){return s.key===sk;})||SUBJECTS[0],stu,cW),tH=oP+hH+oP+cH3+px(14)+lgH+oP,cv=document.createElement('canvas');cv.width=px(720);cv.height=tH;var c=cv.getContext('2d');c.fillStyle='#FFF';c.fillRect(0,0,px(720),tH);var hx=oP,hy=oP;rr(c,hx,hy,px(38),px(38),px(10));c.fillStyle=themeColor();c.fill();c.font=px(18)+'px serif';c.textAlign='center';c.textBaseline='middle';c.fillText(SEC[0].ej,hx+px(19),hy+px(19));c.font=pf(20,true);c.fillStyle='#18182A';c.textAlign='left';c.textBaseline='top';c.fillText(stu.name+' 학생',hx+px(48),hy+px(2));c.font=pf(12,false);c.fillStyle='#A8A5B8';c.fillText('월간 성장 리포트 / '+sl,hx+px(48),hy+px(24));c.font=pf(13,true);c.fillStyle=themeColor();c.textAlign='right';c.textBaseline='middle';c.fillText(ml,px(720)-oP,hy+px(20));c.strokeStyle='#F0EDE6';c.lineWidth=px(1);c.beginPath();c.moveTo(oP,hy+px(48));c.lineTo(px(720)-oP,hy+px(48));c.stroke();var sub2=SUBJECTS.find(function(s){return s.key===sk;})||SUBJECTS[0];drawFC(c,sub2,stu,oP,hy+hH+oP,cW);drawLogo(c,oP,hy+hH+oP+cH3+px(14),px(720)-oP*2);if(isDemo){c.save();c.translate(cv.width/2,cv.height/2);c.rotate(-Math.PI/5);c.font='bold '+px(88)+'px sans-serif';c.fillStyle='rgba(220,60,60,0.18)';c.textAlign='center';c.textBaseline='middle';c.fillText('DEMO',0,-px(40));c.font='bold '+px(36)+'px sans-serif';c.fillStyle='rgba(220,60,60,0.15)';c.fillText('체험판 · 무단사용금지',0,px(40));c.restore();}copyToClip(cv,sl);}catch(err){alert('오류: '+err.message);}},50);}
 
-/* ════════ 앱 탭 전환 ════════ */
+/* ════ 앱 탭 전환 ════ */
 function switchAppTab(name){
   document.querySelectorAll('.appview').forEach(function(v){v.classList.remove('act');});
   document.querySelectorAll('.apptab').forEach(function(t){t.classList.remove('act');});
   document.getElementById('appview-'+name).classList.add('act');
   document.getElementById('apptab-'+name).classList.add('act');
   if(name==='daily'){dalRenderChips();dalRenderTable();dalRenderSummary();}
-  if(name==='monthly'){renderSP();renderR();renderMemo();}
+  if(name==='monthly'){
+    clearTimeout(_at);clearTimeout(_ct);
+    renderSP();renderR();renderMemo();
+  }
 }
 
-/* ════════════════════════════════════════
-   데일리 평가 (dal_ 네임스페이스)
-════════════════════════════════════════ */
-var DAL_LS='dal_rec_v1',DAL_TMPL_LS='dal_tmpl_v1',DAL_SEL_LS='dal_sel_v1';
+/* ════ 데일리 평가 (dal_ 네임스페이스) ════ */
+var DAL_LS='dal_rec_v1',DAL_TMPL_LS='dal_tmpl_v1',DAL_SEL_LS='dal_sel_v1',DAL_STU_LS='dal_stu_v1';
 var dalRec={};
 var dalTmpl={prefix:'안녕하세요 학부모님 😊\n오늘 수업 결과를 안내해 드립니다.\n\n',suffix:'\n\n항상 응원합니다 🙏'};
 var dalCurDate='';
-var dalSelectedIds={}; // { 'YYYY-MM-DD': Set → stored as [] }
-var dalSelMap={};      // 날짜별 선택 id 집합 (runtime Set 대신 plain obj)
+var dalSelMap={};
 var dalMsgStuId=null;
-var _dalPdfCanvas=null; // PDF 저장용 canvas
+var _dalPdfCanvas=null;
+var dalStudents=[];
+var dalStuSearch='';
 
-/* ── 데이터 로드 ── */
 function dalLoadData(){
   try{
     var r=localStorage.getItem(DAL_LS);if(r)dalRec=JSON.parse(r);
     var t=localStorage.getItem(DAL_TMPL_LS);if(t){var pt=JSON.parse(t);dalTmpl.prefix=pt.prefix!=null?pt.prefix:dalTmpl.prefix;dalTmpl.suffix=pt.suffix!=null?pt.suffix:dalTmpl.suffix;}
     var sel=localStorage.getItem(DAL_SEL_LS);if(sel){var ps=JSON.parse(sel);Object.keys(ps).forEach(function(d){dalSelMap[d]={};ps[d].forEach(function(id){dalSelMap[d][id]=true;});});}
+    var stu=localStorage.getItem(DAL_STU_LS);if(stu)dalStudents=JSON.parse(stu);
   }catch(e){}
 }
 function dalPersist(){try{localStorage.setItem(DAL_LS,JSON.stringify(dalRec));}catch(e){}}
-function dalPersistSel(){
-  try{var out={};Object.keys(dalSelMap).forEach(function(d){out[d]=Object.keys(dalSelMap[d]);});localStorage.setItem(DAL_SEL_LS,JSON.stringify(out));}catch(e){}
+function dalPersistSel(){try{var out={};Object.keys(dalSelMap).forEach(function(d){out[d]=Object.keys(dalSelMap[d]);});localStorage.setItem(DAL_SEL_LS,JSON.stringify(out));}catch(e){}}
+function dalPersistStu(){try{localStorage.setItem(DAL_STU_LS,JSON.stringify(dalStudents));}catch(e){}}
+
+function dalInitStudents(){
+  var saved=localStorage.getItem(DAL_STU_LS);
+  if(saved){try{dalStudents=JSON.parse(saved);}catch(e){dalStudents=[];}}
+  if(!dalStudents.length&&S.students&&S.students.length){
+    dalStudents=S.students.map(function(s){return{id:s.id,name:s.name};});
+    dalPersistStu();
+    return;
+  }
+  if(S.students&&S.students.length){
+    var changed=false;
+    S.students.forEach(function(s){
+      if(!dalStudents.find(function(d){return d.id===s.id;})){
+        dalStudents.push({id:s.id,name:s.name});
+        changed=true;
+      }
+    });
+    if(changed){dalStudents.sort(function(a,b){return a.name.localeCompare(b.name,'ko');});dalPersistStu();}
+  }
 }
 
-/* ── 날짜 ── */
 function dalToStr(d){return d.toISOString().slice(0,10);}
 function dalFmtKr(s){var p=s.split('-'),d=new Date(s+'T00:00:00'),days=['일','월','화','수','목','금','토'];return p[0]+'년 '+parseInt(p[1])+'월 '+parseInt(p[2])+'일 ('+days[d.getDay()]+')';}
 function dalPad(n){return String(n).padStart(2,'0');}
@@ -679,100 +662,27 @@ function dalMoveDate(dir){var d=new Date(dalCurDate+'T00:00:00');d.setDate(d.get
 function dalOnDateChange(){dalCurDate=document.getElementById('dalDateInp').value;dalUpdateDateLabel();dalRenderChips();dalRenderTable();dalRenderSummary();}
 function dalGoToday(){dalCurDate=dalToStr(new Date());document.getElementById('dalDateInp').value=dalCurDate;dalUpdateDateLabel();dalRenderChips();dalRenderTable();dalRenderSummary();}
 
-/* ── 선택 관리 ── */
 function dalIsSelected(sid){return !!(dalSelMap[dalCurDate]&&dalSelMap[dalCurDate][sid]);}
 function dalToggleStu(sid){
   if(!dalSelMap[dalCurDate])dalSelMap[dalCurDate]={};
   if(dalSelMap[dalCurDate][sid]){delete dalSelMap[dalCurDate][sid];}
   else{dalSelMap[dalCurDate][sid]=true;}
-  dalPersistSel();
-  dalRenderChips();
-  dalRenderTable();
-  dalRenderSummary();
+  dalPersistSel();dalRenderChips();dalRenderTable();dalRenderSummary();
 }
 function dalGetSelectedStus(){
-  if(!S.students||!S.students.length)return[];
+  if(!dalStudents.length)return[];
   if(!dalSelMap[dalCurDate])return[];
-  return S.students.filter(function(s){return dalSelMap[dalCurDate][s.id];});
+  return dalStudents.filter(function(s){return dalSelMap[dalCurDate][s.id];});
 }
 
-/* ── 전체 출석 토글 ── */
-function dalToggleAll(){
-  var stus=dalGetSelectedStus();
-  if(!stus.length){showToast('⚠️ 먼저 수업할 학생을 선택하세요');return;}
-  var allChecked=stus.every(function(s){var r=dalGetRec(s.id);return r&&r.checked;});
-  var now=new Date(),t=dalPad(now.getHours())+':'+dalPad(now.getMinutes());
-  stus.forEach(function(s){
-    var rec=dalEnsureRec(s.id);
-    if(allChecked){rec.checked=false;delete rec.time;}
-    else{rec.checked=true;if(!rec.time)rec.time=t;}
-  });
-  dalPersist();
-  dalRenderTable();
-  dalRenderSummary();
-  var btn=document.getElementById('dalCheckAllBtn');
-  if(btn)btn.textContent=allChecked?'✅ 전체 출석':'☑️ 전체 해제';
-  showToast(allChecked?'전체 출석 해제':'✅ 전체 출석 처리');
-}
-
-/* ── 오늘 초기화 ── */
-function dalClearDay(){
-  if(!confirm(dalFmtKr(dalCurDate)+' 기록을 모두 초기화할까요?'))return;
-  delete dalRec[dalCurDate];
-  dalPersist();
-  dalRenderTable();
-  dalRenderSummary();
-  showToast('초기화 완료');
-}
-
-/* ── 기록 접근 ── */
-function dalGetRec(sid){return(dalRec[dalCurDate]&&dalRec[dalCurDate][sid])?dalRec[dalCurDate][sid]:null;}
-function dalEnsureRec(sid){if(!dalRec[dalCurDate])dalRec[dalCurDate]={};if(!dalRec[dalCurDate][sid])dalRec[dalCurDate][sid]={};return dalRec[dalCurDate][sid];}
-function dalIsAbsent(sid){var r=dalGetRec(sid);if(!r)return true;if(r.checked)return false;return!(r.hw||r.att||r.content||r.homework||r.note);}
-
-/* ── 행 스타일 갱신 ── */
-function dalUpdateRowStyle(sid){
-  var tr=document.getElementById('dalrow-'+sid);if(!tr)return;
-  var r=dalGetRec(sid),isPresent=r&&r.checked,isAbsent=dalIsAbsent(sid);
-  tr.className=isPresent?'dal-present':isAbsent?'dal-absent':'';
-  var tc=document.getElementById('daltime-'+sid);if(!tc)return;
-  if(isPresent&&r.time)tc.innerHTML='<span class="dal-time-badge">'+r.time+'</span>';
-  else if(isAbsent)tc.innerHTML='<span class="dal-absent-badge">결석</span>';
-  else tc.innerHTML='';
-  /* 전체 출석 버튼 텍스트 갱신 */
-  dalUpdateCheckAllBtn();
-}
-
-function dalUpdateCheckAllBtn(){
-  var btn=document.getElementById('dalCheckAllBtn');if(!btn)return;
-  var stus=dalGetSelectedStus();
-  var allChecked=stus.length>0&&stus.every(function(s){var r=dalGetRec(s.id);return r&&r.checked;});
-  btn.textContent=allChecked?'☑️ 전체 해제':'✅ 전체 출석';
-}
-
-/* ── 체크박스 ── */
-function dalOnCheck(sid,checked){
-  var rec=dalEnsureRec(sid);
-  rec.checked=checked;
-  if(checked){var now=new Date();rec.time=dalPad(now.getHours())+':'+dalPad(now.getMinutes());}
-  else{delete rec.time;}
-  dalPersist();dalUpdateRowStyle(sid);dalRenderSummary();
-}
-
-/* ── 필드 입력 ── */
-function dalSetField(sid,key,val){
-  dalEnsureRec(sid)[key]=val;
-  dalPersist();dalUpdateRowStyle(sid);dalRenderSummary();
-}
-function dalAutoH(el){el.style.height='auto';el.style.height=el.scrollHeight+'px';}
-
-/* ── 학생 칩 렌더 ── */
 function dalRenderChips(){
   var el=document.getElementById('dalStuChips');
-  var stus=S.students;
-  if(!stus||!stus.length){el.innerHTML='<span style="font-size:12.5px;color:var(--lt)">학생이 없습니다 — 월간 레포트에서 학생을 추가하세요</span>';return;}
+  if(!dalStudents.length){el.innerHTML='<span style="font-size:12.5px;color:var(--lt)">학생이 없습니다 — 아래 이름 입력 후 + 추가를 누르세요</span>';return;}
+  var list=dalStudents;
+  if(dalStuSearch.trim()){var q=dalStuSearch.trim();list=list.filter(function(s){return s.name.indexOf(q)!==-1;});}
   el.innerHTML='';
-  stus.forEach(function(s){
+  if(!list.length){el.innerHTML='<span style="font-size:12.5px;color:var(--lt)">검색 결과 없음</span>';return;}
+  list.forEach(function(s){
     var div=document.createElement('div');
     div.className='dal-stu-chip'+(dalIsSelected(s.id)?' sel':'');
     div.textContent=s.name;
@@ -781,14 +691,68 @@ function dalRenderChips(){
   });
 }
 
-/* ── 평가 테이블 렌더 ── */
+function dalAddStu(){
+  var inp=document.getElementById('dalNewStuInp');
+  var name=inp.value.trim();
+  if(!name){showToast('⚠️ 이름을 입력하세요');return;}
+  if(dalStudents.find(function(s){return s.name===name;})){showToast('⚠️ 이미 있는 학생이에요');inp.value='';return;}
+  var id='dal_'+Date.now()+'_'+Math.floor(Math.random()*1000);
+  dalStudents.push({id:id,name:name});
+  dalStudents.sort(function(a,b){return a.name.localeCompare(b.name,'ko');});
+  if(!dalSelMap[dalCurDate])dalSelMap[dalCurDate]={};
+  dalSelMap[dalCurDate][id]=true;
+  dalPersistSel();dalPersistStu();
+  inp.value='';
+  dalRenderChips();dalRenderTable();dalRenderSummary();
+  showToast('✅ '+name+' 추가 완료 (데일리 전용)');
+}
+
+function dalToggleAll(){
+  var stus=dalGetSelectedStus();
+  if(!stus.length){showToast('⚠️ 먼저 수업할 학생을 선택하세요');return;}
+  var allChecked=stus.every(function(s){var r=dalGetRec(s.id);return r&&r.checked;});
+  var now=new Date(),t=dalPad(now.getHours())+':'+dalPad(now.getMinutes());
+  stus.forEach(function(s){var rec=dalEnsureRec(s.id);if(allChecked){rec.checked=false;delete rec.time;}else{rec.checked=true;if(!rec.time)rec.time=t;}});
+  dalPersist();dalRenderTable();dalRenderSummary();
+  var btn=document.getElementById('dalCheckAllBtn');
+  if(btn)btn.textContent=allChecked?'✅ 전체 출석':'☑️ 전체 해제';
+  showToast(allChecked?'전체 출석 해제':'✅ 전체 출석 처리');
+}
+function dalClearDay(){if(!confirm(dalFmtKr(dalCurDate)+' 기록을 모두 초기화할까요?'))return;delete dalRec[dalCurDate];dalPersist();dalRenderTable();dalRenderSummary();showToast('초기화 완료');}
+
+function dalGetRec(sid){return(dalRec[dalCurDate]&&dalRec[dalCurDate][sid])?dalRec[dalCurDate][sid]:null;}
+function dalEnsureRec(sid){if(!dalRec[dalCurDate])dalRec[dalCurDate]={};if(!dalRec[dalCurDate][sid])dalRec[dalCurDate][sid]={};return dalRec[dalCurDate][sid];}
+function dalIsAbsent(sid){var r=dalGetRec(sid);if(!r)return true;if(r.checked)return false;return!(r.hw||r.att||r.content||r.homework||r.note);}
+
+function dalUpdateRowStyle(sid){
+  var tr=document.getElementById('dalrow-'+sid);if(!tr)return;
+  var r=dalGetRec(sid),isPresent=r&&r.checked,isAbsent=dalIsAbsent(sid);
+  tr.className=isPresent?'dal-present':isAbsent?'dal-absent':'';
+  var tc=document.getElementById('daltime-'+sid);if(!tc)return;
+  if(isPresent&&r.time)tc.innerHTML='<span class="dal-time-badge">'+r.time+'</span>';
+  else if(isAbsent)tc.innerHTML='<span class="dal-absent-badge">결석</span>';
+  else tc.innerHTML='';
+  dalUpdateCheckAllBtn();
+}
+function dalUpdateCheckAllBtn(){
+  var btn=document.getElementById('dalCheckAllBtn');if(!btn)return;
+  var stus=dalGetSelectedStus();
+  var allChecked=stus.length>0&&stus.every(function(s){var r=dalGetRec(s.id);return r&&r.checked;});
+  btn.textContent=allChecked?'☑️ 전체 해제':'✅ 전체 출석';
+}
+function dalOnCheck(sid,checked){
+  var rec=dalEnsureRec(sid);rec.checked=checked;
+  if(checked){var now=new Date();rec.time=dalPad(now.getHours())+':'+dalPad(now.getMinutes());}
+  else{delete rec.time;}
+  dalPersist();dalUpdateRowStyle(sid);dalRenderSummary();
+}
+function dalSetField(sid,key,val){dalEnsureRec(sid)[key]=val;dalPersist();dalUpdateRowStyle(sid);dalRenderSummary();}
+function dalAutoH(el){el.style.height='auto';el.style.height=el.scrollHeight+'px';}
+
 function dalRenderTable(){
   var tbody=document.getElementById('dalEvalBody');
   var stus=dalGetSelectedStus();
-  if(!stus.length){
-    tbody.innerHTML='<tr><td colspan="9" class="dal-empty-td">'+(S.students&&S.students.length?'위에서 오늘 수업할 학생을 선택하세요':'학생이 없습니다 — 월간 레포트에서 학생을 추가하세요')+'</td></tr>';
-    return;
-  }
+  if(!stus.length){tbody.innerHTML='<tr><td colspan="9" class="dal-empty-td">'+(dalStudents.length?'위에서 오늘 수업할 학생을 선택하세요':'학생이 없습니다 — 이름 입력 후 + 추가를 누르세요')+'</td></tr>';return;}
   tbody.innerHTML='';
   stus.forEach(function(s){
     var r=dalGetRec(s.id)||{},isPresent=!!r.checked,isAbsent=dalIsAbsent(s.id);
@@ -819,56 +783,46 @@ function dalRenderTable(){
   dalUpdateCheckAllBtn();
 }
 
-/* ── 요약 ── */
 function dalRenderSummary(){
   var el=document.getElementById('dalSummary');
   var stus=dalGetSelectedStus();
-  var total=S.students?S.students.length:0;
-  var selCnt=stus.length;
-  if(!selCnt){el.innerHTML='<div class="dal-sum-item"><b>'+total+'</b>&nbsp;전체 학생 · 수업 학생 선택 전</div>';return;}
+  if(!stus.length){el.innerHTML='<div class="dal-sum-item"><b>'+dalStudents.length+'</b>&nbsp;전체 학생 · 수업 학생 선택 전</div>';return;}
   var present=0,absent=0,partial=0;
   stus.forEach(function(s){var r=dalGetRec(s.id);if(r&&r.checked)present++;else if(dalIsAbsent(s.id))absent++;else partial++;});
   el.innerHTML=
-    '<div class="dal-sum-item"><b>'+selCnt+'</b>&nbsp;수업</div>'+
+    '<div class="dal-sum-item"><b>'+stus.length+'</b>&nbsp;수업</div>'+
     '<div class="dal-sum-item" style="color:var(--gr)"><b>'+present+'</b>&nbsp;출석</div>'+
     '<div class="dal-sum-item" style="color:var(--rd)"><b>'+absent+'</b>&nbsp;결석</div>'+
     (partial?'<div class="dal-sum-item" style="color:var(--am)"><b>'+partial+'</b>&nbsp;미기록</div>':'');
 }
 
-/* ── 문자 패널 ── */
 function dalOpenMsg(sid){
   if(dalIsAbsent(sid)){showToast('❌ 결석 학생은 문자가 생성되지 않습니다');return;}
-  if(dalMsgStuId){var pb=document.getElementById('dalmsgbtn-'+dalMsgStuId);/* 이전 버튼 해제 — id 없어도 무시 */}
   dalMsgStuId=sid;
-  // 버튼 active 갱신 (테이블 내 버튼)
   document.querySelectorAll('.dal-msg-btn').forEach(function(b){b.classList.remove('active');});
-  var btn=document.getElementById('dalrow-'+sid);
-  if(btn){var mb=btn.querySelector('.dal-msg-btn');if(mb)mb.classList.add('active');}
-  var stu=S.students.find(function(x){return x.id===sid;});
+  var row=document.getElementById('dalrow-'+sid);
+  if(row){var mb=row.querySelector('.dal-msg-btn');if(mb)mb.classList.add('active');}
+  var stu=dalStudents.find(function(x){return x.id===sid;});
   document.getElementById('dalMsgPanelName').textContent=stu?stu.name:'';
   dalRefreshPreview();
   document.getElementById('dalMsgPanel').classList.add('open');
 }
-function dalCloseMsgPanel(){
-  document.getElementById('dalMsgPanel').classList.remove('open');
-  document.querySelectorAll('.dal-msg-btn').forEach(function(b){b.classList.remove('active');});
-  dalMsgStuId=null;
-}
+function dalCloseMsgPanel(){document.getElementById('dalMsgPanel').classList.remove('open');document.querySelectorAll('.dal-msg-btn').forEach(function(b){b.classList.remove('active');});dalMsgStuId=null;}
 function dalRefreshPreview(){
   var box=document.getElementById('dalPreviewBox'),hint=document.getElementById('dalCopyHint');
   if(!dalMsgStuId){box.textContent='';hint.textContent='';return;}
-  var stu=S.students.find(function(x){return x.id===dalMsgStuId;});
+  var stu=dalStudents.find(function(x){return x.id===dalMsgStuId;});
   if(!stu||dalIsAbsent(stu.id)){box.textContent='결석 학생입니다.';hint.textContent='';return;}
   var r=dalGetRec(stu.id)||{};
   var prefix=document.getElementById('dalMsgPrefix').value||'';
   var suffix=document.getElementById('dalMsgSuffix').value||'';
   var body='['+stu.name+' 학생 수업 결과 — '+dalFmtKr(dalCurDate)+']\n';
-  if(r.time)     body+='⏰ 수업 시간: '+r.time+'\n';
-  if(r.hw)       body+='📋 숙제 이행률: '+r.hw+'%\n';
-  if(r.att)      body+='😊 수업 태도: '+r.att+'\n';
-  if(r.content)  body+='📖 수업 내용: '+r.content+'\n';
-  if(r.homework) body+='✏️ 숙제: '+r.homework+'\n';
-  if(r.note)     body+='📌 특이사항: '+r.note+'\n';
+  if(r.time)body+='⏰ 수업 시간: '+r.time+'\n';
+  if(r.hw)body+='📋 숙제 이행률: '+r.hw+'%\n';
+  if(r.att)body+='😊 수업 태도: '+r.att+'\n';
+  if(r.content)body+='📖 수업 내용: '+r.content+'\n';
+  if(r.homework)body+='✏️ 숙제: '+r.homework+'\n';
+  if(r.note)body+='📌 특이사항: '+r.note+'\n';
   box.textContent=prefix+body.trimEnd()+suffix;
   hint.textContent=stu.name+' 학생';
 }
@@ -885,139 +839,63 @@ function dalSaveTmpl(){
   dalRefreshPreview();
 }
 
-/* ── PDF / 이미지 저장 ── */
 function dalBuildReportCanvas(){
-  /* 선택된 학생의 오늘 수업 기록을 캔버스로 그리기 */
-  var stus=dalGetSelectedStus();
-  if(!stus.length)return null;
-  var date=dalFmtKr(dalCurDate);
-  var cW=900,rowH=28,pad=20,hdrH=60,colW=[120,50,70,50,56,180,150,150];
+  var stus=dalGetSelectedStus();if(!stus.length)return null;
+  var date=dalFmtKr(dalCurDate),cW=900,rowH=28,pad=20,hdrH=60;
+  var colW=[120,50,70,50,56,180,150,150];
   var cols=['이름','출석','시간','숙제%','태도','수업내용','숙제','특이사항'];
-  /* 먼저 높이 계산 */
   var ctx0=document.createElement('canvas').getContext('2d');
   ctx0.font='13px Noto Sans KR,sans-serif';
   function cellLines(text,w){if(!text)return 1;var words=String(text),cur='',lines=1;for(var i=0;i<words.length;i++){var ch=words[i];if(ch==='\n'){lines++;cur='';continue;}if(ctx0.measureText(cur+ch).width>w-8){lines++;cur=ch;}else cur+=ch;}return Math.max(1,lines);}
-  var rowHeights=stus.map(function(s){var r=dalGetRec(s.id)||{};var h=rowH;h=Math.max(h,(cellLines(r.content,colW[5])*16+10));h=Math.max(h,(cellLines(r.homework,colW[6])*16+10));h=Math.max(h,(cellLines(r.note,colW[7])*16+10));return h;});
+  var rowHeights=stus.map(function(s){var r=dalGetRec(s.id)||{},h=rowH;h=Math.max(h,cellLines(r.content,colW[5])*16+10);h=Math.max(h,cellLines(r.homework,colW[6])*16+10);h=Math.max(h,cellLines(r.note,colW[7])*16+10);return h;});
   var totalH=hdrH+pad+rowH+rowHeights.reduce(function(a,b){return a+b;},0)+pad*2+40;
   var cv=document.createElement('canvas');cv.width=cW;cv.height=totalH;
-  var c=cv.getContext('2d');
-  c.fillStyle='#FFF';c.fillRect(0,0,cW,totalH);
-  /* 헤더 */
+  var c=cv.getContext('2d');c.fillStyle='#FFF';c.fillRect(0,0,cW,totalH);
   c.fillStyle='#E8650A';c.fillRect(0,0,cW,hdrH);
   c.fillStyle='#fff';c.font='bold 18px Noto Sans KR,sans-serif';c.textAlign='left';c.textBaseline='middle';
   c.fillText('📋 데일리 수업 기록',pad,hdrH/2-8);
-  c.font='13px Noto Sans KR,sans-serif';
-  c.fillText(date,pad,hdrH/2+12);
+  c.font='13px Noto Sans KR,sans-serif';c.fillText(date,pad,hdrH/2+12);
   if(centerName){c.font='bold 13px Noto Sans KR,sans-serif';c.textAlign='right';c.fillText(centerName,cW-pad,hdrH/2);}
-  /* 컬럼 헤더 */
   var y=hdrH+pad,x=pad;
   c.fillStyle='#FAFAF8';c.fillRect(pad,y,cW-pad*2,rowH);
   c.strokeStyle='#E8E4DC';c.lineWidth=1;c.strokeRect(pad,y,cW-pad*2,rowH);
   c.font='bold 12px Noto Sans KR,sans-serif';c.fillStyle='#5C5A72';c.textBaseline='middle';
   cols.forEach(function(col,i){c.textAlign='center';c.fillText(col,x+colW[i]/2,y+rowH/2);x+=colW[i];});
   y+=rowH;
-  /* 데이터 행 */
   stus.forEach(function(s,ri){
-    var r=dalGetRec(s.id)||{};
-    var rh=rowHeights[ri];
-    var isAbsent=dalIsAbsent(s.id);
+    var r=dalGetRec(s.id)||{},rh=rowHeights[ri],isAbsent=dalIsAbsent(s.id);
     c.fillStyle=isAbsent?'#FFF8F6':(ri%2===0?'#FFF':'#FAFAF8');
     c.fillRect(pad,y,cW-pad*2,rh);
     c.strokeStyle='#F0EDE6';c.lineWidth=1;c.strokeRect(pad,y,cW-pad*2,rh);
     c.font='13px Noto Sans KR,sans-serif';c.textBaseline='middle';
     var cx=pad;
-    var cells=[
-      s.name,
-      isAbsent?'결석':(r.checked?'✅':''),
-      r.time||'',
-      r.hw?(r.hw+'%'):'',
-      r.att||'',
-      r.content||'',
-      r.homework||'',
-      r.note||''
-    ];
+    var cells=[s.name,isAbsent?'결석':(r.checked?'✅':''),r.time||'',r.hw?(r.hw+'%'):'',r.att||'',r.content||'',r.homework||'',r.note||''];
     cells.forEach(function(cell,i){
       c.fillStyle=isAbsent&&i===0?'#C24810':isAbsent?'#bbb':'#18182A';
       if(i===0)c.font='bold 13px Noto Sans KR,sans-serif';else c.font='13px Noto Sans KR,sans-serif';
       c.textAlign='center';
-      /* 긴 텍스트 줄바꿈 */
       if(i>=5){var words2=String(cell||''),cur2='',lines2=[],iy=0;for(var ci=0;ci<words2.length;ci++){var ch2=words2[ci];if(ch2==='\n'){lines2.push(cur2);cur2='';continue;}if(c.measureText(cur2+ch2).width>colW[i]-8&&cur2){lines2.push(cur2);cur2=ch2;}else cur2+=ch2;}lines2.push(cur2);var lineH=16,startY=y+(rh-(lines2.length*lineH))/2+lineH/2;lines2.forEach(function(ln,li){c.fillText(ln,cx+colW[i]/2,startY+li*lineH);});}
       else{c.fillText(cell,cx+colW[i]/2,y+rh/2);}
       cx+=colW[i];
     });
     y+=rh;
   });
-  /* 푸터 */
   c.fillStyle='#A8A5B8';c.font='11px Noto Sans KR,sans-serif';c.textAlign='center';c.textBaseline='middle';
   c.fillText('총 '+stus.length+'명 수업 기록',cW/2,y+20);
   return cv;
 }
-
 function dalSavePDF(){
-  var stus=dalGetSelectedStus();
-  if(!stus.length){showToast('⚠️ 수업 학생을 먼저 선택하세요');return;}
+  var stus=dalGetSelectedStus();if(!stus.length){showToast('⚠️ 수업 학생을 먼저 선택하세요');return;}
   showToast('이미지 생성 중…');
-  setTimeout(function(){
-    try{
-      var cv=dalBuildReportCanvas();
-      if(!cv){showToast('⚠️ 생성 실패');return;}
-      _dalPdfCanvas=cv;
-      document.getElementById('dalPdfTtl').textContent='데일리 기록 — '+dalFmtKr(dalCurDate);
-      var body=document.getElementById('dalPdfBody');
-      body.innerHTML='';
-      var img=document.createElement('img');
-      img.src=cv.toDataURL('image/png');
-      img.style.maxWidth='100%';
-      body.appendChild(img);
-      document.getElementById('dalPdfModal').classList.add('open');
-    }catch(e){showToast('❌ 오류: '+e.message);}
-  },80);
+  setTimeout(function(){try{var cv=dalBuildReportCanvas();if(!cv){showToast('⚠️ 생성 실패');return;}_dalPdfCanvas=cv;document.getElementById('dalPdfTtl').textContent='데일리 기록 — '+dalFmtKr(dalCurDate);var body=document.getElementById('dalPdfBody');body.innerHTML='';var img=document.createElement('img');img.src=cv.toDataURL('image/png');img.style.maxWidth='100%';body.appendChild(img);document.getElementById('dalPdfModal').classList.add('open');}catch(e){showToast('❌ 오류: '+e.message);}},80);
 }
 function dalClosePdfModal(){document.getElementById('dalPdfModal').classList.remove('open');_dalPdfCanvas=null;}
-function dalDownloadImg(){
-  if(!_dalPdfCanvas){showToast('⚠️ 미리보기를 먼저 열어주세요');return;}
-  var a=document.createElement('a');
-  a.href=_dalPdfCanvas.toDataURL('image/png');
-  a.download='데일리기록_'+dalCurDate+'.png';
-  a.click();
-  showToast('⬇️ 이미지 저장 완료');
-}
-function dalPrintPdf(){
-  if(!_dalPdfCanvas)return;
-  var win=window.open('','_blank');
-  var src=_dalPdfCanvas.toDataURL('image/png');
-  win.document.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><style>body{margin:0;padding:0}img{max-width:100%;display:block}@media print{body{margin:0}}</style></head><body><img src="'+src+'"></body></html>');
-  win.document.close();win.focus();
-  setTimeout(function(){win.print();},400);
-}
+function dalDownloadImg(){if(!_dalPdfCanvas){showToast('⚠️ 미리보기를 먼저 열어주세요');return;}var a=document.createElement('a');a.href=_dalPdfCanvas.toDataURL('image/png');a.download='데일리기록_'+dalCurDate+'.png';a.click();showToast('⬇️ 이미지 저장 완료');}
+function dalPrintPdf(){if(!_dalPdfCanvas)return;var win=window.open('','_blank');var src=_dalPdfCanvas.toDataURL('image/png');win.document.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><style>body{margin:0;padding:0}img{max-width:100%;display:block}@media print{body{margin:0}}</style></head><body><img src="'+src+'"></body></html>');win.document.close();win.focus();setTimeout(function(){win.print();},400);}
 
-/* ── 데일리 학생 직접 추가 ── */
-function dalAddStu(){
-  var inp=document.getElementById('dalNewStuInp');
-  var name=inp.value.trim();
-  if(!name){showToast('⚠️ 이름을 입력하세요');return;}
-  if(S.students.find(function(s){return s.name===name;})){
-    showToast('⚠️ 이미 있는 학생이에요');inp.value='';return;
-  }
-  var id='s'+Date.now()+'_'+Math.floor(Math.random()*1000);
-  S.students.push({id:id,name:name});
-  S.students.sort(function(a,b){return a.name.localeCompare(b.name,'ko');});
-  /* 추가 즉시 오늘 수업 학생으로 선택 */
-  if(!dalSelMap[dalCurDate])dalSelMap[dalCurDate]={};
-  dalSelMap[dalCurDate][id]=true;
-  dalPersistSel();
-  autosave();
-  inp.value='';
-  dalRenderChips();
-  dalRenderTable();
-  dalRenderSummary();
-  showToast('✅ '+name+' 추가 완료');
-}
-
-/* ── esc 유틸 ── */
 function dalEsc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 
-/* ════════ 초기화 ════════ */
+/* ════ 초기화 ════ */
 function norm(st){if(!st||typeof st!=='object')st={};if(!Array.isArray(st.students))st.students=[];if(!st.values||typeof st.values!=='object')st.values={};if(!Array.isArray(st.archived))st.archived=[];if(!st.month){var n=new Date();st.month=n.getFullYear()+'-'+String(n.getMonth()+1).padStart(2,'0');}if(st.activeStudent&&!st.students.find(function(s){return s.id===st.activeStudent;}))st.activeStudent=null;if(!st.activeStudent&&st.students.length)st.activeStudent=st.students[0].id;return st;}
 
 function init(){
@@ -1033,21 +911,51 @@ function init(){
   if(!isDemo)initCenter();
   initTheme();
   loadSUBJ();renderSubjPanel();
-  /* 데일리 초기화 */
+
   dalLoadData();
   dalInitDate();
   document.getElementById('dalMsgPrefix').value=dalTmpl.prefix;
   document.getElementById('dalMsgSuffix').value=dalTmpl.suffix;
+
   if(isDemo){
     S.month=new Date().getFullYear()+'-'+String(new Date().getMonth()+1).padStart(2,'0');
     document.getElementById('monthInput').value=S.month;
     document.getElementById('lockScreen').style.display='none';
     document.getElementById('mainApp').style.display='block';
     var cb=document.getElementById('cbanner');if(cb)cb.style.display='none';
+    dalInitStudents();
+    dalRenderChips();dalRenderTable();dalRenderSummary();
     renderSP();renderR();renderMemo();
     setTimeout(function(){showToast('👋 데모 모드 — 자유롭게 체험해보세요!');},500);
+    return;
   }
-  try{var saved=!isDemo&&localStorage.getItem(GAS_LS);if(saved){document.getElementById('lockInp').value=saved;document.getElementById('lockBtn').disabled=false;tryUnlock();}}catch(e){}
+
+  try{
+    var saved=localStorage.getItem(GAS_LS);
+    if(saved){
+      document.getElementById('lockInp').value=saved;
+      document.getElementById('lockBtn').disabled=false;
+      tryUnlock();
+    }
+  }catch(e){}
+
+  /* 5분 무활동 시 자동 연결 해제 (잠금화면 없이 토스트만) */
+  var _idleTimer;
+  function resetIdle(){
+    clearTimeout(_idleTimer);
+    _idleTimer=setTimeout(function(){
+      if(!gasUrl)return;
+      clearTimeout(_at);clearTimeout(_ct);
+      gasUrl='';
+      try{localStorage.removeItem(GAS_LS);}catch(e){}
+      showToast('⏱ 5분 무활동으로 연결이 해제됐습니다. 새로고침 후 사용하세요.');
+      setSyn('','연결 해제됨');
+    },5*60*1000);
+  }
+  ['mousemove','keydown','click','touchstart','scroll'].forEach(function(ev){
+    document.addEventListener(ev,resetIdle,{passive:true});
+  });
+  resetIdle();
 }
 document.addEventListener('DOMContentLoaded',init);
 </script>
