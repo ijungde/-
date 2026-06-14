@@ -318,12 +318,12 @@ select.dal-inp{min-width:56px;cursor:pointer}
 </div>
 
 <div class="apptab-bar">
-  <div class="apptab act" id="apptab-monthly" onclick="switchAppTab('monthly')">📊 월간 레포트</div>
-  <div class="apptab" id="apptab-daily" onclick="switchAppTab('daily')">📋 데일리 평가</div>
+  <div class="apptab act" id="apptab-daily" onclick="switchAppTab('daily')">📋 데일리 평가</div>
+  <div class="apptab" id="apptab-monthly" onclick="switchAppTab('monthly')">📊 월간 레포트</div>
 </div>
 
 <!-- ══ 월간 레포트 ══ -->
-<div class="appview act" id="appview-monthly">
+<div class="appview" id="appview-monthly">
 <div class="logopanel">
   <div class="logopanel-row">
     <div class="logopanel-ttl"><span>🏷️</span> 이미지 로고</div>
@@ -420,7 +420,7 @@ select.dal-inp{min-width:56px;cursor:pointer}
 </div><!-- /monthly -->
 
 <!-- ══ 데일리 평가 ══ -->
-<div class="appview" id="appview-daily">
+<div class="appview act" id="appview-daily">
 <div class="dal-wrap">
 
   <!-- ① 고정 문자 멘트 -->
@@ -457,7 +457,13 @@ select.dal-inp{min-width:56px;cursor:pointer}
 
   <!-- ③ 학생 선택 -->
   <div class="dal-panel">
-    <div class="dal-panel-ttl">👥 수업 학생 선택 <span style="font-size:11px;font-weight:400;color:var(--lt)">클릭으로 오늘 수업할 학생을 선택하세요</span></div>
+    <div class="dal-panel-ttl" style="justify-content:space-between;flex-wrap:wrap;gap:8px">
+      <span>👥 수업 학생 선택 <span style="font-size:11px;font-weight:400;color:var(--lt)">클릭으로 오늘 수업할 학생을 선택하세요</span></span>
+      <div style="display:flex;gap:7px;align-items:center">
+        <input type="text" id="dalNewStuInp" class="dal-inp" placeholder="학생 이름" style="width:110px;padding:5px 8px;font-size:12px" onkeydown="if(event.key==='Enter')dalAddStu()">
+        <button class="dalb dalb-sm dalb-p" onclick="dalAddStu()">+ 추가</button>
+      </div>
+    </div>
     <div class="dal-stu-select-wrap">
       <div class="dal-stu-chips" id="dalStuChips"></div>
     </div>
@@ -635,6 +641,7 @@ function switchAppTab(name){
   document.getElementById('appview-'+name).classList.add('act');
   document.getElementById('apptab-'+name).classList.add('act');
   if(name==='daily'){dalRenderChips();dalRenderTable();dalRenderSummary();}
+  if(name==='monthly'){renderSP();renderR();renderMemo();}
 }
 
 /* ════════════════════════════════════════
@@ -982,6 +989,29 @@ function dalPrintPdf(){
   win.document.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><style>body{margin:0;padding:0}img{max-width:100%;display:block}@media print{body{margin:0}}</style></head><body><img src="'+src+'"></body></html>');
   win.document.close();win.focus();
   setTimeout(function(){win.print();},400);
+}
+
+/* ── 데일리 학생 직접 추가 ── */
+function dalAddStu(){
+  var inp=document.getElementById('dalNewStuInp');
+  var name=inp.value.trim();
+  if(!name){showToast('⚠️ 이름을 입력하세요');return;}
+  if(S.students.find(function(s){return s.name===name;})){
+    showToast('⚠️ 이미 있는 학생이에요');inp.value='';return;
+  }
+  var id='s'+Date.now()+'_'+Math.floor(Math.random()*1000);
+  S.students.push({id:id,name:name});
+  S.students.sort(function(a,b){return a.name.localeCompare(b.name,'ko');});
+  /* 추가 즉시 오늘 수업 학생으로 선택 */
+  if(!dalSelMap[dalCurDate])dalSelMap[dalCurDate]={};
+  dalSelMap[dalCurDate][id]=true;
+  dalPersistSel();
+  autosave();
+  inp.value='';
+  dalRenderChips();
+  dalRenderTable();
+  dalRenderSummary();
+  showToast('✅ '+name+' 추가 완료');
 }
 
 /* ── esc 유틸 ── */
