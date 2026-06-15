@@ -562,7 +562,7 @@ function commitEdit(){if(!_es)return;if(JSON.stringify(S.values)!==JSON.stringif
 function pushU(d){undoStack.push({desc:d,snap:JSON.parse(JSON.stringify(S.values))});if(undoStack.length>50)undoStack.shift();_es=null;updU();}
 function updU(){document.getElementById('undoBtn').disabled=!undoStack.length;}
 function undoAct(){if(!undoStack.length)return;_es=null;S.values=undoStack.pop().snap;persist();renderR();renderMemo();updU();}
-function tryUnlock(){var url=document.getElementById('lockInp').value.trim();if(!url)return;var btn=document.getElementById('lockBtn');btn.disabled=true;btn.textContent='확인 중…';document.getElementById('lockErr').style.display='none';cloudLoad(url,function(ok,data){if(ok){gasUrl=url;try{localStorage.setItem(GAS_LS,url);}catch(e){}document.getElementById('lockScreen').style.display='none';document.getElementById('mainApp').style.display='block';setSyn('ok','연결됨');applyCloudData(data);renderSP();renderR();renderMemo();dalInitStudents();}else{btn.disabled=false;btn.textContent='접속하기';document.getElementById('lockErr').style.display='block';}},S.month);}
+function tryUnlock(){var url=document.getElementById('lockInp').value.trim();if(!url)return;var btn=document.getElementById('lockBtn');btn.disabled=true;btn.textContent='확인 중…';document.getElementById('lockErr').style.display='none';cloudLoad(url,function(ok,data){if(ok){gasUrl=url;try{localStorage.setItem(GAS_LS,url);}catch(e){}document.getElementById('lockScreen').style.display='none';document.getElementById('mainApp').style.display='block';setSyn('ok','연결됨');applyCloudData(data);renderSP();renderR();renderMemo();dalInitStudents();resetIdle();}else{btn.disabled=false;btn.textContent='접속하기';document.getElementById('lockErr').style.display='block';}},S.month);}
 var _ci=0;
 function jsonpLoad(url,cb){var nm='_jcb'+(++_ci);window[nm]=function(d){cb(null,d);delete window[nm];var s=document.getElementById(nm);if(s)s.parentNode.removeChild(s);};var sc=document.createElement('script');sc.id=nm;sc.src=url+(url.indexOf('?')>=0?'&':'?')+'callback='+nm+'&_='+Date.now();sc.onerror=function(){cb(new Error('실패'));delete window[nm];};document.head.appendChild(sc);setTimeout(function(){if(window[nm]){cb(new Error('타임아웃'));delete window[nm];}},12000);}
 function cloudLoad(url,cb,month){var mParam=month?'&month='+encodeURIComponent(month):'';var sep=url.indexOf('?')>=0?'&':'?';jsonpLoad(url+sep+'_t='+Date.now()+mParam,function(e,d){if(e||!d||!d.ok){cb(false,null);}else{cb(true,d.data);}});}
@@ -978,6 +978,26 @@ function init(){
   resetIdle();
 }
 document.addEventListener('DOMContentLoaded',init);
-/* ── 파일 무결성 확인 완료 v4-final ── */
+/* 5분 무활동 시 월간 블러 오버레이 — 전역 선언 */
+var _idleTimer;
+function resetIdle(){
+  clearTimeout(_idleTimer);
+  _idleTimer=setTimeout(function(){
+    if(!gasUrl)return;
+    clearTimeout(_at);clearTimeout(_ct);
+    gasUrl='';
+    try{localStorage.removeItem(GAS_LS);}catch(e){}
+    setSyn('','연결 해제됨');
+    if(_currentTab==='monthly'){
+      document.getElementById('monthlyBlur').style.display='flex';
+    } else {
+      showToast('⏱ 5분 무활동으로 연결이 해제됐습니다. 월간 레포트 사용 시 새로고침하세요.');
+    }
+  },5*60*1000);
+}
+['mousemove','keydown','click','touchstart','scroll'].forEach(function(ev){
+  document.addEventListener(ev,resetIdle,{passive:true});
+});
+/* resetIdle()은 tryUnlock 성공 후 호출 */
 </script>
 </body></html>
