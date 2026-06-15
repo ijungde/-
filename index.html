@@ -1081,9 +1081,11 @@ function resetIdle(){
     }
   },5*60*1000);
 }
-['mousemove','keydown','click','touchstart','scroll'].forEach(function(ev){
-  document.addEventListener(ev,resetIdle,{passive:true});
-});
+document.addEventListener('mousemove',resetIdle,{passive:true});
+document.addEventListener('keydown',resetIdle,{passive:true});
+document.addEventListener('click',resetIdle,{passive:true});
+document.addEventListener('touchstart',resetIdle,{passive:true});
+document.addEventListener('scroll',resetIdle,{passive:true});
 
 function init(){
   isDemo=location.search.indexOf('demo')!==-1||location.hash==='#demo';
@@ -1125,6 +1127,7 @@ function init(){
       tryUnlock();
     }
   }catch(e){}
+  resetIdle();
 }
 document.addEventListener('DOMContentLoaded',init);
 </script>
