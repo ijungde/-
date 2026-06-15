@@ -304,6 +304,16 @@ select.dal-inp{min-width:56px;cursor:pointer}
   <div class="apptab" id="apptab-monthly" onclick="switchAppTab('monthly')">📊 월간 레포트</div>
 </div>
 
+<!-- 월간 블러 오버레이 -->
+<div id="monthlyBlur" style="display:none;position:fixed;inset:0;z-index:8000;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);background:rgba(24,20,42,.45);align-items:center;justify-content:center;">
+  <div style="background:#fff;border-radius:20px;padding:36px 32px;text-align:center;max-width:340px;width:90%;box-shadow:0 8px 40px rgba(24,20,42,.22);">
+    <div style="font-size:44px;margin-bottom:14px;">⏱</div>
+    <div style="font-size:17px;font-weight:800;color:#18182A;margin-bottom:8px;">연결이 해제됐습니다</div>
+    <div style="font-size:13px;color:#5C5A72;line-height:1.7;margin-bottom:22px;">5분 무활동으로 월간 레포트 연결이<br>해제되었습니다.<br>새로고침 후 다시 접속해주세요.</div>
+    <button onclick="location.reload()" style="width:100%;padding:13px;background:#E8650A;color:#fff;border:none;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;">🔄 새로고침</button>
+  </div>
+</div>
+
 <!-- 월간 레포트 -->
 <div class="appview" id="appview-monthly">
 <div class="logopanel">
@@ -603,8 +613,11 @@ function switchAppTab(name){
   document.querySelectorAll('.apptab').forEach(function(t){t.classList.remove('act');});
   document.getElementById('appview-'+name).classList.add('act');
   document.getElementById('apptab-'+name).classList.add('act');
+  _currentTab=name;
   if(name==='daily'){dalRenderChips();dalRenderTable();dalRenderSummary();}
   if(name==='monthly'){
+    /* 월간 탭 진입 시 연결 해제 상태면 바로 블러 표시 */
+    if(!gasUrl){document.getElementById('monthlyBlur').style.display='flex';return;}
     clearTimeout(_at);clearTimeout(_ct);
     renderSP();renderR();renderMemo();
   }
@@ -939,8 +952,10 @@ function init(){
     }
   }catch(e){}
 
-  /* 5분 무활동 시 자동 연결 해제 (잠금화면 없이 토스트만) */
+  /* 5분 무활동 시 자동 연결 해제 (월간 탭에만 블러 오버레이) */
   var _idleTimer;
+  var _currentTab='daily'; /* 현재 활성 탭 추적 */
+
   function resetIdle(){
     clearTimeout(_idleTimer);
     _idleTimer=setTimeout(function(){
@@ -948,8 +963,13 @@ function init(){
       clearTimeout(_at);clearTimeout(_ct);
       gasUrl='';
       try{localStorage.removeItem(GAS_LS);}catch(e){}
-      showToast('⏱ 5분 무활동으로 연결이 해제됐습니다. 새로고침 후 사용하세요.');
       setSyn('','연결 해제됨');
+      /* 월간 탭이면 블러 오버레이, 데일리면 토스트만 */
+      if(_currentTab==='monthly'){
+        document.getElementById('monthlyBlur').style.display='flex';
+      } else {
+        showToast('⏱ 5분 무활동으로 연결이 해제됐습니다. 월간 레포트 사용 시 새로고침하세요.');
+      }
     },5*60*1000);
   }
   ['mousemove','keydown','click','touchstart','scroll'].forEach(function(ev){
