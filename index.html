@@ -1058,4 +1058,80 @@ function dalSavePDF(){
 }
 function dalClosePdfModal(){document.getElementById('dalPdfModal').classList.remove('open');_dalPdfCanvas=null;}
 function dalDownloadImg(){if(!_dalPdfCanvas){showToast('⚠️ 미리보기를 먼저 열어주세요');return;}var a=document.createElement('a');a.href=_dalPdfCanvas.toDataURL('image/png');a.download='데일리기록_'+dalCurDate+'.png';a.click();showToast('⬇️ 이미지 저장 완료');}
-function dalPrintPdf(){if(!_dalPdfCanvas)return;var win=window.open('','_blank');var src=_dalPdfCanvas
+function dalPrintPdf(){if(!_dalPdfCanvas)return;var win=window.open('','_blank');var src=_dalPdfCanvas.toDataURL('image/png');win.document.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><style>body{margin:0;padding:0}img{max-width:100%;display:block}@media print{body{margin:0}}</style></head><body><img src="'+src+'"></body></html>');win.document.close();win.focus();setTimeout(function(){win.print();},400);}
+
+function dalEsc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+/* ════ 초기화 ════ */
+function norm(st){if(!st||typeof st!=='object')st={};if(!Array.isArray(st.students))st.students=[];if(!st.values||typeof st.values!=='object')st.values={};if(!Array.isArray(st.archived))st.archived=[];if(!st.month){var n=new Date();st.month=n.getFullYear()+'-'+String(n.getMonth()+1).padStart(2,'0');}if(st.activeStudent&&!st.students.find(function(s){return s.id===st.activeStudent;}))st.activeStudent=null;if(!st.activeStudent&&st.students.length)st.activeStudent=st.students[0].id;return st;}
+
+var _idleTimer;
+function resetIdle(){
+  clearTimeout(_idleTimer);
+  _idleTimer=setTimeout(function(){
+    if(!gasUrl)return;
+    clearTimeout(_at);clearTimeout(_ct);
+    gasUrl='';
+    try{localStorage.removeItem(GAS_LS);}catch(e){}
+    setSyn('','연결 해제됨');
+    if(_currentTab==='monthly'){
+      document.getElementById('monthlyBlur').style.display='flex';
+    }else{
+      showToast('⏱ 5분 무활동으로 연결이 해제됐습니다. 월간 레포트 사용 시 새로고침하세요.');
+    }
+  },5*60*1000);
+}
+// 이벤트 리스너는 init() 내 비데모 분기에서만 등록
+
+function init(){
+  isDemo=location.search.indexOf('demo')!==-1||location.hash==='#demo';
+  var emb=document.getElementById('embedded-data').textContent.trim(),loaded=null;
+  if(emb){try{loaded=JSON.parse(emb);}catch(e){}}
+  if(!loaded&&!isDemo)loaded=loadLS();
+  S=norm(loaded||{});
+  purgeArchive();
+  document.getElementById('monthInput').value=S.month;
+  updateMonthLabel();
+  initLogo();
+  if(!isDemo)initCenter();
+  initTheme();
+  loadSUBJ();renderSubjPanel();
+
+  dalLoadData();
+  dalInitDate();
+  document.getElementById('dalMsgPrefix').value=dalTmpl.prefix;
+  document.getElementById('dalMsgSuffix').value=dalTmpl.suffix;
+
+  if(isDemo){
+    S.month=new Date().getFullYear()+'-'+String(new Date().getMonth()+1).padStart(2,'0');
+    document.getElementById('monthInput').value=S.month;
+    document.getElementById('lockScreen').style.display='none';
+    document.getElementById('mainApp').style.display='block';
+    var cb=document.getElementById('cbanner');if(cb)cb.style.display='none';
+    dalInitStudents();
+    dalRenderChoBar();dalRenderChips();dalRenderTable();dalRenderSummary();
+    renderSP();renderR();renderMemo();
+    setTimeout(function(){showToast('👋 데모 모드 — 자유롭게 체험해보세요!');},500);
+    return; // 데모는 여기서 종료 — resetIdle() 호출 안 함
+  }
+
+  // 비데모: 이벤트 리스너 + 초기 타이머 시작
+  document.addEventListener('mousemove',resetIdle,{passive:true});
+  document.addEventListener('keydown',resetIdle,{passive:true});
+  document.addEventListener('click',resetIdle,{passive:true});
+  document.addEventListener('touchstart',resetIdle,{passive:true});
+  document.addEventListener('scroll',resetIdle,{passive:true});
+
+  try{
+    var saved=localStorage.getItem(GAS_LS);
+    if(saved){
+      document.getElementById('lockInp').value=saved;
+      document.getElementById('lockBtn').disabled=false;
+      tryUnlock();
+    }
+  }catch(e){}
+  resetIdle();
+}
+document.addEventListener('DOMContentLoaded',init);
+</script>
+</body></html>
