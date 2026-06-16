@@ -647,7 +647,7 @@ function switchAppTab(name){
   _currentTab=name;
   if(name==='daily'){dalRenderChoBar();dalRenderChips();dalRenderTable();dalRenderSummary();}
   if(name==='monthly'){
-    if(!gasUrl){document.getElementById('monthlyBlur').style.display='flex';return;}
+    if(!gasUrl&&!isDemo){document.getElementById('monthlyBlur').style.display='flex';return;}
     clearTimeout(_at);clearTimeout(_ct);
     renderSP();renderR();renderMemo();
   }
@@ -1108,14 +1108,17 @@ function init(){
     document.getElementById('lockScreen').style.display='none';
     document.getElementById('mainApp').style.display='block';
     var cb=document.getElementById('cbanner');if(cb)cb.style.display='none';
+    /* 데모: monthlyBlur 절대 안 뜨도록 강제 숨김 */
+    var mb=document.getElementById('monthlyBlur');if(mb)mb.style.display='none';
     dalInitStudents();
     dalRenderChoBar();dalRenderChips();dalRenderTable();dalRenderSummary();
     renderSP();renderR();renderMemo();
     setTimeout(function(){showToast('👋 데모 모드 — 자유롭게 체험해보세요!');},500);
-    return; // 데모는 여기서 종료 — resetIdle() 호출 안 함
+    /* 데모는 여기서 완전 종료 — resetIdle/이벤트리스너 등록 안 함 */
+    return;
   }
 
-  // 비데모: 이벤트 리스너 + 초기 타이머 시작
+  // 비데모만 이벤트 리스너 + 타이머 등록
   document.addEventListener('mousemove',resetIdle,{passive:true});
   document.addEventListener('keydown',resetIdle,{passive:true});
   document.addEventListener('click',resetIdle,{passive:true});
